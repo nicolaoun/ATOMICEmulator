@@ -9,8 +9,8 @@
 #include <iostream>
 //#include "Proto-ABD/ABDRWClient.hpp"
 //#include "Proto-ABD/ABDReader.hpp"
-#include "ABDRWClient.hpp"
-#include "ABDServer.hpp"
+#include "abd_client.hpp"
+#include "abd_server.hpp"
 #include "arguments.h"
 #include <string>
 
