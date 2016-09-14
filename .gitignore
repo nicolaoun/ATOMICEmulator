@@ -27,3 +27,11 @@
 *.exe
 *.out
 *.app
+
+# Tests
+testing/*
+*.xcworkspacedata
+
+Untitled.xcworkspace/xcuserdata/nicolasnicolaou.xcuserdatad/UserInterfaceState.xcuserstate
+
+*.txt~
