@@ -48,10 +48,10 @@ RM = /Applications/CMake.app/Contents/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory
+CMAKE_SOURCE_DIR = /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory
+CMAKE_BINARY_DIR = /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/CMakeFiles /Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/CMakeFiles /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,221 +123,221 @@ asm/fast:
 	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/build
 .PHONY : asm/fast
 
-Proto-ABD/ABDRWClient.o: Proto-ABD/ABDRWClient.cpp.o
+Protocols/ABD/abd_client.o: Protocols/ABD/abd_client.cpp.o
 
-.PHONY : Proto-ABD/ABDRWClient.o
-
-# target to build an object file
-Proto-ABD/ABDRWClient.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABDRWClient.cpp.o
-.PHONY : Proto-ABD/ABDRWClient.cpp.o
-
-Proto-ABD/ABDRWClient.i: Proto-ABD/ABDRWClient.cpp.i
-
-.PHONY : Proto-ABD/ABDRWClient.i
-
-# target to preprocess a source file
-Proto-ABD/ABDRWClient.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABDRWClient.cpp.i
-.PHONY : Proto-ABD/ABDRWClient.cpp.i
-
-Proto-ABD/ABDRWClient.s: Proto-ABD/ABDRWClient.cpp.s
-
-.PHONY : Proto-ABD/ABDRWClient.s
-
-# target to generate assembly for a file
-Proto-ABD/ABDRWClient.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABDRWClient.cpp.s
-.PHONY : Proto-ABD/ABDRWClient.cpp.s
-
-Proto-ABD/ABDServer.o: Proto-ABD/ABDServer.cpp.o
-
-.PHONY : Proto-ABD/ABDServer.o
+.PHONY : Protocols/ABD/abd_client.o
 
 # target to build an object file
-Proto-ABD/ABDServer.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABDServer.cpp.o
-.PHONY : Proto-ABD/ABDServer.cpp.o
+Protocols/ABD/abd_client.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o
+.PHONY : Protocols/ABD/abd_client.cpp.o
 
-Proto-ABD/ABDServer.i: Proto-ABD/ABDServer.cpp.i
+Protocols/ABD/abd_client.i: Protocols/ABD/abd_client.cpp.i
 
-.PHONY : Proto-ABD/ABDServer.i
+.PHONY : Protocols/ABD/abd_client.i
 
 # target to preprocess a source file
-Proto-ABD/ABDServer.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABDServer.cpp.i
-.PHONY : Proto-ABD/ABDServer.cpp.i
+Protocols/ABD/abd_client.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.i
+.PHONY : Protocols/ABD/abd_client.cpp.i
 
-Proto-ABD/ABDServer.s: Proto-ABD/ABDServer.cpp.s
+Protocols/ABD/abd_client.s: Protocols/ABD/abd_client.cpp.s
 
-.PHONY : Proto-ABD/ABDServer.s
+.PHONY : Protocols/ABD/abd_client.s
 
 # target to generate assembly for a file
-Proto-ABD/ABDServer.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABDServer.cpp.s
-.PHONY : Proto-ABD/ABDServer.cpp.s
+Protocols/ABD/abd_client.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.s
+.PHONY : Protocols/ABD/abd_client.cpp.s
 
-Proto-ABD/ABD_protocol.o: Proto-ABD/ABD_protocol.cpp.o
+Protocols/ABD/abd_protocol.o: Protocols/ABD/abd_protocol.cpp.o
 
-.PHONY : Proto-ABD/ABD_protocol.o
+.PHONY : Protocols/ABD/abd_protocol.o
 
 # target to build an object file
-Proto-ABD/ABD_protocol.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABD_protocol.cpp.o
-.PHONY : Proto-ABD/ABD_protocol.cpp.o
+Protocols/ABD/abd_protocol.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o
+.PHONY : Protocols/ABD/abd_protocol.cpp.o
 
-Proto-ABD/ABD_protocol.i: Proto-ABD/ABD_protocol.cpp.i
+Protocols/ABD/abd_protocol.i: Protocols/ABD/abd_protocol.cpp.i
 
-.PHONY : Proto-ABD/ABD_protocol.i
+.PHONY : Protocols/ABD/abd_protocol.i
 
 # target to preprocess a source file
-Proto-ABD/ABD_protocol.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABD_protocol.cpp.i
-.PHONY : Proto-ABD/ABD_protocol.cpp.i
+Protocols/ABD/abd_protocol.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.i
+.PHONY : Protocols/ABD/abd_protocol.cpp.i
 
-Proto-ABD/ABD_protocol.s: Proto-ABD/ABD_protocol.cpp.s
+Protocols/ABD/abd_protocol.s: Protocols/ABD/abd_protocol.cpp.s
 
-.PHONY : Proto-ABD/ABD_protocol.s
+.PHONY : Protocols/ABD/abd_protocol.s
 
 # target to generate assembly for a file
-Proto-ABD/ABD_protocol.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Proto-ABD/ABD_protocol.cpp.s
-.PHONY : Proto-ABD/ABD_protocol.cpp.s
+Protocols/ABD/abd_protocol.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.s
+.PHONY : Protocols/ABD/abd_protocol.cpp.s
 
-Server/arguments.o: Server/arguments.cpp.o
+Protocols/ABD/abd_server.o: Protocols/ABD/abd_server.cpp.o
 
-.PHONY : Server/arguments.o
+.PHONY : Protocols/ABD/abd_server.o
 
 # target to build an object file
-Server/arguments.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/arguments.cpp.o
-.PHONY : Server/arguments.cpp.o
+Protocols/ABD/abd_server.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o
+.PHONY : Protocols/ABD/abd_server.cpp.o
 
-Server/arguments.i: Server/arguments.cpp.i
+Protocols/ABD/abd_server.i: Protocols/ABD/abd_server.cpp.i
 
-.PHONY : Server/arguments.i
+.PHONY : Protocols/ABD/abd_server.i
 
 # target to preprocess a source file
-Server/arguments.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/arguments.cpp.i
-.PHONY : Server/arguments.cpp.i
+Protocols/ABD/abd_server.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.i
+.PHONY : Protocols/ABD/abd_server.cpp.i
 
-Server/arguments.s: Server/arguments.cpp.s
+Protocols/ABD/abd_server.s: Protocols/ABD/abd_server.cpp.s
 
-.PHONY : Server/arguments.s
+.PHONY : Protocols/ABD/abd_server.s
 
 # target to generate assembly for a file
-Server/arguments.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/arguments.cpp.s
-.PHONY : Server/arguments.cpp.s
+Protocols/ABD/abd_server.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.s
+.PHONY : Protocols/ABD/abd_server.cpp.s
 
-Server/filesystem.o: Server/filesystem.cpp.o
+Utilities/arguments.o: Utilities/arguments.cpp.o
 
-.PHONY : Server/filesystem.o
+.PHONY : Utilities/arguments.o
 
 # target to build an object file
-Server/filesystem.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/filesystem.cpp.o
-.PHONY : Server/filesystem.cpp.o
+Utilities/arguments.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/arguments.cpp.o
+.PHONY : Utilities/arguments.cpp.o
 
-Server/filesystem.i: Server/filesystem.cpp.i
+Utilities/arguments.i: Utilities/arguments.cpp.i
 
-.PHONY : Server/filesystem.i
+.PHONY : Utilities/arguments.i
 
 # target to preprocess a source file
-Server/filesystem.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/filesystem.cpp.i
-.PHONY : Server/filesystem.cpp.i
+Utilities/arguments.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/arguments.cpp.i
+.PHONY : Utilities/arguments.cpp.i
 
-Server/filesystem.s: Server/filesystem.cpp.s
+Utilities/arguments.s: Utilities/arguments.cpp.s
 
-.PHONY : Server/filesystem.s
+.PHONY : Utilities/arguments.s
 
 # target to generate assembly for a file
-Server/filesystem.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/filesystem.cpp.s
-.PHONY : Server/filesystem.cpp.s
+Utilities/arguments.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/arguments.cpp.s
+.PHONY : Utilities/arguments.cpp.s
 
-Server/set_operations.o: Server/set_operations.cpp.o
+Utilities/filesystem.o: Utilities/filesystem.cpp.o
 
-.PHONY : Server/set_operations.o
+.PHONY : Utilities/filesystem.o
 
 # target to build an object file
-Server/set_operations.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/set_operations.cpp.o
-.PHONY : Server/set_operations.cpp.o
+Utilities/filesystem.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/filesystem.cpp.o
+.PHONY : Utilities/filesystem.cpp.o
 
-Server/set_operations.i: Server/set_operations.cpp.i
+Utilities/filesystem.i: Utilities/filesystem.cpp.i
 
-.PHONY : Server/set_operations.i
+.PHONY : Utilities/filesystem.i
 
 # target to preprocess a source file
-Server/set_operations.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/set_operations.cpp.i
-.PHONY : Server/set_operations.cpp.i
+Utilities/filesystem.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/filesystem.cpp.i
+.PHONY : Utilities/filesystem.cpp.i
 
-Server/set_operations.s: Server/set_operations.cpp.s
+Utilities/filesystem.s: Utilities/filesystem.cpp.s
 
-.PHONY : Server/set_operations.s
+.PHONY : Utilities/filesystem.s
 
 # target to generate assembly for a file
-Server/set_operations.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/set_operations.cpp.s
-.PHONY : Server/set_operations.cpp.s
+Utilities/filesystem.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/filesystem.cpp.s
+.PHONY : Utilities/filesystem.cpp.s
 
-Server/sm_common.o: Server/sm_common.cpp.o
+Utilities/set_operations.o: Utilities/set_operations.cpp.o
 
-.PHONY : Server/sm_common.o
+.PHONY : Utilities/set_operations.o
 
 # target to build an object file
-Server/sm_common.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/sm_common.cpp.o
-.PHONY : Server/sm_common.cpp.o
+Utilities/set_operations.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/set_operations.cpp.o
+.PHONY : Utilities/set_operations.cpp.o
 
-Server/sm_common.i: Server/sm_common.cpp.i
+Utilities/set_operations.i: Utilities/set_operations.cpp.i
 
-.PHONY : Server/sm_common.i
+.PHONY : Utilities/set_operations.i
 
 # target to preprocess a source file
-Server/sm_common.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/sm_common.cpp.i
-.PHONY : Server/sm_common.cpp.i
+Utilities/set_operations.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/set_operations.cpp.i
+.PHONY : Utilities/set_operations.cpp.i
 
-Server/sm_common.s: Server/sm_common.cpp.s
+Utilities/set_operations.s: Utilities/set_operations.cpp.s
 
-.PHONY : Server/sm_common.s
+.PHONY : Utilities/set_operations.s
 
 # target to generate assembly for a file
-Server/sm_common.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/sm_common.cpp.s
-.PHONY : Server/sm_common.cpp.s
+Utilities/set_operations.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/set_operations.cpp.s
+.PHONY : Utilities/set_operations.cpp.s
 
-Server/sm_node.o: Server/sm_node.cpp.o
+Utilities/sm_common.o: Utilities/sm_common.cpp.o
 
-.PHONY : Server/sm_node.o
+.PHONY : Utilities/sm_common.o
 
 # target to build an object file
-Server/sm_node.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/sm_node.cpp.o
-.PHONY : Server/sm_node.cpp.o
+Utilities/sm_common.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/sm_common.cpp.o
+.PHONY : Utilities/sm_common.cpp.o
 
-Server/sm_node.i: Server/sm_node.cpp.i
+Utilities/sm_common.i: Utilities/sm_common.cpp.i
 
-.PHONY : Server/sm_node.i
+.PHONY : Utilities/sm_common.i
 
 # target to preprocess a source file
-Server/sm_node.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/sm_node.cpp.i
-.PHONY : Server/sm_node.cpp.i
+Utilities/sm_common.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/sm_common.cpp.i
+.PHONY : Utilities/sm_common.cpp.i
 
-Server/sm_node.s: Server/sm_node.cpp.s
+Utilities/sm_common.s: Utilities/sm_common.cpp.s
 
-.PHONY : Server/sm_node.s
+.PHONY : Utilities/sm_common.s
 
 # target to generate assembly for a file
-Server/sm_node.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Server/sm_node.cpp.s
-.PHONY : Server/sm_node.cpp.s
+Utilities/sm_common.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/sm_common.cpp.s
+.PHONY : Utilities/sm_common.cpp.s
+
+Utilities/sm_node.o: Utilities/sm_node.cpp.o
+
+.PHONY : Utilities/sm_node.o
+
+# target to build an object file
+Utilities/sm_node.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/sm_node.cpp.o
+.PHONY : Utilities/sm_node.cpp.o
+
+Utilities/sm_node.i: Utilities/sm_node.cpp.i
+
+.PHONY : Utilities/sm_node.i
+
+# target to preprocess a source file
+Utilities/sm_node.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/sm_node.cpp.i
+.PHONY : Utilities/sm_node.cpp.i
+
+Utilities/sm_node.s: Utilities/sm_node.cpp.s
+
+.PHONY : Utilities/sm_node.s
+
+# target to generate assembly for a file
+Utilities/sm_node.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Utilities/sm_node.cpp.s
+.PHONY : Utilities/sm_node.cpp.s
 
 main.o: main.cpp.o
 
@@ -375,30 +375,30 @@ help:
 	@echo "... asm"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Proto-ABD/ABDRWClient.o"
-	@echo "... Proto-ABD/ABDRWClient.i"
-	@echo "... Proto-ABD/ABDRWClient.s"
-	@echo "... Proto-ABD/ABDServer.o"
-	@echo "... Proto-ABD/ABDServer.i"
-	@echo "... Proto-ABD/ABDServer.s"
-	@echo "... Proto-ABD/ABD_protocol.o"
-	@echo "... Proto-ABD/ABD_protocol.i"
-	@echo "... Proto-ABD/ABD_protocol.s"
-	@echo "... Server/arguments.o"
-	@echo "... Server/arguments.i"
-	@echo "... Server/arguments.s"
-	@echo "... Server/filesystem.o"
-	@echo "... Server/filesystem.i"
-	@echo "... Server/filesystem.s"
-	@echo "... Server/set_operations.o"
-	@echo "... Server/set_operations.i"
-	@echo "... Server/set_operations.s"
-	@echo "... Server/sm_common.o"
-	@echo "... Server/sm_common.i"
-	@echo "... Server/sm_common.s"
-	@echo "... Server/sm_node.o"
-	@echo "... Server/sm_node.i"
-	@echo "... Server/sm_node.s"
+	@echo "... Protocols/ABD/abd_client.o"
+	@echo "... Protocols/ABD/abd_client.i"
+	@echo "... Protocols/ABD/abd_client.s"
+	@echo "... Protocols/ABD/abd_protocol.o"
+	@echo "... Protocols/ABD/abd_protocol.i"
+	@echo "... Protocols/ABD/abd_protocol.s"
+	@echo "... Protocols/ABD/abd_server.o"
+	@echo "... Protocols/ABD/abd_server.i"
+	@echo "... Protocols/ABD/abd_server.s"
+	@echo "... Utilities/arguments.o"
+	@echo "... Utilities/arguments.i"
+	@echo "... Utilities/arguments.s"
+	@echo "... Utilities/filesystem.o"
+	@echo "... Utilities/filesystem.i"
+	@echo "... Utilities/filesystem.s"
+	@echo "... Utilities/set_operations.o"
+	@echo "... Utilities/set_operations.i"
+	@echo "... Utilities/set_operations.s"
+	@echo "... Utilities/sm_common.o"
+	@echo "... Utilities/sm_common.i"
+	@echo "... Utilities/sm_common.s"
+	@echo "... Utilities/sm_node.o"
+	@echo "... Utilities/sm_node.i"
+	@echo "... Utilities/sm_node.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

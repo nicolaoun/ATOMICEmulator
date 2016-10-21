@@ -124,7 +124,6 @@ Tag RWObject::load_latest_tag()
         {
             instrm >> tg_.ts;
             instrm >> tg_.wid;
-
         }
         instrm.close();
     }

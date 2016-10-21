@@ -22,13 +22,12 @@
  SOFTWARE.
  */
 
-//  MWMR_reader
+//  ABDMWMR_client
 
-#include "ABDRWClient.hpp"
-#include <algorithm>
+#include "abd_client.hpp"
 
 // int nodeID, int S, int R, int W, int Q, float rInt, int ops, int proto, char* qfile
-ABDRWClient::ABDRWClient(int nodeID, int role, std::string opath, std::string sfile) {
+ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile) {
     
     nodeID_ = nodeID;
     role_ = role;
@@ -82,29 +81,7 @@ ABDRWClient::ABDRWClient(int nodeID, int role, std::string opath, std::string sf
     
 }
 
-/*
- void ABDRWClient::auto_read(std::string objID, float rInt, int ops, std::string fpath, std::string value){
- int timeout;
- 
- // Initialize the variables
- read_interval_ = rInt;
- total_ops_ = ops;
- 
- for (int i=0; i<total_ops_; i++) {
- timeout = (int) (rand()%((int) read_interval_));
- DEBUGING(4, "\n\n****************\nSleeping for %d sec...\n****************\n\n", timeout);
- if(timeout<MIN_TIMEOUT)
- sleep(MIN_TIMEOUT);
- else
- sleep(timeout);
- 
- read(objID, fpath, value);
- }
- }
- */
-
-
-void ABDRWClient::invoke_op(std::string objID, std::string fpath, std::string value){
+void ABDClient::invoke_op(std::string objID, std::string fpath, std::string value){
     struct timeval sysTime;
     std::string rounds="ONE";
     
@@ -205,8 +182,7 @@ void ABDRWClient::invoke_op(std::string objID, std::string fpath, std::string va
     
 }
 
-
-bool ABDRWClient::prepare_pkt(int counter, Server dest, int msgType){
+bool ABDClient::prepare_pkt(int counter, Server dest, int msgType){
     
     Packet p;
     //std::set<Tag>::iterator it;
@@ -237,7 +213,7 @@ bool ABDRWClient::prepare_pkt(int counter, Server dest, int msgType){
     return send_pkt<Packet>(dest.sock, &p);
 }
 
-void ABDRWClient::send_to_all(int m_type){
+void ABDClient::send_to_all(int m_type){
     //int s;
     req_counter_++;
     std::set<Server>::iterator it;
@@ -252,7 +228,7 @@ void ABDRWClient::send_to_all(int m_type){
     startSend=sysTime.tv_sec + (sysTime.tv_usec/1000000.0);
     
     for (it=servers_connected_.begin(); it!=servers_connected_.end(); it++)  {
-        //srv_threads.push_back(std::thread(&ABDRWClient::send_to_server, this, *it,m_type));
+        //srv_threads.push_back(std::thread(&ABDClient::send_to_server, this, *it,m_type));
         send_to_server(*it,m_type);
     } // end of for
     
@@ -279,7 +255,7 @@ void ABDRWClient::send_to_all(int m_type){
     }
 }
 
-void ABDRWClient::send_to_server(Server s, int m_type)
+void ABDClient::send_to_server(Server s, int m_type)
 {
     char fpath[100];
     
@@ -307,7 +283,7 @@ void ABDRWClient::send_to_server(Server s, int m_type)
     }
 }
 
-void ABDRWClient::rcv_from_quorum(){
+void ABDClient::rcv_from_quorum(){
     Packet p;
     struct timeval sel_timeout;
     int ready;
@@ -460,7 +436,7 @@ void ABDRWClient::rcv_from_quorum(){
      */
 }
 
-void ABDRWClient::process_replies()
+void ABDClient::process_replies()
 {
    std::stringstream sstm;
     
@@ -541,7 +517,7 @@ void ABDRWClient::process_replies()
     mode_ = PHASE2;
 }
 
-Tag ABDRWClient::find_max_tag()
+Tag ABDClient::find_max_tag()
 {
     std::set<Packet>::iterator pit;
     
@@ -568,7 +544,7 @@ Tag ABDRWClient::find_max_tag()
     return max_tag;
 }
 
-void ABDRWClient::stop(){
+void ABDClient::stop(){
     close_connections();
     //terminate();
     switch(role_){
@@ -592,7 +568,7 @@ void ABDRWClient::stop(){
 
 }
 
-void ABDRWClient::close_connections(){
+void ABDClient::close_connections(){
     
     //Packet p;
     std::set<Server>::iterator  it;
@@ -605,6 +581,36 @@ void ABDRWClient::close_connections(){
         close((*it).sock); /* Close socket */
     }
     
+}
+
+void ABDClient::terminate(){
+    //Print the outcome
+    switch(role_){
+        case WRITER:
+            //send_timer_.force_cancel();
+            DEBUGING(7,"(writes: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
+                     num_writes_,
+                     num_one_comm_,
+                     num_two_comm_,
+                     totTime/num_writes_);
+            break;
+        case READER:
+            //send_timer_.force_cancel();
+            DEBUGING(7,"(reads: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
+                     num_reads_,
+                     num_one_comm_,
+                     num_two_comm_,
+                     totTime/num_reads_);
+            break;
+        /*
+        case SERVER:
+            if(crashed_)
+                DEBUGING(7,"crashed at %f -- TERMINATED\n", crashTime);
+            else
+                DEBUGING(7,"terminates -- TERMINATED\n");
+            break;
+            */
+    }
 }
 
 

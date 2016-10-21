@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-#ifndef ABDRWClient_hpp
-#define ABDRWClient_hpp
+#ifndef ABDClient_hpp
+#define ABDClient_hpp
 
 #include "ABD_protocol.hpp"
 #include <iostream>
@@ -37,10 +37,10 @@ SOFTWARE.
 #endif /* SFWReader_hpp */
 
 
-class ABDRWClient : smClient {
+class ABDClient : smClient {
 public:
     //SFWReader(int nodeID, int S, int W, int R, int Q, float rInt, int ops, int proto, char* qf);
-    ABDRWClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
+    ABDClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
     void invoke_op(std::string objID, std::string path="./", std::string value="");
     //void auto_read(std::string objID, float rInt, int num_ops, std::string path="./", std::string value="");
     void set_debug_lvl(int lvl){debuglvl = lvl;}
@@ -56,17 +56,15 @@ protected:
 		double read_interval_;              //interval at which we execute read operations
 		int total_ops_;                     // number of total operations to be invoked
     
-		char objMetaFile[25];              // file that holds latest tag value
-		Tag tg_;                            // tag seen by the current node
-		std::string value_;                      // latest object value retrieved
-		Tag maxTag;                         // maximum tag discovered during a read round
+        char objMetaFile[25];               // file that holds latest tag value
+        Tag tg_;                            // tag seen by the current node
+        std::string value_;                 // latest object value retrieved
+        Tag maxTag;                         // maximum tag discovered during a read round
 		std::string maxValue;
 		int max_server_id;
     
 		std::vector<RWObject> objects;
 		RWObject   *obj;
-    
-		std::set<int> srv_set_;                  // std::set of servers
     
 		// File Locations
 		std::string client_root_dir_;

@@ -6,15 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABDRWClient.cpp
-ABDRWClient.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABDRWClient.hpp
-algorithm
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/ABD_protocol.hpp
+sm_node.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/sm_node.h
+vector
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABDRWClient.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.cpp
+abd_client.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.hpp
+
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.hpp
 ABD_protocol.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABD_protocol.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/ABD_protocol.hpp
 iostream
 -
 stdio.h
@@ -28,51 +32,27 @@ unistd.h
 mutex
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABDServer.cpp
-ABDServer.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABDServer.hpp
-filesystem.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/filesystem.h
-
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABDServer.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.cpp
 ABD_protocol.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABD_protocol.hpp
-sys/types.h
--
-sys/socket.h
--
-netinet/in.h
--
-netdb.h
--
-cstdio
--
-cstdlib
--
-cstring
--
-fcntl.h
--
-arpa/inet.h
--
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/ABD_protocol.hpp
+
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.hpp
+sm_node.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/sm_node.h
 vector
 -
-thread
--
-mutex
--
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABD_protocol.cpp
-ABD_protocol.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABD_protocol.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.cpp
+abd_server.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.hpp
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/ABD_protocol.hpp
-sm_node.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Proto-ABD/sm_node.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.hpp
+abd_protocol.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.hpp
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/arguments.cpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/arguments.cpp
 arguments.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/arguments.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/arguments.h
 unistd.h
 -
 sstream
@@ -80,27 +60,27 @@ sstream
 stdexcept
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/arguments.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/arguments.h
 string
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/filesystem.cpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/filesystem.cpp
 sys/stat.h
 -
 filesystem.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/filesystem.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/filesystem.h
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/filesystem.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/filesystem.h
 string
 -
 fstream
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/set_operations.cpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/set_operations.cpp
 set_operations.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/set_operations.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/set_operations.hpp
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/set_operations.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/set_operations.hpp
 stdio.h
 -
 set
@@ -110,11 +90,11 @@ string
 sstream
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/sm_common.cpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_common.cpp
 sm_common.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/sm_common.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_common.h
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/sm_common.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_common.h
 set
 -
 string
@@ -124,19 +104,19 @@ ostream
 ctime
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/sm_node.cpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_node.cpp
 sm_node.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/sm_node.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_node.h
 fstream
 -
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/sm_node.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_node.h
 sm_common.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/sm_common.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_common.h
 filesystem.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/filesystem.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/filesystem.h
 set_operations.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/Server/set_operations.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/set_operations.hpp
 sys/time.h
 -
 time.h
@@ -179,22 +159,32 @@ algorithm
 -
 thread
 -
+mutex
+-
+zmq.hpp
+-
 
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/main.cpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/main.cpp
 iostream
 -
-ABDRWClient.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/ABDRWClient.hpp
-ABDServer.hpp
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/ABDServer.hpp
+ABD/abd_client.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/ABD/abd_client.hpp
+ABD/abd_server.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/ABD/abd_server.hpp
 arguments.h
-/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/arguments.h
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/arguments.h
 string
 -
 
-Proto-ABD/ABDRWClient.hpp
+Protocols/ABD/ABD_protocol.hpp
+sm_node.h
+Protocols/ABD/sm_node.h
+vector
+-
+
+Protocols/ABD/abd_client.hpp
 ABD_protocol.hpp
-Proto-ABD/ABD_protocol.hpp
+Protocols/ABD/ABD_protocol.hpp
 iostream
 -
 stdio.h
@@ -208,49 +198,27 @@ unistd.h
 mutex
 -
 
-Proto-ABD/ABDServer.hpp
-ABD_protocol.hpp
-Proto-ABD/ABD_protocol.hpp
-sys/types.h
--
-sys/socket.h
--
-netinet/in.h
--
-netdb.h
--
-cstdio
--
-cstdlib
--
-cstring
--
-fcntl.h
--
-arpa/inet.h
--
+Protocols/ABD/abd_protocol.hpp
+sm_node.h
+Protocols/ABD/sm_node.h
 vector
 -
-thread
--
-mutex
--
 
-Proto-ABD/ABD_protocol.hpp
-sm_node.h
-Proto-ABD/sm_node.h
+Protocols/ABD/abd_server.hpp
+abd_protocol.hpp
+Protocols/ABD/abd_protocol.hpp
 
-Server/arguments.h
+Utilities/arguments.h
 string
 -
 
-Server/filesystem.h
+Utilities/filesystem.h
 string
 -
 fstream
 -
 
-Server/set_operations.hpp
+Utilities/set_operations.hpp
 stdio.h
 -
 set
@@ -260,7 +228,7 @@ string
 sstream
 -
 
-Server/sm_common.h
+Utilities/sm_common.h
 set
 -
 string
@@ -270,13 +238,13 @@ ostream
 ctime
 -
 
-Server/sm_node.h
+Utilities/sm_node.h
 sm_common.h
-Server/sm_common.h
+Utilities/sm_common.h
 filesystem.h
-Server/filesystem.h
+Utilities/filesystem.h
 set_operations.hpp
-Server/set_operations.hpp
+Utilities/set_operations.hpp
 sys/time.h
 -
 time.h
@@ -318,5 +286,9 @@ cstdlib
 algorithm
 -
 thread
+-
+mutex
+-
+zmq.hpp
 -
 

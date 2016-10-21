@@ -49,11 +49,14 @@
 #include <arpa/inet.h>
 #include <netdb.h>              /* For gethostbyname */
 #include <fcntl.h>              /* For nonblocking socket */
-
+//threads
 #include <cstdlib>              // exit
 #include <algorithm>
 #include <thread>
 #include <mutex>
+//network on steroids
+#include <zmq.hpp>
+//#include "zhelpers.hpp"
 
 // Process Types
 enum ProcessType{
@@ -213,6 +216,9 @@ protected:
     bool connect_to_server(Server *s);
     void setnonblocking(int sock);
     
+    /*
+     * Regular socket send
+     */
     template <typename PacketClass>
     bool send_pkt(int sock, PacketClass *p)
     {
@@ -252,6 +258,9 @@ protected:
         
     }
     
+    /*
+     * Regular socket send
+     */
     template <typename PacketClass>
     bool rcv_pkt(int sock, PacketClass *p)
     {
@@ -286,7 +295,6 @@ protected:
         return true;
     }
 
-    
     bool send_file(int sock, char* filepath);
     bool rcv_file(int sock, char* filepath);
     

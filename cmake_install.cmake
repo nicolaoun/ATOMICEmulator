@@ -1,4 +1,4 @@
-# Install script for directory: /Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory
+# Install script for directory: /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/nicolasnicolaou/Documents/workspace/AtomicSharedMemory/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

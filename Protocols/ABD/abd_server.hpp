@@ -25,22 +25,7 @@ SOFTWARE.
 #ifndef ABDServer_hpp
 #define ABDServer_hpp
 
-#include "ABD_protocol.hpp"
-/*
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <fcntl.h>
-#include <arpa/inet.h>
-#include <vector>
-//#include <pthread.h>
-#include <thread>
-#include <mutex>
-*/
+#include "abd_protocol.hpp"
 
 #define MAX_CONNECTIONS 5
 

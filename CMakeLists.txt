@@ -5,28 +5,30 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 add_compile_options(-std=c++11)
 
 set(SOURCE_FILES
-        Proto-ABD/ABD_protocol.hpp
-        Proto-ABD/ABD_protocol.cpp
-        Proto-ABD/ABDRWClient.cpp
-        Proto-ABD/ABDRWClient.hpp
-        Proto-ABD/ABDServer.cpp
-        Proto-ABD/ABDServer.hpp
+        Protocols/ABD/abd_protocol.hpp
+        Protocols/ABD/abd_protocol.cpp
+        Protocols/ABD/abd_client.cpp
+        Protocols/ABD/abd_client.hpp
+        Protocols/ABD/abd_server.cpp
+        Protocols/ABD/abd_server.hpp
 
-        Server/set_operations.hpp
-        Server/set_operations.cpp
-        Server/sm_common.cpp
-        Server/sm_common.h
-        Server/sm_node.cpp
-        Server/sm_node.h
-        Server/arguments.cpp 
-	Server/arguments.h
-	Server/filesystem.h
-        Server/filesystem.cpp
+        Utilities/set_operations.hpp
+        Utilities/set_operations.cpp
+        Utilities/sm_common.cpp
+        Utilities/sm_common.h
+        Utilities/sm_node.cpp
+        Utilities/sm_node.h
+        Utilities/arguments.cpp
+        Utilities/arguments.h
+        Utilities/filesystem.h
+        Utilities/filesystem.cpp
 
         main.cpp
         )
 
-include_directories(${CMAKE_SOURCE_DIR}/Proto-ABD)
-include_directories(${CMAKE_SOURCE_DIR}/Server)
+include_directories(${CMAKE_SOURCE_DIR}/Protocols)
+include_directories(${CMAKE_SOURCE_DIR}/Utilities)
+include_directories(/usr/local/lib)
+TARGET_LINK_LIBRARIES(zmq-static)
 
 add_executable(asm ${SOURCE_FILES})

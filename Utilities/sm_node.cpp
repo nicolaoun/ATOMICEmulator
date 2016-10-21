@@ -128,34 +128,6 @@ void smClient::init_logfile(std::string file){
     DEBUGING(7, "\t%s - DEBUG_LEVEL %d\n************************\n", get_datetime().c_str(), debuglvl);
 }
 
-/*void smClient::terminate(){
-    switch(role_){
-        case WRITER:
-            //send_timer_.force_cancel();    
-            DEBUGING(7,"(writes: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
-                     num_writes_,
-                     num_one_comm_,
-                     num_two_comm_,
-                     totTime/num_writes_);
-            break;
-        case READER:
-            //send_timer_.force_cancel();
-            DEBUGING(7,"(reads: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
-                     num_reads_,
-                     num_one_comm_,
-                     num_two_comm_,
-                     totTime/num_reads_);
-            break;
-        case SERVER:
-            if(crashed_)
-                DEBUGING(7,"crashed at %f -- TERMINATED\n", crashTime);
-            else
-                DEBUGING(7,"terminates -- TERMINATED\n");
-            break;
-    }
-}
- */
-
 /**********************************************************/
 /*                Network Operations                      */
 /**********************************************************/
@@ -192,30 +164,9 @@ bool smClient::send_file(int sock, char* fpath)
     {
         // open the file at the end
         std::ifstream infile( fpath, std::ios::binary );
-        //fp = open(fpath, O_RDONLY);
-        
+
         int perc=0;
-        DEBUGING(4, "Transmitting file...%d\%",perc);
-        
-        /*
-        while(sendfile(fp, sock, offset, &sbytes, NULL,0) && transmitted_bytes < fs_pkt.fsize)
-        {
-            transmitted_bytes += sbytes;
-            
-            // print progress
-            if (perc < 10) {
-                std::cout << "\b\b";
-            }
-            else
-            {
-                std::cout << "\b\b\b";
-            }
-            
-            perc = (transmitted_bytes*100)/fs_pkt.fsize;
-            std::cout << perc << "%";
-        }
-         */
-        
+        DEBUGING(4, "Transmitting file...%d\%",perc);  
         
         while( infile.tellg() < fs_pkt.fsize )
         {
@@ -371,7 +322,6 @@ bool smClient::rcv_file(int sock, char* fpath)
     return true;
 }
 
-
 void smClient::parse_hosts(const char *file){
     FILE *fp;
   //!!  Server *srv = new Server();
@@ -417,39 +367,6 @@ void smClient::connect_to_hosts(){
 	FD_ZERO(&readfds);
     
 	for (srv_it = servers_list_.begin(); srv_it != servers_list_.end(); srv_it++) {
-/*
-		if (((*srv_it).sock  = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-		{  // Create socket
-			REPORTERROR("Socket");
-			exit(1);
-		}
-        
-        
-		rem = gethostbyname((*srv_it).hostname);
-        
-		if (rem == NULL)
-		{  // Find Server's address
-			REPORTERROR("Gethostbyname (could not resolve Server's %s IP)", (*srv_it).hostname);
-			exit(1);
-		}
-        
-		_server.sin_family = AF_INET;  // Internet domain
-		bcopy((char *) rem -> h_addr, (char *) &_server.sin_addr, rem -> h_length);
-		_server.sin_port = htons((*srv_it).port);  // Server's Internet address and port
-		serverptr = (struct sockaddr *) &_server;
-		serverlen = sizeof _server;
-        
-		if (connect((*srv_it).sock, serverptr, serverlen) < 0)
-		{  // Request connection
-			REPORTERROR("Could not connect to Server %s (%s)", (*srv_it).hostname, rem->h_addr_list[0]);
-		}
-		else{
-			DEBUGING(6, "Connected to Server %d on host %s, port %d, sock %d\n",
-			         (*srv_it).serverID,
-			         (*srv_it).hostname,
-			         (*srv_it).port,
-			         (*srv_it).sock);
- */
         if( connect_to_server(&(*srv_it)))
         {
             servers_connected_.insert(*srv_it);
@@ -460,18 +377,7 @@ void smClient::connect_to_hosts(){
         }
         
 	} // end EOF while
-   
-	/*
-    if(contains_quorum(servers_id_connected_) < 0)
-    {
-        for (int i=0; i<S_; i++) {
-            close((*srv_it).sock);
-        }
-        DEBUGING(4, "EXITING - Too few alive servers...\n");
-        exit(1);
-    }
-     */
-    
+
 	DEBUGING(2, "\nConnected to %d servers... \n\n", servers_connected_.size());
 
 }

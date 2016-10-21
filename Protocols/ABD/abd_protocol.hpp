@@ -29,6 +29,7 @@ SOFTWARE.
 #ifndef protocol_h
 #define protocol_h
 #include "sm_node.h"
+#include <vector>
 
 
 // timestamp structure
@@ -51,22 +52,6 @@ class Tag {
 
 		//bool operator < (const Tag& tg1);
 };
-
-/*
-   struct lttag{
-//comparison operator
-bool operator() (const struct tag tg1, const struct tag tg2) const
-{
-//Check if tg1 > tg2
-if((tg1.ts > tg2.ts) ||
-(tg1.ts==tg2.ts && tg1.wid > tg2.wid))
-return true;
-
-//Else tg1=tg2 or tg1<tg2
-return false;
-}
-};
-*/
 
 // shared object structure
 class RWObject{
