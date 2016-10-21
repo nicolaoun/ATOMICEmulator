@@ -29,6 +29,8 @@ SOFTWARE.
 #include <string>  
 #include <ostream>
 #include <ctime>
+//network on steroids
+#include "zhelpers.hpp"
 
 class Serializable
 {
