@@ -26,6 +26,10 @@
 
 #include "abd_client.hpp"
 
+/************************************************
+ *              INITIALIZATION
+ ************************************************/
+
 // int nodeID, int S, int R, int W, int Q, float rInt, int ops, int proto, char* qfile
 ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile) {
     
@@ -34,7 +38,21 @@ ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile)
     value_ = "";
     total_ops_ = 1;
     
+    //setup local directories
+    setup_dirs(opath);
     
+    //read the servers
+    parse_hosts(sfile.c_str());
+    
+    
+    DEBUGING(4,"Initialized, Server file: %s\n",
+             sfile.c_str());
+    
+}
+
+void ABDClient::setup_dirs(std::string opath)
+{
+
     // specify the node's paths
     if ( opath == "")
     {
@@ -46,141 +64,36 @@ ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile)
     {
         client_root_dir_ = opath;
     }
-    
+
     if(!directoryExists(client_root_dir_)) {
         createDirectory(client_root_dir_);
     }
-    
+
     rcvd_files_dir_ = client_root_dir_ + "/rcvd_files" ;
     if(!directoryExists(rcvd_files_dir_)) {
         createDirectory(rcvd_files_dir_);
     }
-    
+
     logs_dir_ = client_root_dir_ + "/logs";
     if(!directoryExists(logs_dir_)) {
         createDirectory(logs_dir_);
     }
-    
+
     meta_dir_ = client_root_dir_ + "/.meta";
     if(!directoryExists(meta_dir_)) {
         createDirectory(meta_dir_);
     }
-    
+
     char log_fname[10];
     sprintf(log_fname, "/c%d",nodeID_);
     logs_dir_ += log_fname;
     init_logfile(logs_dir_);
     DEBUGING(6, "Loaded Directories...\n");
-    
-    //read the servers
-    parse_hosts(sfile.c_str());
-    
-    
-    DEBUGING(4,"Initialized, Server file: %s\n",
-             sfile.c_str());
-    
 }
 
-void ABDClient::invoke_op(std::string objID, std::string fpath, std::string value){
-    struct timeval sysTime;
-    std::string rounds="ONE";
-    
-    // connect to hosts
-    connect_to_hosts();
-    
-    //Initialize counter
-    req_counter_=0;
-    
-    // if not being able to connect to a majority -> through exception
-    if ( (int) servers_connected_.size() <= S_/2 ) {
-        REPORTERROR("Connection could not be established with the majority of the servers in the given list.");
-        return;
-    }
-    
-    // initialize object details
-    RWObject temp_obj(objID, meta_dir_);
-    temp_obj.set_path(fpath);
-    temp_obj.set_value(value);
-    
-    std::vector<RWObject>::iterator oit = std::find(objects.begin(), objects.end(), temp_obj);
-    
-    if ( oit != objects.end() ) {
-        DEBUGING(3,"Object %d already in the std::set.\n");//, oit->get_id());
-    }
-    else
-    {
-        DEBUGING(3,"Inserting object %d in the std::set.\n");//, oit->get_id());
-        oit = objects.insert(oit, temp_obj);
-    }
-    
-    //std::set the object to work with
-    obj = &(*oit);
-    
-    //mark the time of the read invocation
-    gettimeofday(&sysTime, NULL);
-    startTime=sysTime.tv_sec + (sysTime.tv_usec/1000000.0);
-    
-    mode_ = PHASE1;
-    
-    if ( role_ == READER ) {
-        num_reads_++;
-        std::cout << "***************************************\n";
-        DEBUGING(6,"Invoking read %d on object %s at %s \n",
-                 num_reads_,
-                 obj->get_id().c_str(),
-                 get_datetime().c_str()
-                 );
-        std::cout << "***************************************\n";
-    }
-    else
-    {
-        num_writes_++;
-        std::cout << "***************************************\n";
-        DEBUGING(6,"Invoking write %d on object %s at %s \n",
-                 num_writes_,
-                 obj->get_id().c_str(),
-                 get_datetime().c_str());
-        std::cout << "***************************************\n";
-    }
-    
-    num_msgs_ = 0;
-    
-    // PHASE1
-    send_to_all(READ);      // send READ to all the servers
-    rcv_from_quorum();      // receive from majority
-    process_replies();      // discover the maximum tag among the replies
-    // END PHASE1
-    
-    //PHASE2
-    DEBUGING(2, "Performing phase2...\n");
-    rounds="TWO";
-    
-    num_two_comm_++;
-    
-    send_to_all(WRITE); // send the latest tag to all the servers
-    rcv_from_quorum();  // wait for a majority to reply
-    // END PHASE2
-    
-    // Get the real time after the computation
-    gettimeofday(&sysTime, NULL);
-    endTime = sysTime.tv_sec+(sysTime.tv_usec/1000000.0);
-    
-    totTime+=endTime-startTime;
-    
-    std::cout << "\n\n**************************************************\n";
-    DEBUGING(6, "Read#:%d, Duration:%f, Rounds:%s, Tag:<%d,%d,%d>, Object: %s!!\n",
-             num_reads_,
-             endTime-startTime,
-             rounds.c_str(),
-             obj->tg_.ts,obj->tg_.wid,obj->tg_.wc,
-             obj->get_id().c_str());
-    std::cout << "******************************************************\n\n";
-    
-    //disconnect from the hosts
-    DEBUGING(6, "Closing connections...\n");
-    close_connections();
-    
-}
+/************************************************
+ *         COMMUNICATION METHODS
+ ************************************************/
 
 Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType)
 {
@@ -348,6 +261,7 @@ void ABDClient::rcv_from_quorum(){
                                         p.obj.get_tag().ts, p.obj.get_tag().wid,
                                         p.obj.get_id().c_str()
                                         );
+
                                 if ( rcv_file((*it).sock, fpath) )
                                 {
                                     pkts_rcved_.insert(p);
@@ -433,6 +347,112 @@ void ABDClient::rcv_from_quorum(){
      */
 }
 
+
+/************************************************
+ *         PROTOCOL SPECIFIC METHODS
+ ************************************************/
+
+void ABDClient::invoke_op(std::string objID, std::string fpath, std::string value){
+    struct timeval sysTime;
+    std::string rounds="ONE";
+
+    // connect to hosts
+    connect_to_hosts();
+
+    //Initialize counter
+    req_counter_=0;
+
+    // if not being able to connect to a majority -> through exception
+    if ( (int) servers_connected_.size() <= S_/2 ) {
+        REPORTERROR("Connection could not be established with the majority of the servers in the given list.");
+        return;
+    }
+
+    // initialize object details
+    RWObject temp_obj(objID, meta_dir_);
+    temp_obj.set_path(fpath);
+    temp_obj.set_value(value);
+
+    std::vector<RWObject>::iterator oit = std::find(objects.begin(), objects.end(), temp_obj);
+
+    if ( oit != objects.end() ) {
+        DEBUGING(3,"Object %d already in the std::set.\n");//, oit->get_id());
+    }
+    else
+    {
+        DEBUGING(3,"Inserting object %d in the std::set.\n");//, oit->get_id());
+        oit = objects.insert(oit, temp_obj);
+    }
+
+    //std::set the object to work with
+    obj = &(*oit);
+
+    //mark the time of the read invocation
+    gettimeofday(&sysTime, NULL);
+    startTime=sysTime.tv_sec + (sysTime.tv_usec/1000000.0);
+
+    mode_ = PHASE1;
+
+    if ( role_ == READER ) {
+        num_reads_++;
+        std::cout << "***************************************\n";
+        DEBUGING(6,"Invoking read %d on object %s at %s \n",
+                 num_reads_,
+                 obj->get_id().c_str(),
+                 get_datetime().c_str()
+                 );
+        std::cout << "***************************************\n";
+    }
+    else
+    {
+        num_writes_++;
+        std::cout << "***************************************\n";
+        DEBUGING(6,"Invoking write %d on object %s at %s \n",
+                 num_writes_,
+                 obj->get_id().c_str(),
+                 get_datetime().c_str());
+        std::cout << "***************************************\n";
+    }
+
+    num_msgs_ = 0;
+
+    // PHASE1
+    send_to_all(READ);      // send READ to all the servers
+    rcv_from_quorum();      // receive from majority
+    process_replies();      // discover the maximum tag among the replies
+    // END PHASE1
+
+    //PHASE2
+    DEBUGING(2, "Performing phase2...\n");
+    rounds="TWO";
+
+    num_two_comm_++;
+
+    send_to_all(WRITE); // send the latest tag to all the servers
+    rcv_from_quorum();  // wait for a majority to reply
+    // END PHASE2
+
+    // Get the real time after the computation
+    gettimeofday(&sysTime, NULL);
+    endTime = sysTime.tv_sec+(sysTime.tv_usec/1000000.0);
+
+    totTime+=endTime-startTime;
+
+    std::cout << "\n\n**************************************************\n";
+    DEBUGING(6, "Read#:%d, Duration:%f, Rounds:%s, Tag:<%d,%d,%d>, Object: %s!!\n",
+             num_reads_,
+             endTime-startTime,
+             rounds.c_str(),
+             obj->tg_.ts,obj->tg_.wid,obj->tg_.wc,
+             obj->get_id().c_str());
+    std::cout << "******************************************************\n\n";
+
+    //disconnect from the hosts
+    DEBUGING(6, "Closing connections...\n");
+    close_connections();
+
+}
+
 void ABDClient::process_replies()
 {
    std::stringstream sstm;
@@ -513,6 +533,10 @@ void ABDClient::process_replies()
     
     mode_ = PHASE2;
 }
+
+/************************************************
+ *         HELPER METHODS
+ ************************************************/
 
 Tag ABDClient::find_max_tag()
 {

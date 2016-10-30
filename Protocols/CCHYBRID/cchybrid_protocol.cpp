@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-#include "ABD_protocol.hpp"
+#include "cchybrid_protocol.hpp"
 
 bool Tag::operator > (const Tag& tg1) const
 {

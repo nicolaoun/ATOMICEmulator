@@ -77,11 +77,15 @@ protected:
 		std::set<Server> servers_sent_;          // servers we sent a msg to
 		std::set<Packet> pkts_rcved_;
     
-		//int is_quorum_complete();
+        //Initialization procedures
+        void setup_dirs(std::string opath);
+
+        //Protocol specific procedures
+        //int is_quorum_complete();
 		void process_replies();
         Tag find_max_tag();
     
-		// Coomunication procedures
+        // Communication procedures
         Packet prepare_pkt(int, Server s, int);
 		void send_to_all(int);
         void send_to_server(Server s, int m_type);
