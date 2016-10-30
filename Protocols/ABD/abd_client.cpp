@@ -261,7 +261,7 @@ void ABDClient::send_to_server(Server s, int m_type)
              p.counter);
 
     // try to send meta and file to the server -> if succeed add server in the sent set
-    if( send_pkt<Packet>(dest.sock, &p) )
+    if( send_pkt<Packet>(s.sock, &p) )
     {
         if( m_type == WRITE )
         {
