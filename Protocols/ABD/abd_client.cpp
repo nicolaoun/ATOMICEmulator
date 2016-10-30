@@ -182,13 +182,11 @@ void ABDClient::invoke_op(std::string objID, std::string fpath, std::string valu
     
 }
 
-Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType){
-    
+Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType)
+{
     Packet p;
-    //std::set<Tag>::iterator it;
     Tag tg;
-    
-    
+        
     //Specify the destination of the packet
     p.src_=nodeID_;
     p.dst_=dest.serverID;
@@ -197,9 +195,7 @@ Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType){
     p.msgType = msgType;
     p.counter = counter;
     p.obj = *obj;
-    //p.tg = tg_;
-    //p.value = value_;
-    
+
     return p;
 }
 
@@ -328,7 +324,7 @@ void ABDClient::rcv_from_quorum(){
                     DEBUGING(1,"Receiving packet at address:0x%x\n",&p);
                     
                     // receive the packet
-                    if ( rcv_pkt((*it).sock, &p) )
+                    if ( rcv_pkt<Packet>((*it).sock, &p) )
                     {
                         
                         DEBUGING(3,"Received packet from S:%d, Type:%d, Tag:<%d,%d,%d>, Object: <%s, %s, %s>, Counter:%d\n",
