@@ -82,7 +82,7 @@ protected:
         Tag find_max_tag();
     
 		// Coomunication procedures
-		bool prepare_pkt(int, Server s, int);
+        Packet prepare_pkt(int, Server s, int);
 		void send_to_all(int);
         void send_to_server(Server s, int m_type);
 		void rcv_from_quorum();

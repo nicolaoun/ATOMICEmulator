@@ -182,7 +182,7 @@ void ABDClient::invoke_op(std::string objID, std::string fpath, std::string valu
     
 }
 
-bool ABDClient::prepare_pkt(int counter, Server dest, int msgType){
+Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType){
     
     Packet p;
     //std::set<Tag>::iterator it;
@@ -200,17 +200,7 @@ bool ABDClient::prepare_pkt(int counter, Server dest, int msgType){
     //p.tg = tg_;
     //p.value = value_;
     
-    tg = p.obj.get_tag();
-    DEBUGING(2,"Sending packet to PID:%d, Type:%d, Object:%s, Tag:<%d,%d,%d>, Counter:%d\n",
-             p.dst_,
-             p.msgType,
-             p.obj.get_id().c_str(),
-             tg.ts,tg.wid,tg.wc,
-             p.counter);
-    
-    
-    // send packet
-    return send_pkt<Packet>(dest.sock, &p);
+    return p;
 }
 
 void ABDClient::send_to_all(int m_type){
@@ -258,9 +248,20 @@ void ABDClient::send_to_all(int m_type){
 void ABDClient::send_to_server(Server s, int m_type)
 {
     char fpath[100];
-    
+    Packet p;
+
+    p = prepare_pkt(req_counter_, s, m_type);
+
+    Tag tg = p.obj.get_tag();
+    DEBUGING(2,"Sending packet to PID:%d, Type:%d, Object:%s, Tag:<%d,%d,%d>, Counter:%d\n",
+             p.dst_,
+             p.msgType,
+             p.obj.get_id().c_str(),
+             tg.ts,tg.wid,tg.wc,
+             p.counter);
+
     // try to send meta and file to the server -> if succeed add server in the sent set
-    if( prepare_pkt(req_counter_, s, m_type) )
+    if( send_pkt<Packet>(dest.sock, &p) )
     {
         if( m_type == WRITE )
         {
