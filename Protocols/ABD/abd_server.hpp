@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef ABDServer_hpp
 #define ABDServer_hpp
 
-#include "abd_protocol.hpp"
+#include "../sm_protocol.hpp"
 
 #define MAX_CONNECTIONS 5
 

@@ -172,7 +172,7 @@ void ABDClient::send_to_server(Server s, int m_type)
     // try to send meta and file to the server -> if succeed add server in the sent set
     if( send_pkt<Packet>(s.sock, &p) )
     {
-        if( m_type == WRITE )
+        if( m_type == WRITE && p.obj.get_type() == FILE_T)
         {
             //mtx.lock();
             // send the object value
@@ -254,22 +254,25 @@ void ABDClient::rcv_from_quorum(){
                             // receive the file during the query phase (PHASE 1)
                             if ( mode_ == PHASE1 )
                             {
-                                //receive the file
-                                sprintf(fpath, "%s/sid%d.[%d,%d].%s.temp",
-                                        rcvd_files_dir_.c_str(),
-                                        p.src_,
-                                        p.obj.get_tag().ts, p.obj.get_tag().wid,
-                                        p.obj.get_id().c_str()
-                                        );
-
-                                if ( rcv_file((*it).sock, fpath) )
+                                //if the object is a file => receive it
+                                if(p.obj.get_type() == FILE_T)
                                 {
-                                    pkts_rcved_.insert(p);
-                                    servers_replied_.insert((*it).serverID);
+                                    sprintf(fpath, "%s/sid%d.[%d,%d].%s.temp",
+                                            rcvd_files_dir_.c_str(),
+                                            p.src_,
+                                            p.obj.get_tag().ts, p.obj.get_tag().wid,
+                                            p.obj.get_id().c_str()
+                                            );
+
+                                    if ( rcv_file((*it).sock, fpath) )
+                                    {
+                                        pkts_rcved_.insert(p);
+                                        servers_replied_.insert((*it).serverID);
+                                    }
+
+                                    //servers_alive_.erase(*it);
+                                    //servers_sent_.erase(*it);
                                 }
-                                
-                                //servers_alive_.erase(*it);
-                                //servers_sent_.erase(*it);
                             }
                             else
                             {
@@ -352,7 +355,7 @@ void ABDClient::rcv_from_quorum(){
  *         PROTOCOL SPECIFIC METHODS
  ************************************************/
 
-void ABDClient::invoke_op(std::string objID, std::string fpath, std::string value){
+void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath, std::string value){
     struct timeval sysTime;
     std::string rounds="ONE";
 
@@ -369,7 +372,7 @@ void ABDClient::invoke_op(std::string objID, std::string fpath, std::string valu
     }
 
     // initialize object details
-    RWObject temp_obj(objID, meta_dir_);
+    RWObject temp_obj(objID, objType, meta_dir_);
     temp_obj.set_path(fpath);
     temp_obj.set_value(value);
 

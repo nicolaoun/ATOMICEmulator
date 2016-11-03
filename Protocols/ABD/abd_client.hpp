@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef ABDClient_hpp
 #define ABDClient_hpp
 
-#include "ABD_protocol.hpp"
+#include "../sm_protocol.hpp"
 #include <iostream>
 #include <stdio.h>          /* For I/O */
 #include <string.h>
@@ -41,7 +41,7 @@ class ABDClient : smClient {
 public:
     //SFWReader(int nodeID, int S, int W, int R, int Q, float rInt, int ops, int proto, char* qf);
     ABDClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
-    void invoke_op(std::string objID, std::string path="./", std::string value="");
+    void invoke_op(std::string objID, object_t objType, std::string path="./", std::string value="");
     //void auto_read(std::string objID, float rInt, int num_ops, std::string path="./", std::string value="");
     void set_debug_lvl(int lvl){debuglvl = lvl;}
     bool has_commited(){return commit_flag_;}

@@ -309,7 +309,8 @@ RWObject ABDServer::getLocalReplica(RWObject obj)
     // if the object is not found -> initialize the object with default values
     if( oit == objects_set.end() )
     {
-        RWObject temp_obj(obj.get_id(), meta_dir_);
+        // Create an object of the same type
+        RWObject temp_obj(obj.get_id(), obj.get_type(), meta_dir_);
         
         //oit = objects_set.insert(oit, temp_obj);
         ret_obj = insertLocalReplica(temp_obj);

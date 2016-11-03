@@ -63,6 +63,7 @@ class RWObject{
   public:
     std::string objID_;
     Tag tg_;
+    std::string value_;
 
     RWObject();
     RWObject(int oID, object_t, const std::string &meta="./.meta");
@@ -90,7 +91,6 @@ class RWObject{
   protected:
     object_t objType_;        // this can be file or value
     std::string file_path_;
-    std::string value_;
     std::string meta_dir_;
 };
 
@@ -115,7 +115,7 @@ class Packet : public Serializable{
     virtual void serialize(std::ostream& stream)
     {
         // Serialization code
-        stream << src_ <<" "<< dst_ << " " << msgType << " "  << counter << " "  << obj.objID_ << " "  << obj.tg_.ts << " " << obj.tg_.wid;
+        stream << src_ <<" "<< dst_ << " " << msgType << " "  << counter << " "  << obj.objID_ << " "  << obj.tg_.ts << " " << obj.tg_.wid ;
     }
     
     virtual void deserialize(std::istream& stream)
