@@ -37,17 +37,15 @@ ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile)
     role_ = role;
     value_ = "";
     total_ops_ = 1;
-    
+
     //setup local directories
     setup_dirs(opath);
     
     //read the servers
     parse_hosts(sfile.c_str());
     
-    
     DEBUGING(4,"Initialized, Server file: %s\n",
              sfile.c_str());
-    
 }
 
 void ABDClient::setup_dirs(std::string opath)

@@ -63,8 +63,7 @@ class Tag {
 class RWObject{
   public:
     std::string objID_;
-    Tag tg_;
-    std::string value_;
+    Tag tg_;                    // tag associated with object
 
     RWObject();
     RWObject(int oID, object_t, const std::string &meta="./.meta");
@@ -77,6 +76,8 @@ class RWObject{
 
     std::string get_value();
     void set_value(const std::string &val);
+    std::string get_pvalue();
+    void set_pvalue(const std::string &val);
 
     Tag get_tag();
     void set_tag(Tag t);
@@ -97,6 +98,8 @@ class RWObject{
     object_t objType_;        // this can be file or value
     std::string file_path_;
     std::string meta_dir_;
+    std::string value_;         // value associated with tag
+    std::string p_value_;       // value associated with previous tag
 };
 
 

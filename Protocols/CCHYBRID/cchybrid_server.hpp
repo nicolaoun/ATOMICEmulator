@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-#ifndef ABDServer_hpp
-#define ABDServer_hpp
+#ifndef CCHybridServer_hpp
+#define CCHybridServer_hpp
 
-#include "abd_protocol.hpp"
+#include "sm_protocol.hpp"
 
 #define MAX_CONNECTIONS 5
 
@@ -47,9 +47,9 @@ public:
 };
 
 
-class ABDServer : smClient{
+class CCHybridServer : smClient{
 public:
-    ABDServer(int serverID, int port, int S=0, int W=0, int R=0, int Q=0, int nfq=0, double cInt=5);
+    CCHybridServer(int serverID, int port, int S=0, int W=0, int R=0, int Q=0, int nfq=0, double cInt=5);
     void start();
     void serveClient(Client *c);
     void set_debug_lvl(int lvl){debuglvl = lvl;}

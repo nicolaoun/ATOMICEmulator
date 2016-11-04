@@ -73,6 +73,7 @@ protected:
         Tag maxTag;                         // maximum tag discovered during a read round
 		std::string maxValue;
 		int max_server_id;
+        int fail_;                          // maximum number of server failures
     
 		std::vector<RWObject> objects;
 		RWObject   *obj;

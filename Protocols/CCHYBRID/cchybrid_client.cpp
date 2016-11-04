@@ -22,21 +22,22 @@
  SOFTWARE.
  */
 
-//  ABDMWMR_client
+//  cchybridMWMR_client
 
-#include "abd_client.hpp"
+#include "cchybrid_client.hpp"
 
 /************************************************
  *              INITIALIZATION
  ************************************************/
 
 // int nodeID, int S, int R, int W, int Q, float rInt, int ops, int proto, char* qfile
-ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile) {
+CCHybridClient::CCHybridClient(int nodeID, int role, int failures, std::string opath, std::string sfile) {
     
     nodeID_ = nodeID;
     role_ = role;
     value_ = "";
     total_ops_ = 1;
+    fail_ = failures;
     
     //setup local directories
     setup_dirs(opath);
@@ -50,7 +51,7 @@ ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile)
     
 }
 
-void ABDClient::setup_dirs(std::string opath)
+void CCHybridClient::setup_dirs(std::string opath)
 {
 
     // specify the node's paths
@@ -95,7 +96,7 @@ void ABDClient::setup_dirs(std::string opath)
  *         COMMUNICATION METHODS
  ************************************************/
 
-Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType)
+Packet CCHybridClient::prepare_pkt(int counter, Server dest, int msgType)
 {
     Packet p;
     Tag tg;
@@ -112,36 +113,28 @@ Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType)
     return p;
 }
 
-void ABDClient::send_to_all(int m_type){
+void CCHybridClient::send_to_all(int m_type){
     //int s;
-    req_counter_++;
     std::set<Server>::iterator it;
     std::vector<std::thread> srv_threads;
     struct timeval sysTime;
     double startSend, curTime, timeDiff=0, timeOut=60;
     
+    // increment the send counter and empty the receive set
+    req_counter_ ++;
     servers_sent_.clear();
-    
-    //mark the time of the read invocation
-    gettimeofday(&sysTime, NULL);
-    startSend=sysTime.tv_sec + (sysTime.tv_usec/1000000.0);
-    
+      
     for (it=servers_connected_.begin(); it!=servers_connected_.end(); it++)  {
-        //srv_threads.push_back(std::thread(&ABDClient::send_to_server, this, *it,m_type));
-        send_to_server(*it,m_type);
+        //srv_threads.push_back(std::thread(&CCHybridClient::send_to_server, this, *it,m_type));
+        if( send_to_server(*it,m_type) )
+        {
+            servers_sent_.insert(*it);
+        }
+        else
+        {
+            REPORTERROR("Failed to communicate with server %d", (*it).serverID);
+        }
     } // end of for
-    
-    // wait until enough servers receive our msg or a timeout occurs
-    /*while(timeDiff < timeOut)
-    {
-        //mark the time of the read invocation
-        gettimeofday(&sysTime, NULL);
-        curTime=sysTime.tv_sec + (sysTime.tv_usec/1000000.0);
-        timeDiff = curTime - startTime;
-        if((int)timeDiff%10 == 0)
-            std::cout << timeDiff <<",";
-    }
-     */
      
     //for (auto& th : srv_threads) th.join();
     
@@ -154,7 +147,7 @@ void ABDClient::send_to_all(int m_type){
     }
 }
 
-void ABDClient::send_to_server(Server s, int m_type)
+bool CCHybridClient::send_to_server(Server s, int m_type)
 {
     char fpath[100];
     Packet p;
@@ -180,20 +173,28 @@ void ABDClient::send_to_server(Server s, int m_type)
             sprintf(fpath, "%s/%s",client_root_dir_.c_str(), obj->get_id().c_str());
             if( send_file(s.sock, fpath))
             {
-                servers_sent_.insert(s);
+                return true;
+            }
+            else
+            {
+                return false;       //failed to send file
             }
             //mtx.unlock();
         }
         else
         {
             //mtx.lock();
-            servers_sent_.insert(s);
+            return true;
             //mtx.unlock();
         }
     }
+    else
+    {
+        return false;           //failed to send packet
+    }
 }
 
-void ABDClient::rcv_from_quorum(){
+void CCHybridClient::rcv_from_quorum(){
     Packet p;
     struct timeval sel_timeout;
     int ready;
@@ -355,7 +356,7 @@ void ABDClient::rcv_from_quorum(){
  *         PROTOCOL SPECIFIC METHODS
  ************************************************/
 
-void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath, std::string value){
+void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string fpath, std::string value){
     struct timeval sysTime;
     std::string rounds="ONE";
 
@@ -390,7 +391,7 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath
     //std::set the object to work with
     obj = &(*oit);
 
-    //mark the time of the read invocation
+    //Start the clock
     gettimeofday(&sysTime, NULL);
     startTime=sysTime.tv_sec + (sysTime.tv_usec/1000000.0);
 
@@ -420,6 +421,9 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath
     num_msgs_ = 0;
 
     // PHASE1
+    DEBUGING(2, "Performing phase1...\n");
+    rounds="ONE";
+
     send_to_all(READ);      // send READ to all the servers
     rcv_from_quorum();      // receive from majority
     process_replies();      // discover the maximum tag among the replies
@@ -435,10 +439,11 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath
     rcv_from_quorum();  // wait for a majority to reply
     // END PHASE2
 
-    // Get the real time after the computation
+    // Stop the clock
     gettimeofday(&sysTime, NULL);
     endTime = sysTime.tv_sec+(sysTime.tv_usec/1000000.0);
 
+    // Calculate operation duration
     totTime+=endTime-startTime;
 
     std::cout << "\n\n**************************************************\n";
@@ -453,10 +458,245 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath
     //disconnect from the hosts
     DEBUGING(6, "Closing connections...\n");
     close_connections();
-
 }
 
-void ABDClient::process_replies()
+
+void
+CCHybridClient::ProcessReply(std::istream& istm, Address sender)
+{
+    NS_LOG_FUNCTION (this);
+
+    std::stringstream sstm;
+    uint32_t msgT, msgTs, msgV, msgVp, msgViews;
+    bool propTs;
+
+    istm >> msgT >> msgTs >> msgV >> msgVp >> msgViews >> propTs;
+    //increment the number of replies received
+    m_replies ++;
+
+    switch(m_prType)
+    {
+    case WRITER:
+        if (m_replies >= (m_numServers - m_fail))
+        {
+            m_opStatus = IDLE;
+            ScheduleOperation (m_interval);
+
+            m_real_end = std::chrono::system_clock::now();
+            std::chrono::duration<double> elapsed_seconds = m_real_end-m_real_start;
+
+            m_opEnd = Now();
+            AsmCommon::Reset(sstm);
+            sstm << "** WRITE COMPLETED: "  << m_opCount << " in "<< ((m_opEnd.GetSeconds() - m_opStart.GetSeconds()) + elapsed_seconds.count()) << "s (<"<<(m_opEnd.GetSeconds() - m_opStart.GetSeconds())<<"> + <"<< elapsed_seconds.count() <<">), <ts, value>: [" << m_ts << "," << m_value << "], @ 2 EXCH **";
+            LogInfo(sstm);
+
+            m_opAve += m_opEnd - m_opStart;
+            m_real_opAve += elapsed_seconds;  //
+
+            m_twoExOps++;
+        }
+        break;
+
+    case READER:
+        switch(m_opStatus)
+        {
+        case PHASE1:
+            //if new max ts discovered - update the local <ts, value, pvalue>
+            if(m_ts < msgTs)
+            {
+                m_ts = msgTs;
+                m_value = msgV;
+                m_pvalue = msgVp;
+
+                if (m_verbose)
+                {
+                    AsmCommon::Reset(sstm);
+                    sstm << "Updated local <ts,value> pair to: [" << m_ts << "," << m_value << "," << m_pvalue <<"]";
+                    LogInfo(sstm);
+                }
+
+                //reset the maxAck set and maxViews variables
+                m_repliesSet.clear();
+                m_propSet.clear();
+                m_maxViews = 0;
+
+            }
+
+            // enclosed ts == maxTs - include the msg in the maxAck set and update maxViews variable
+            if ( m_ts == msgTs )
+            {
+                // add the sender and the
+                m_repliesSet.push_back(std::make_pair(sender, msgViews));
+
+                //max views
+                m_maxViews = (m_maxViews < msgViews) ? msgViews : m_maxViews;
+
+                //check if the ts was propagated by a reader
+                if(propTs)
+                {
+                    m_propSet.push_back(sender);
+                }
+
+            }
+
+            //if we received enough replies go to the next phase
+            if (m_replies >= (m_numServers - m_fail))
+            {
+                if (m_verbose)
+                {
+                    AsmCommon::Reset(sstm);
+                    sstm << "Waiting for " << (m_numServers-m_fail) << " replies, received " << m_replies;
+                    LogInfo(sstm);
+                }
+
+
+                // if too many processes viewed this ts go to a second phase
+                if (m_maxViews > ((m_numServers/m_fail) - 2) )
+                {
+                    AsmCommon::Reset(sstm);
+                    sstm << "Proceeding to PHASE2, maxViews " << m_maxViews << ", bound "<< ((m_numServers/m_fail) - 2);
+                    LogInfo(sstm);
+
+                    // if propagated to less than f+1 servers - go to second phase
+                    if( m_propSet.size() < m_fail+1)
+                    {
+                        //Phase 2
+                        m_opStatus = PHASE2;
+                        m_msgType = INFORM;
+
+                        //Send msg to all
+                        m_replies = 0;		//reset replies
+                        HandleSend();
+                    }
+                    else
+                    {
+                        AsmCommon::Reset(sstm);
+                        m_opStatus = IDLE;
+                        m_opEnd = Now();
+                        m_real_end = std::chrono::system_clock::now();									///
+                        std::chrono::duration<double> elapsed_seconds = m_real_end-m_real_start;		///
+
+                        sstm << "** READ COMPLETED: "  << m_opCount << " in "<< ((m_opEnd.GetSeconds() - m_opStart.GetSeconds()) + elapsed_seconds.count()) << "s (<"<<(m_opEnd.GetSeconds() - m_opStart.GetSeconds())<<"> + <"<< elapsed_seconds.count() <<">), Prop Value: "<< m_value <<
+                                ", <ts, value, pvalue>: ["<< m_ts << "," << m_value << ","<< m_pvalue <<"] - @ 2 EXCH **";
+                        LogInfo(sstm);
+                        m_opAve += m_opEnd - m_opStart;
+                        m_real_opAve += elapsed_seconds;  //
+                        ScheduleOperation (m_interval);
+                        //increase four exchange counter
+                        m_twoExOps++;
+                    }
+
+                    //reset maxviews
+                    m_maxViews = 0;
+                }
+                else
+                {
+                    AsmCommon::Reset(sstm);
+                    sstm << "Checking the PREDICATE, maxViews " << m_maxViews << ", bound "<< ((m_numServers/m_fail) - 2);
+                    LogInfo(sstm);
+
+                    AsmCommon::Reset(sstm);
+
+                    m_opStatus = IDLE;
+                    std::chrono::duration<double> elapsed_seconds;
+
+                    //check the predicate to return in one round
+                    if ( IsPredicateValid () )
+                    {
+                        m_opEnd = Now();
+                        m_real_end = std::chrono::system_clock::now();									///
+                        elapsed_seconds = m_real_end-m_real_start;		///
+
+                        sstm << "** READ COMPLETED: "  << m_opCount << " in "<< ((m_opEnd.GetSeconds() - m_opStart.GetSeconds()) + elapsed_seconds.count()) << "s (<"<<(m_opEnd.GetSeconds() - m_opStart.GetSeconds())<<"> + <"<< elapsed_seconds.count() <<">), Return Value: "<< m_value <<
+                                ", <ts, value, pvalue>: ["<< m_ts << "," << m_value << ","<< m_pvalue <<"] - @ 2 EXCH **";
+                    }
+                    else
+                    {
+                        m_opEnd = Now();
+                        m_real_end = std::chrono::system_clock::now();									///
+                        elapsed_seconds = m_real_end-m_real_start;		///
+
+                        sstm << "** READ COMPLETED: "  << m_opCount << " in "<< ((m_opEnd.GetSeconds() - m_opStart.GetSeconds()) + elapsed_seconds.count()) << "s (<"<<(m_opEnd.GetSeconds() - m_opStart.GetSeconds())<<"> + <"<< elapsed_seconds.count() <<">), Return PValue: "<< m_pvalue <<
+                                ", <ts, value, pvalue>: ["<< m_ts << "," << m_value << ","<< m_pvalue <<"] - @ 2 EXCH **";
+                    }
+
+                    m_opAve += m_opEnd - m_opStart;
+                    m_real_opAve += elapsed_seconds;  //
+                    LogInfo(sstm);
+                    ScheduleOperation (m_interval);
+                    //increase four exchange counter
+                    m_twoExOps++;
+                }
+            }
+            break;
+        case PHASE2:
+            if (m_replies >= (m_numServers - m_fail))
+            {
+                m_opStatus = IDLE;
+                ScheduleOperation (m_interval);
+
+                m_opEnd = Now();
+                m_real_end = std::chrono::system_clock::now();									///
+                std::chrono::duration<double> elapsed_seconds = m_real_end-m_real_start;		///
+
+                AsmCommon::Reset(sstm);
+                sstm << "** READ COMPLETED: "  << m_opCount << " in "<< ((m_opEnd.GetSeconds() - m_opStart.GetSeconds()) + elapsed_seconds.count()) << "s (<"<<(m_opEnd.GetSeconds() - m_opStart.GetSeconds())<<"> + <"<< elapsed_seconds.count() <<">), <ts, value>: [" << m_ts << "," << m_value << "] - @ 4 EXCH **";
+                LogInfo(sstm);
+
+                m_real_opAve += elapsed_seconds;  //
+                m_opAve += m_opEnd - m_opStart;
+
+                //increase four exchange counter
+                m_fourExOps++;
+            }
+            break;
+        default:
+            break;
+            }
+    }
+}
+
+bool
+CCHybridClient::IsPredicateValid()
+{
+    NS_LOG_FUNCTION (this);
+
+    std::vector<uint16_t> buckets;
+    std::vector< std::pair<Address, uint32_t> >::iterator it;
+    int a;
+    std::stringstream sstm;
+
+    buckets.resize((int) ((m_numServers/m_fail) - 1));
+
+    // construct the buckets
+    for( it = m_repliesSet.begin(); it<m_repliesSet.end(); it++)
+    {
+        buckets[(*it).second]++;
+    }
+
+    for(a = ((m_numServers/m_fail) - 2); a > 0; a--)
+    {
+        if (m_verbose)
+        {
+            AsmCommon::Reset(sstm);
+            sstm << "PREDICATE LOOP: a=" << a << ", b[a]="<< buckets[a] << ", bound=" << (m_numServers - a*m_fail);
+            LogInfo(sstm);
+        }
+
+        if (buckets[a] >= (m_numServers - a*m_fail))
+        {
+            return true;
+        }
+        else
+        {
+            buckets[a-1] += buckets[a];
+        }
+    }
+
+    return false;
+}
+
+void CCHybridClient::process_replies()
 {
    std::stringstream sstm;
     
@@ -470,14 +710,14 @@ void ABDClient::process_replies()
     std::string dest_file = sstm.str();     // local file
    
     
-    DEBUGING(3,"ABD: WRITE Comparing - Local Tag:<%d,%d> vs Max Tag <%d,%d>\n",
+    DEBUGING(3,"CCHybrid: WRITE Comparing - Local Tag:<%d,%d> vs Max Tag <%d,%d>\n",
              obj->tg_.ts,
              obj->tg_.wid,
              maxTag.ts,
              maxTag.wid
              );
     
-    // ABD with updates
+    // CCHybrid with updates
     // Check if the max tag is equal to our local tag -> we know the latest version thus write the new version
     if (role_ == WRITER && maxTag == obj->tg_) {
         // increment the max timestamp
@@ -488,7 +728,7 @@ void ABDClient::process_replies()
         commit_flag_ = true;
         
         std::cout << "\n\n***************************************************\n";
-        DEBUGING(6,"ABD: WRITE SUCCEEDED -> Writing New Tag:<%d,%d,%d> \n",
+        DEBUGING(6,"CCHybrid: WRITE SUCCEEDED -> Writing New Tag:<%d,%d,%d> \n",
                  maxTag.ts,
                  maxTag.wid,
                  maxTag.wc
@@ -524,7 +764,7 @@ void ABDClient::process_replies()
         }
         
         std::cout << "\n\n***************************************\n";
-        DEBUGING(6,"ABD: Propagating Tag:<%d,%d,%d> \n",
+        DEBUGING(6,"CCHybrid: Propagating Tag:<%d,%d,%d> \n",
                  maxTag.ts,
                  maxTag.wid,
                  maxTag.wc
@@ -541,7 +781,7 @@ void ABDClient::process_replies()
  *         HELPER METHODS
  ************************************************/
 
-Tag ABDClient::find_max_tag()
+Tag CCHybridClient::find_max_tag()
 {
     std::set<Packet>::iterator pit;
     
@@ -568,7 +808,7 @@ Tag ABDClient::find_max_tag()
     return max_tag;
 }
 
-void ABDClient::stop(){
+void CCHybridClient::stop(){
     close_connections();
     //terminate();
     switch(role_){
@@ -592,7 +832,7 @@ void ABDClient::stop(){
 
 }
 
-void ABDClient::close_connections(){
+void CCHybridClient::close_connections(){
     
     //Packet p;
     std::set<Server>::iterator  it;
@@ -607,7 +847,7 @@ void ABDClient::close_connections(){
     
 }
 
-void ABDClient::terminate(){
+void CCHybridClient::terminate(){
     //Print the outcome
     switch(role_){
         case WRITER:

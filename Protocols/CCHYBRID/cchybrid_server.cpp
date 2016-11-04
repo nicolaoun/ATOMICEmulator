@@ -22,9 +22,9 @@
  SOFTWARE.
  */
 
-#include "abd_server.hpp"
+#include "cchybrid_server.hpp"
 
-ABDServer::ABDServer(int serverID, int port, int S, int W, int R, int Q, int nfq, double cInt) {
+CCHybridServer::CCHybridServer(int serverID, int port, int S, int W, int R, int Q, int nfq, double cInt) {
     
     nodeID_ = serverID;
     S_ = S;     //# of servers
@@ -83,7 +83,7 @@ ABDServer::ABDServer(int serverID, int port, int S, int W, int R, int Q, int nfq
     
 }
 
-void ABDServer::start(){
+void CCHybridServer::start(){
     Packet p;
     int fd[2],cid;                                    //pipe variables
     //vector<int> child_list;                         //list to maintain the connected nodes
@@ -119,7 +119,7 @@ void ABDServer::start(){
 }
 
 //Method to create a socket
-void ABDServer::createSocket()
+void CCHybridServer::createSocket()
 {
     if ((sock_ = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0){
         REPORTERROR("Socket Creation");
@@ -130,7 +130,7 @@ void ABDServer::createSocket()
 }
 
 //Method to initialize the server structs
-void ABDServer::initializeServerAddress()
+void CCHybridServer::initializeServerAddress()
 {
     server.sin_family = PF_INET;                    /* Internet domain */
     server.sin_addr.s_addr = htonl(INADDR_ANY);     /* My Internet address */
@@ -140,7 +140,7 @@ void ABDServer::initializeServerAddress()
 }
 
 //Method to bind the socket with ip and port
-void ABDServer::bindSocket()
+void CCHybridServer::bindSocket()
 {
     if (bind(sock_, serverptr, serverlen) < 0) {
         REPORTERROR("Binding Socket");
@@ -149,7 +149,7 @@ void ABDServer::bindSocket()
 }
 
 //Method to call socket listening
-void ABDServer::listenSocket()
+void CCHybridServer::listenSocket()
 {
     if (listen(sock_, MAX_CONNECTIONS ) < 0) { /* 5 max. requests in queue */
         REPORTERROR("Listen");
@@ -158,7 +158,7 @@ void ABDServer::listenSocket()
 }
 
 //Method to accept a new connection request from a client
-void ABDServer::acceptClientConnection()
+void CCHybridServer::acceptClientConnection()
 {
     Client *tmp_client;
     
@@ -204,14 +204,14 @@ void ABDServer::acceptClientConnection()
     
     //create a new thread to handle the client
     try {
-        threads.push_back(std::thread(&ABDServer::serveClient, this, tmp_client));
+        threads.push_back(std::thread(&CCHybridServer::serveClient, this, tmp_client));
     } catch (int err) {
         REPORTERROR("An exception occured while creating the thread. Err No:%d\n",  err);
     }
 }
 
 
-void ABDServer::serveClient(Client *tmp_client)
+void CCHybridServer::serveClient(Client *tmp_client)
 {
     Packet p;
     std::string type_str;
@@ -298,7 +298,7 @@ void ABDServer::serveClient(Client *tmp_client)
 }
 
 //Method to search for an object in the set of replicas and return that object if found
-RWObject ABDServer::getLocalReplica(RWObject obj)
+RWObject CCHybridServer::getLocalReplica(RWObject obj)
 {
     std::set<RWObject*>::iterator oit;
     RWObject ret_obj;
@@ -324,7 +324,7 @@ RWObject ABDServer::getLocalReplica(RWObject obj)
 }
 
 //Method to insert a replica in the replica set, returns a pointer to the element inserted
-RWObject ABDServer::insertLocalReplica(RWObject obj)
+RWObject CCHybridServer::insertLocalReplica(RWObject obj)
 {
     std::pair<std::set<RWObject*>::iterator,bool> ret;
     std::set<RWObject*>::iterator oit;
@@ -350,7 +350,7 @@ RWObject ABDServer::insertLocalReplica(RWObject obj)
     
 }
 
-void ABDServer::serve(Packet *pkt, Client *c, RWObject replica)
+void CCHybridServer::serve(Packet *pkt, Client *c, RWObject replica)
 {
     //int pid = pkt->src_ - S_;   // position of requesting process in the counter array
     int pid = pkt->src_;
@@ -455,7 +455,7 @@ void ABDServer::serve(Packet *pkt, Client *c, RWObject replica)
      */
 }
 
-void ABDServer::prepare_pkt(Client *dest, int msgType, RWObject obj){
+void CCHybridServer::prepare_pkt(Client *dest, int msgType, RWObject obj){
     
     Packet p;
     std::set<Tag>::iterator it;
