@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-#ifndef ABDClient_hpp
-#define ABDClient_hpp
+#ifndef CCHybridClient_hpp
+#define CCHybridClient_hpp
 
-#include "ABD_protocol.hpp"
+#include "sm_protocol.hpp"
 #include <iostream>
 #include <stdio.h>          /* For I/O */
 #include <string.h>
@@ -36,11 +36,10 @@ SOFTWARE.
 
 #endif /* SFWReader_hpp */
 
-
-class ABDClient : smClient {
+class CCHybridClient : smClient {
 public:
     //SFWReader(int nodeID, int S, int W, int R, int Q, float rInt, int ops, int proto, char* qf);
-    ABDClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
+    CCHybridClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
     void invoke_op(std::string objID, object_t objType, std::string path="./", std::string value="");
     //void auto_read(std::string objID, float rInt, int num_ops, std::string path="./", std::string value="");
     void set_debug_lvl(int lvl){debuglvl = lvl;}

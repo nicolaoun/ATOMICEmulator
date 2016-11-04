@@ -105,6 +105,9 @@ void RWObject::set_path(const std::string &path){ file_path_ = path; }
 std::string RWObject::get_value(){ return value_; }
 void RWObject::set_value(const std::string &val){ value_ = val; }
 
+std::string RWObject::get_pvalue(){ return p_value_; }
+void RWObject::set_pvalue(const std::string &val){ p_value_ = val; }
+
 /*
  * Meta data related methods
  * */
