@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef ABDClient_hpp
 #define ABDClient_hpp
 
-#include "../sm_protocol.hpp"
+#include "ABD_protocol.hpp"
 #include <iostream>
 #include <stdio.h>          /* For I/O */
 #include <string.h>
@@ -36,17 +36,6 @@ SOFTWARE.
 
 #endif /* SFWReader_hpp */
 
-/*
-class Server : Node{
-
-public:
-    Server(){
-        this->nodeID = 0;
-        this->port = 10000;
-        this->sock = 0
-    };
-};
-*/
 
 class ABDClient : smClient {
 public:

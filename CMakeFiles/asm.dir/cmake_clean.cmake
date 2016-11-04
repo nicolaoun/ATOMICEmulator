@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o"
+  "CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o"
   "CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o"
   "CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o"
   "CMakeFiles/asm.dir/Utilities/set_operations.cpp.o"

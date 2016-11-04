@@ -69,7 +69,7 @@ int main(int argc, char** argv)
                     case 1:
                         std::cout << "\nInvoking "<< args.type <<" operation....\n";
 
-                        client.invoke_op(args.objid, ".");
+                        client.invoke_op(args.objid, FILE_T, ".");
                         break;
 
                     // perform multiple opearions in a specified frequency
@@ -78,7 +78,7 @@ int main(int argc, char** argv)
                         std::cin >> frequency;
                         while(ops > 0)
                         {
-                            client.invoke_op(args.objid, ".");
+                            client.invoke_op(args.objid, FILE_T, ".");
                             int timeout = (rand()%((int) frequency));
 
                             std::cout << "\n\n****************\nNext operation in " << timeout << " sec...\n****************\n\n";
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
             }
             else //just invoke a single operation
             {
-                client.invoke_op(args.objid, ".");
+                client.invoke_op(args.objid, FILE_T, ".");
 
                 if ( client_type == READER || (client_type == WRITER && client.has_commited()) )
                 {

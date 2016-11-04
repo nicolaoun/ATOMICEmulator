@@ -57,28 +57,28 @@ include CMakeFiles/asm.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/asm.dir/flags.make
 
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o: CMakeFiles/asm.dir/flags.make
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o: Protocols/ABD/abd_protocol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o -c /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.cpp
+CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o: CMakeFiles/asm.dir/flags.make
+CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o: Protocols/sm_protocol.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o -c /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.cpp
 
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.cpp > CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.i
+CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.cpp > CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.i
 
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.cpp -o CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.s
+CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.cpp -o CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.s
 
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.requires:
+CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.requires:
 
-.PHONY : CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.requires
+.PHONY : CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.requires
 
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.provides: CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.requires
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.provides.build
-.PHONY : CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.provides
+CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.provides: CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.requires
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.provides.build
+.PHONY : CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.provides
 
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.provides.build: CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o
+CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.provides.build: CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o
 
 
 CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o: CMakeFiles/asm.dir/flags.make
@@ -275,7 +275,7 @@ CMakeFiles/asm.dir/main.cpp.o.provides.build: CMakeFiles/asm.dir/main.cpp.o
 
 # Object files for target asm
 asm_OBJECTS = \
-"CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o" \
+"CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o" \
 "CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o" \
 "CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o" \
 "CMakeFiles/asm.dir/Utilities/set_operations.cpp.o" \
@@ -288,7 +288,7 @@ asm_OBJECTS = \
 # External object files for target asm
 asm_EXTERNAL_OBJECTS =
 
-asm: CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o
+asm: CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o
 asm: CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o
 asm: CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o
 asm: CMakeFiles/asm.dir/Utilities/set_operations.cpp.o
@@ -307,7 +307,7 @@ CMakeFiles/asm.dir/build: asm
 
 .PHONY : CMakeFiles/asm.dir/build
 
-CMakeFiles/asm.dir/requires: CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o.requires
+CMakeFiles/asm.dir/requires: CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o.requires
 CMakeFiles/asm.dir/requires: CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o.requires
 CMakeFiles/asm.dir/requires: CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o.requires
 CMakeFiles/asm.dir/requires: CMakeFiles/asm.dir/Utilities/set_operations.cpp.o.requires

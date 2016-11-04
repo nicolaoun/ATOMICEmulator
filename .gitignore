@@ -35,3 +35,11 @@ testing/*
 Untitled.xcworkspace/xcuserdata/nicolasnicolaou.xcuserdatad/UserInterfaceState.xcuserstate
 
 *.txt~
+
+*.autosave
+
+*.includes
+
+*.user
+
+*.files

@@ -25,14 +25,18 @@ SOFTWARE.
 #ifndef ABDServer_hpp
 #define ABDServer_hpp
 
-#include "../sm_protocol.hpp"
+#include "abd_protocol.hpp"
 
 #define MAX_CONNECTIONS 5
 
 // details of a single client
-class Client : Node {
+class Client {
 public:
+    int nodeID;             // client id
     int  req_counter;       // used to distinguish stale messages from this client
+    int  sock;              // communication socket
+    char hostname[100];     // client hostname
+    char ip_addr[30];       // client ip address
 
     // overloaded == operator
     bool operator == (const Client& c1) const
