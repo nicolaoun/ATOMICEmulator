@@ -2181,3 +2181,5 @@ Protocols/CCHYBRID/cchybrid-server.cpp
 Protocols/CCHYBRID/cchybrid-server.hpp
 Protocols/CCHYBRID/cchybrid_protocol.cpp
 Protocols/CCHYBRID/cchybrid_protocol.hpp
+Protocols/sm_protocol.cpp
+Protocols/sm_protocol.hpp
