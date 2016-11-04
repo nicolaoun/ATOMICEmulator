@@ -30,6 +30,7 @@ SOFTWARE.
 #define protocol_h
 #include "sm_node.h"
 #include <vector>
+#include "rapidjson/document.h"
 
 enum object_t
 {
@@ -78,11 +79,15 @@ class RWObject{
     void set_value(const std::string &val);
 
     Tag get_tag();
+    void set_tag(Tag t);
     Tag load_latest_tag();
-
     bool set_latest_tag(const Tag &tg);
 
+    bool load_metadata();
+    bool save_metadata();
+
     object_t get_type(){return objType_;}
+    void set_type(object_t t){objType_ = t;}
 
     bool operator == (const RWObject& obj1) const;
     bool operator < (const RWObject& obj1) const;
@@ -114,14 +119,25 @@ class Packet : public Serializable{
     
     virtual void serialize(std::ostream& stream)
     {
+        Tag tag = obj.get_tag();
+
         // Serialization code
-        stream << src_ <<" "<< dst_ << " " << msgType << " "  << counter << " "  << obj.objID_ << " "  << obj.tg_.ts << " " << obj.tg_.wid ;
+        stream << src_ <<" "<< dst_ << " " << msgType << " "  << counter << " ";
+        stream  << obj.objID_ << " " << obj.get_type() << " " << tag.ts << " " << tag.wid << " " << obj.get_value();
     }
     
     virtual void deserialize(std::istream& stream)
     {
+        int oType;
+        std::string val;
+        Tag tag;
+
         // Deserialization code
-        stream >> src_ >> dst_ >> msgType >> counter >> obj.objID_ >> obj.tg_.ts >> obj.tg_.wid;
+        stream >> src_ >> dst_ >> msgType >> counter >> obj.objID_ >> oType >> tag.ts >> tag.wid >> val;
+
+        obj.set_tag(tag);
+        obj.set_value(val);
+        obj.set_type((object_t) oType);
     }
 };
 

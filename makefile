@@ -150,33 +150,6 @@ Protocols/ABD/abd_client.cpp.s:
 	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.s
 .PHONY : Protocols/ABD/abd_client.cpp.s
 
-Protocols/ABD/abd_protocol.o: Protocols/ABD/abd_protocol.cpp.o
-
-.PHONY : Protocols/ABD/abd_protocol.o
-
-# target to build an object file
-Protocols/ABD/abd_protocol.cpp.o:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o
-.PHONY : Protocols/ABD/abd_protocol.cpp.o
-
-Protocols/ABD/abd_protocol.i: Protocols/ABD/abd_protocol.cpp.i
-
-.PHONY : Protocols/ABD/abd_protocol.i
-
-# target to preprocess a source file
-Protocols/ABD/abd_protocol.cpp.i:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.i
-.PHONY : Protocols/ABD/abd_protocol.cpp.i
-
-Protocols/ABD/abd_protocol.s: Protocols/ABD/abd_protocol.cpp.s
-
-.PHONY : Protocols/ABD/abd_protocol.s
-
-# target to generate assembly for a file
-Protocols/ABD/abd_protocol.cpp.s:
-	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.s
-.PHONY : Protocols/ABD/abd_protocol.cpp.s
-
 Protocols/ABD/abd_server.o: Protocols/ABD/abd_server.cpp.o
 
 .PHONY : Protocols/ABD/abd_server.o
@@ -203,6 +176,33 @@ Protocols/ABD/abd_server.s: Protocols/ABD/abd_server.cpp.s
 Protocols/ABD/abd_server.cpp.s:
 	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.s
 .PHONY : Protocols/ABD/abd_server.cpp.s
+
+Protocols/sm_protocol.o: Protocols/sm_protocol.cpp.o
+
+.PHONY : Protocols/sm_protocol.o
+
+# target to build an object file
+Protocols/sm_protocol.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o
+.PHONY : Protocols/sm_protocol.cpp.o
+
+Protocols/sm_protocol.i: Protocols/sm_protocol.cpp.i
+
+.PHONY : Protocols/sm_protocol.i
+
+# target to preprocess a source file
+Protocols/sm_protocol.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.i
+.PHONY : Protocols/sm_protocol.cpp.i
+
+Protocols/sm_protocol.s: Protocols/sm_protocol.cpp.s
+
+.PHONY : Protocols/sm_protocol.s
+
+# target to generate assembly for a file
+Protocols/sm_protocol.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.s
+.PHONY : Protocols/sm_protocol.cpp.s
 
 Utilities/arguments.o: Utilities/arguments.cpp.o
 
@@ -378,12 +378,12 @@ help:
 	@echo "... Protocols/ABD/abd_client.o"
 	@echo "... Protocols/ABD/abd_client.i"
 	@echo "... Protocols/ABD/abd_client.s"
-	@echo "... Protocols/ABD/abd_protocol.o"
-	@echo "... Protocols/ABD/abd_protocol.i"
-	@echo "... Protocols/ABD/abd_protocol.s"
 	@echo "... Protocols/ABD/abd_server.o"
 	@echo "... Protocols/ABD/abd_server.i"
 	@echo "... Protocols/ABD/abd_server.s"
+	@echo "... Protocols/sm_protocol.o"
+	@echo "... Protocols/sm_protocol.i"
+	@echo "... Protocols/sm_protocol.s"
 	@echo "... Utilities/arguments.o"
 	@echo "... Utilities/arguments.i"
 	@echo "... Utilities/arguments.s"

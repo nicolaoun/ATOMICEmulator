@@ -5,8 +5,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 add_compile_options(-std=c++11)
 
 set(SOURCE_FILES
-        Protocols/ABD/abd_protocol.hpp
-        Protocols/ABD/abd_protocol.cpp
+        Protocols/sm_protocol.hpp
+        Protocols/sm_protocol.cpp
+
         Protocols/ABD/abd_client.cpp
         Protocols/ABD/abd_client.hpp
         Protocols/ABD/abd_server.cpp
