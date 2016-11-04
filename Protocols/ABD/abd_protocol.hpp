@@ -116,6 +116,18 @@ class Packet : public Serializable{
         // Deserialization code
         stream >> src_ >> dst_ >> msgType >> counter >> obj.objID_ >> obj.tg_.ts >> obj.tg_.wid;
     }
+
+    virtual void serialize(std::ostringstream& stream)
+    {
+        // Serialization code
+        stream << src_ <<" "<< dst_ << " " << msgType << " "  << counter << " "  << obj.objID_ << " "  << obj.tg_.ts << " " << obj.tg_.wid;
+    }
+
+    virtual void deserialize(std::istringstream& stream)
+    {
+        // Deserialization code
+        stream >> src_ >> dst_ >> msgType >> counter >> obj.objID_ >> obj.tg_.ts >> obj.tg_.wid;
+    }
 };
 
 #endif /* protocol_h */

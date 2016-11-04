@@ -434,7 +434,7 @@ bool smClient::connect_to_node(Server *n)
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REQ);
 
-    n->z_sock = socket;
+    n->z_sock = &socket;
 
     // Configure socket to not wait at close time
     int linger = 0;

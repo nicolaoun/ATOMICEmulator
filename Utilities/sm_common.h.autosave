@@ -53,7 +53,8 @@ public:
     char ip_addr[30];       // node ip address
     int port;               // node incoming port
     int sock;               // node communication socket
-    zmq::socket_t *z_sock;  // node zmq socket
+    zmq::context_t context;
+    zmq::socket_t z_sock(context, ZMQ_REP);   // node zmq socket
 
     Server(){
         nodeID = 0;
@@ -64,7 +65,7 @@ public:
     Server(zmq::context_t ctx){
         nodeID = 0;
         port = 10000;
-        z_sock = NULL;
+        z_sock(ctx, ZMQ_REQ);
     };
         
     // overloaded < operator

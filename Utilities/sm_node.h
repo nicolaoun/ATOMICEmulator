@@ -54,9 +54,6 @@
 #include <algorithm>
 #include <thread>
 #include <mutex>
-//network on steroids
-#include <zmq.hpp>
-//#include "zhelpers.hpp"
 
 // Process Types
 enum ProcessType{
@@ -210,10 +207,14 @@ protected:
     fd_set readfds,crashfds;    // fd set descriptors
     std::vector<Server> servers_list_;
     std::set<Server> servers_connected_;
+    //std::vector<Node> servers_list_;
+    //std::set<Node> servers_connected_;
     std::set<int> servers_id_connected_;
     void parse_hosts(const char*);
     void connect_to_hosts();
     bool connect_to_server(Server *s);
+    //bool connect_to_server(Node *n);
+    bool connect_to_node(Server *n);
     void setnonblocking(int sock);
     
     /*
@@ -259,7 +260,7 @@ protected:
     }
     
     /*
-     * Regular socket send
+     * Regular socket receive
      */
     template <typename PacketClass>
     bool rcv_pkt(int sock, PacketClass *p)
@@ -297,6 +298,71 @@ protected:
 
     bool send_file(int sock, char* filepath);
     bool rcv_file(int sock, char* filepath);
+
+    /***************************************
+     *          ZMQ Socket
+     ***************************************/
+
+    // Overloaded send method
+    template <typename PacketClass>
+    bool send_pkt(zmq::socket_t z_sock, PacketClass *p)
+    {
+        size_t transmitLen=0 , bytes_sent;
+        std::ostringstream oss;
+
+        try{
+            p->serialize(oss);
+
+            DEBUGING(2, "Sending Buffer: %s\n", oss.str().c_str());
+
+            if ( !s_send(z_sock, oss.str()) )
+            {
+                // error while sending the message
+                REPORTERROR("Sending a packet on ZMQ socket");
+                return false;
+            }
+
+            DEBUGING(2, "Trasmitted: %d\n",
+                     oss.str().length());
+        }
+        catch(int e)
+        {
+            REPORTERROR("Failed to send packet. Error No: %d\n",e);
+            return false;
+        }
+
+        return true;
+    }
+
+     // Overloaded receive method
+    template <typename PacketClass>
+    bool rcv_pkt(zmq::socket_t z_sock, PacketClass *p)
+    {
+        try
+        {
+            DEBUGING(1, "Expecting to receive packet at socket...\n");
+
+            zmq::message_t reply;
+            z_sock.recv(&reply);
+
+            if ( !reply.data()) { /* Get message */
+                REPORTERROR("Receiving packet on ZMQ socket");
+                return false;
+            }
+
+            std::istringstream iss(static_cast<char*>(reply.data()));
+            // deserialize the packet received
+            p->deserialize(iss);
+
+            DEBUGING(1, "Received Buffer: %s, Size: %d", iss.str().c_str(), reply.size());
+        }
+        catch(int e)
+        {
+            REPORTERROR("Failed to receive packet. Error No: %d\n",e);
+        }
+
+        return true;
+    }
     
     // Logging
     void init_logfile(std::string dir="");

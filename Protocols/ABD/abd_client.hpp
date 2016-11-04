@@ -36,6 +36,17 @@ SOFTWARE.
 
 #endif /* SFWReader_hpp */
 
+/*
+class Server : Node{
+
+public:
+    Server(){
+        this->nodeID = 0;
+        this->port = 10000;
+        this->sock = 0
+    };
+};
+*/
 
 class ABDClient : smClient {
 public:

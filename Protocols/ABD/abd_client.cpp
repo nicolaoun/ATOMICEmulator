@@ -191,7 +191,7 @@ bool ABDClient::prepare_pkt(int counter, Server dest, int msgType){
     
     //Specify the destination of the packet
     p.src_=nodeID_;
-    p.dst_=dest.serverID;
+    p.dst_=dest.nodeID;
     
     //Specify the fields of the packet accordingly
     p.msgType = msgType;
@@ -354,7 +354,7 @@ void ABDClient::rcv_from_quorum(){
                                 if ( rcv_file((*it).sock, fpath) )
                                 {
                                     pkts_rcved_.insert(p);
-                                    servers_replied_.insert((*it).serverID);
+                                    servers_replied_.insert((*it).nodeID);
                                 }
                                 
                                 //servers_alive_.erase(*it);
@@ -363,7 +363,7 @@ void ABDClient::rcv_from_quorum(){
                             else
                             {
                                 pkts_rcved_.insert(p);
-                                servers_replied_.insert((*it).serverID);
+                                servers_replied_.insert((*it).nodeID);
                                 //servers_sent_.erase(*it);
                             }
                         }
@@ -373,7 +373,7 @@ void ABDClient::rcv_from_quorum(){
                                 case WRITEACK:
                                 case COUNTER_ERROR:
                                     DEBUGING(4, "Counter-Error with Server %d (%s) on socket %d: LC=%d, SC=%d ...\n",
-                                             (*it).serverID,
+                                             (*it).nodeID,
                                              (*it).hostname,
                                              (*it).sock,
                                              req_counter_,
@@ -382,7 +382,7 @@ void ABDClient::rcv_from_quorum(){
                                     
                                 default:
                                     DEBUGING(4, "Unknown-Error with Server %d (%s) on socket %d: Packet details: type %d, counter %d, tag <%d,%d,%d>...\n",
-                                             (*it).serverID,
+                                             (*it).nodeID,
                                              (*it).hostname,
                                              (*it).sock,
                                              p.msgType, p.counter,
@@ -399,7 +399,7 @@ void ABDClient::rcv_from_quorum(){
                     else
                     {
                         REPORTERROR("Failed receiving packet form SID: %d on socket SID: %d",
-                                    (*it).serverID,
+                                    (*it).nodeID,
                                     (*it).sock);
                         //servers_alive_.erase(*it);
                         //servers_sent_.erase(*it);;

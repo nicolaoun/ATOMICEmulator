@@ -103,6 +103,8 @@ ostream
 -
 ctime
 -
+zhelpers.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/zhelpers.hpp
 
 /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_node.cpp
 sm_node.h
@@ -161,7 +163,33 @@ thread
 -
 mutex
 -
+
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/zhelpers.hpp
 zmq.hpp
+-
+iostream
+-
+iomanip
+-
+string
+-
+sstream
+-
+time.h
+-
+assert.h
+-
+stdlib.h
+-
+stdio.h
+-
+stdarg.h
+-
+signal.h
+-
+sys/time.h
+-
+unistd.h
 -
 
 /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/main.cpp
@@ -237,6 +265,8 @@ ostream
 -
 ctime
 -
+zhelpers.hpp
+Utilities/zhelpers.hpp
 
 Utilities/sm_node.h
 sm_common.h
@@ -289,6 +319,32 @@ thread
 -
 mutex
 -
+
+Utilities/zhelpers.hpp
 zmq.hpp
+-
+iostream
+-
+iomanip
+-
+string
+-
+sstream
+-
+time.h
+-
+assert.h
+-
+stdlib.h
+-
+stdio.h
+-
+stdarg.h
+-
+signal.h
+-
+sys/time.h
+-
+unistd.h
 -
 

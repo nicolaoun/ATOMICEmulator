@@ -2169,3 +2169,4 @@ main.cpp
 README.md
 servers.list
 TODO
+Utilities/zhelpers.hpp
