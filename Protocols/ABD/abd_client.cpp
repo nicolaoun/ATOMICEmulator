@@ -31,9 +31,9 @@
  ************************************************/
 
 // int nodeID, int S, int R, int W, int Q, float rInt, int ops, int proto, char* qfile
-ABDClient::ABDClient(int nodeID, int role, std::string opath, std::string sfile) {
+ABDClient::ABDClient(int id, int role, std::string opath, std::string sfile) {
     
-    nodeID_ = nodeID;
+    nodeID = id;
     role_ = role;
     value_ = "";
     total_ops_ = 1;
@@ -55,7 +55,7 @@ void ABDClient::setup_dirs(std::string opath)
     if ( opath == "")
     {
         std::stringstream sstm;
-        sstm << "./client_" << nodeID_;
+        sstm << "./client_" << nodeID;
         client_root_dir_ = sstm.str();
     }
     else
@@ -83,7 +83,7 @@ void ABDClient::setup_dirs(std::string opath)
     }
 
     char log_fname[10];
-    sprintf(log_fname, "/c%d",nodeID_);
+    sprintf(log_fname, "/c%d",nodeID);
     logs_dir_ += log_fname;
     init_logfile(logs_dir_);
     DEBUGING(6, "Loaded Directories...\n");
@@ -93,13 +93,13 @@ void ABDClient::setup_dirs(std::string opath)
  *         COMMUNICATION METHODS
  ************************************************/
 
-Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType)
+Packet ABDClient::prepare_pkt(int counter, smNode dest, int msgType)
 {
     Packet p;
     Tag tg;
         
     //Specify the destination of the packet
-    p.src_=nodeID_;
+    p.src_=nodeID;
     p.dst_=dest.nodeID;
     
     //Specify the fields of the packet accordingly
@@ -113,7 +113,7 @@ Packet ABDClient::prepare_pkt(int counter, Server dest, int msgType)
 void ABDClient::send_to_all(int m_type){
     //int s;
     req_counter_++;
-    std::set<Server>::iterator it;
+    std::set<smNode>::iterator it;
     std::vector<std::thread> srv_threads;
     struct timeval sysTime;
     double startSend, curTime, timeDiff=0, timeOut=60;
@@ -152,7 +152,7 @@ void ABDClient::send_to_all(int m_type){
     }
 }
 
-void ABDClient::send_to_server(Server s, int m_type)
+void ABDClient::send_to_server(smNode s, int m_type)
 {
     char fpath[100];
     Packet p;
@@ -195,8 +195,8 @@ void ABDClient::rcv_from_quorum(){
     Packet p;
     struct timeval sel_timeout;
     int ready;
-    std::set<Server>::iterator it;
-    std::set<Server> servers_pending_;
+    std::set<smNode>::iterator it;
+    std::set<smNode> servers_pending_;
     char fpath[100];
     int total_sent = servers_sent_.size();
     
@@ -267,7 +267,7 @@ void ABDClient::rcv_from_quorum(){
                                 else
                                 {
                                     REPORTERROR("Failed receiving file form SID: %d on socket SID: %d",
-                                                (*it).serverID,
+                                                (*it).nodeID,
                                                 (*it).sock);
                                 }
 
@@ -482,7 +482,7 @@ void ABDClient::process_replies()
     if (role_ == WRITER && maxTag == obj->tg_) {
         // increment the max timestamp
         maxTag.ts = maxTag.ts + 1;
-        maxTag.wid  = nodeID_;
+        maxTag.wid  = nodeID;
         
         obj->set_latest_tag(maxTag);
         commit_flag_ = true;
@@ -595,7 +595,7 @@ void ABDClient::stop(){
 void ABDClient::close_connections(){
     
     //Packet p;
-    std::set<Server>::iterator  it;
+    std::set<smNode>::iterator  it;
     
     req_counter_++;
     

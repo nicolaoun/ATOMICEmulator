@@ -25,7 +25,7 @@ SOFTWARE.
 #ifndef ABDClient_hpp
 #define ABDClient_hpp
 
-#include "../sm_protocol.hpp"
+#include "sm_protocol.hpp"
 #include <iostream>
 #include <stdio.h>          /* For I/O */
 #include <string.h>
@@ -48,7 +48,7 @@ public:
 };
 */
 
-class ABDClient : smClient {
+class ABDClient : smNode {
 public:
     //SFWReader(int nodeID, int S, int W, int R, int Q, float rInt, int ops, int proto, char* qf);
     ABDClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
@@ -86,7 +86,7 @@ protected:
     
 		//structures to group and keep the messages rcved
 		std::set<int> servers_replied_;          // ids of the servers that replied
-		std::set<Server> servers_sent_;          // servers we sent a msg to
+        std::set<smNode> servers_sent_;          // servers we sent a msg to
 		std::set<Packet> pkts_rcved_;
     
         //Initialization procedures
@@ -98,9 +98,9 @@ protected:
         Tag find_max_tag();
     
         // Communication procedures
-        Packet prepare_pkt(int, Server s, int);
+        Packet prepare_pkt(int, smNode s, int);
 		void send_to_all(int);
-        void send_to_server(Server s, int m_type);
+        void send_to_server(smNode s, int m_type);
 		void rcv_from_quorum();
 		void close_connections();
 };

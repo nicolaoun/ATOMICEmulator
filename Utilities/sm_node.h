@@ -22,8 +22,8 @@
  SOFTWARE.
  */
 
-#ifndef smClient_h
-#define smClient_h
+#ifndef smNode_h
+#define smNode_h
 
 #include "sm_common.h"
 #include "filesystem.h"
@@ -152,30 +152,52 @@ public:
 /*
  * Specification of a participant in the Register Implementation service
  */
-class smClient {
+class smNode {
     
 public:
-    smClient();
-    smClient(int R, int W, int proto, char* sfile, char* qfile);
+    int nodeID;             // node identifier
+    char hostname[100];     // node hostname
+    char ip_addr[30];       // node ip address
+    int port;               // node incoming port
+    int sock;               // node communication socket
+    zmq::socket_t *z_sock;  // node zmq socket
+
+    int req_counter_;           // request counter
+    int receive_counter_;       // count # of messages received
+
+    smNode();
+    smNode(int proto, char* sfile, char* qfile);
     //void terminate();
     void DEBUGING(int level, const char *format, ...);
     void REPORTERROR(const char *format, ...);
+
+    // overloaded < operator
+    bool operator < (const smNode& n) const
+    {
+        return (this->nodeID < n.nodeID);
+    }
+
+    // overloaded == operator
+    bool operator == (const smNode& n) const
+    {
+        //Check if n1 == n2
+        return (this->nodeID == n.nodeID);
+    }
     
-protected:
-    int nodeID_;                //node identifier
-    int debuglvl;
-    
+protected:  
     int random_;                //choose random interval yes/no
     int seed_;
+
+    int debuglvl;           // debug messages lvl
     std::string logfile;
     std::string infofile;
     std::string errorfile;
-    
+
     int S_;                     // number of servers in the system
     int R_;                     // number of readers in the system
     int W_;                     // number of writers in the system
     int Q_;                     // number of quorums in the quorum system
-    
+
     int *server_mem;            // @ r/w: Server list associated with the quorums they belong into
     int *q_mem_num;             // @ r/w: list of # of members of each quorum
     int *q_rcv_count;           // counts # of members of each quorum that replied to a r/w req
@@ -186,8 +208,6 @@ protected:
     int faulty_;                // whether a node may fail
     int crashed_;               // indicates whethter the node is crashed and dead
     //int randomness_;          // to indicate whether we use random interval for sends
-    
-    int receive_counter_;       // count # of messages received
     int mode_;                  // specifies whether node is idle or waiting
     
     //helpful counters
@@ -196,7 +216,6 @@ protected:
     int num_reads_;
     int num_one_comm_;
     int num_two_comm_;
-    int req_counter_;           // request counter
     
     // Timers
     double startTime,endTime,totTime,crashTime;
@@ -205,16 +224,16 @@ protected:
     
     // Network operations
     fd_set readfds,crashfds;    // fd set descriptors
-    std::vector<Server> servers_list_;
-    std::set<Server> servers_connected_;
+    std::vector<smNode> servers_list_;
+    std::set<smNode> servers_connected_;
     //std::vector<Node> servers_list_;
     //std::set<Node> servers_connected_;
     std::set<int> servers_id_connected_;
     void parse_hosts(const char*);
     void connect_to_hosts();
-    bool connect_to_server(Server *s);
+    bool connect_to_server(smNode *s);
     //bool connect_to_server(Node *n);
-    bool connect_to_node(Server *n);
+    bool connect_to_node(smNode *n);
     void setnonblocking(int sock);
     
     /*
@@ -369,4 +388,4 @@ protected:
     
 };
 
-#endif /* smClient_h */
+#endif /* smNode_h */

@@ -27,7 +27,7 @@ SOFTWARE.
 
 //int hdr_mwmr::offset_;
 
-void smClient::DEBUGING(int level, const char *format, ...)
+void smNode::DEBUGING(int level, const char *format, ...)
 {
     va_list ap;
     char rolestr[3][20]={"SERVER","READER","WRITER"};
@@ -47,7 +47,7 @@ void smClient::DEBUGING(int level, const char *format, ...)
         
         sprintf(outstr, "[INFO]%10s %d: %s",
                 rolestr[role_],
-                nodeID_,
+                nodeID,
                 formattedstr);
         
         printf("%s",outstr);
@@ -62,7 +62,7 @@ void smClient::DEBUGING(int level, const char *format, ...)
     }
 }
 
-void smClient::REPORTERROR(const char *format, ...)
+void smNode::REPORTERROR(const char *format, ...)
 {
     va_list ap;
     char errorstr[255];
@@ -79,7 +79,7 @@ void smClient::REPORTERROR(const char *format, ...)
         
         sprintf(errorout, "[ERROR]%10s %d: %s",
                 rolestr[role_],
-                nodeID_,
+                nodeID,
                 errorstr);
         
         fp=fopen(errorfile.c_str(), "a");
@@ -90,13 +90,13 @@ void smClient::REPORTERROR(const char *format, ...)
     {
         sprintf(errorout, "[ERROR]%10s %d: Error msg too long.",
                 rolestr[role_],
-                nodeID_);
+                nodeID);
     }
     
     perror((const char*)errorout);
 }
 
-smClient::smClient()
+smNode::smNode()
 {
     
     receive_counter_ = 0;
@@ -114,7 +114,7 @@ smClient::smClient()
     totTime=0;
 }
 
-void smClient::init_logfile(std::string file){
+void smNode::init_logfile(std::string file){
     FILE *fp;
     
     logfile = file;
@@ -132,7 +132,7 @@ void smClient::init_logfile(std::string file){
 /*                Network Operations                      */
 /**********************************************************/
 
-bool smClient::send_file(int sock, char* fpath)
+bool smNode::send_file(int sock, char* fpath)
 {
     int transmitted_bytes=0 , bytes_sent=0, bytes_read;
     char buffer[MAX_BUFFER_SIZE];
@@ -240,7 +240,7 @@ bool smClient::send_file(int sock, char* fpath)
  * Function: rcv_file
  * Params: socket to listen, file path to save rcved contents
  **/
-bool smClient::rcv_file(int sock, char* fpath)
+bool smNode::rcv_file(int sock, char* fpath)
 {
     int rcv_bytes, transmitted_bytes = 0;
     char buffer[MAX_BUFFER_SIZE];
@@ -322,10 +322,10 @@ bool smClient::rcv_file(int sock, char* fpath)
     return true;
 }
 
-void smClient::parse_hosts(const char *file){
+void smNode::parse_hosts(const char *file){
     FILE *fp;
   //!!  Server *srv = new Server();
-	Server srv;
+    smNode srv;
 
     
     DEBUGING(2, "Reading file: %s\n",
@@ -336,12 +336,12 @@ void smClient::parse_hosts(const char *file){
         exit(1);
     }
     else{
-        while (fscanf(fp, "%d %s %d", &srv.serverID, srv.hostname, &srv.port)!=EOF) {
+        while (fscanf(fp, "%d %s %d", &srv.nodeID, srv.hostname, &srv.port)!=EOF) {
             
             servers_list_.push_back(srv);
             
             DEBUGING(2, "SID:%d, Host:s%s, Port:%d\n",
-                     srv.serverID,
+                     srv.nodeID,
                      srv.hostname,
                      srv.port);
         }
@@ -353,12 +353,12 @@ void smClient::parse_hosts(const char *file){
     }
 }
 
-void smClient::connect_to_hosts(){
+void smNode::connect_to_hosts(){
 //	int serverlen;
 //	struct sockaddr_in _server;
 //	struct sockaddr *serverptr;
 //	struct hostent *rem;
-	std::vector<Server>::iterator srv_it;
+    std::vector<smNode>::iterator srv_it;
     
 	// Clear the servers set
 	servers_connected_.clear();
@@ -370,7 +370,7 @@ void smClient::connect_to_hosts(){
         if( connect_to_server(&(*srv_it)))
         {
             servers_connected_.insert(*srv_it);
-			servers_id_connected_.insert((*srv_it).serverID);
+            servers_id_connected_.insert((*srv_it).nodeID);
             
 			//add the socket in the fd set
 			FD_SET((*srv_it).sock, &readfds);
@@ -385,7 +385,7 @@ void smClient::connect_to_hosts(){
 /**
  *  Connect to server and return the socket
  **/
-bool smClient::connect_to_server(Node *s)
+bool smNode::connect_to_server(smNode *s)
 {
     int serverlen;
     struct sockaddr_in _server;
@@ -428,28 +428,28 @@ bool smClient::connect_to_server(Node *s)
     return true;
 }
 
-bool smClient::connect_to_node(Server *n)
+bool smNode::connect_to_node(smNode *n)
 {
     //  Prepare our context and socket
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REQ);
 
-    n->z_sock = socket;
+    n->z_sock = &socket;
 
     // Configure socket to not wait at close time
     int linger = 0;
-    n->z_sock.setsockopt (ZMQ_LINGER, &linger, sizeof (linger));
+    n->z_sock->setsockopt (ZMQ_LINGER, &linger, sizeof (linger));
 
-    s_set_id(n->z_sock);
+    s_set_id(*n->z_sock);
 
     std::cout << "Connecting to "<< n->hostname << "(ip:"<< n->ip_addr <<") on port "<< n->port <<"…" << std::endl;
-    std::ostringstream iss;
+    std::ostringstream oss;
     oss << "tcp://" << n->ip_addr << ":" << n->port;
-    n->z_sock.connect (oss.str());
+    n->z_sock->connect (oss.str());
 }
 
 
-void smClient::setnonblocking(int sock)
+void smNode::setnonblocking(int sock)
 {
 	int opts;
     

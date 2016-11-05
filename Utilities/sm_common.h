@@ -40,12 +40,13 @@ public:
     
     virtual void serialize(std::ostream& stream) = 0;
     virtual void deserialize(std::istream& stream) = 0;
-    virtual void serialize(std::ostringstream& stream) = 0;
-    virtual void deserialize(std::istringstream& stream) = 0;
+   // virtual void serialize(std::ostringstream& stream) = 0;
+   //virtual void deserialize(std::istringstream& stream) = 0;
 };
 
 // Node structure
-class Server{
+/*
+class Node{
 
 public:
     int nodeID;
@@ -55,17 +56,12 @@ public:
     int sock;               // node communication socket
     zmq::socket_t *z_sock;  // node zmq socket
 
-    Server(){
+    Node(){
         nodeID = 0;
         port = 10000;
         sock = 0;
-    };
-
-    Server(zmq::context_t ctx){
-        nodeID = 0;
-        port = 10000;
         z_sock = NULL;
-    };
+    }
         
     // overloaded < operator
     bool operator < (const Server& n) const
@@ -80,6 +76,7 @@ public:
         return (this->nodeID == n.nodeID);
     }
 };
+*/
 
 std::string get_datetime();
 std::string get_date();

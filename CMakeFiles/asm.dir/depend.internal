@@ -4,7 +4,7 @@
 CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.hpp
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
+ Protocols/sm_protocol.hpp
  Utilities/filesystem.h
  Utilities/rapidjson/allocators.h
  Utilities/rapidjson/document.h
@@ -29,17 +29,11 @@ CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o
  Utilities/set_operations.hpp
  Utilities/sm_common.h
  Utilities/sm_node.h
-<<<<<<< HEAD
  Utilities/zhelpers.hpp
-CMakeFiles/asm.dir/Protocols/ABD/abd_protocol.cpp.o
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/ABD_protocol.hpp
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.cpp
-=======
 CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.hpp
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
->>>>>>> master
+ Protocols/sm_protocol.hpp
  Utilities/filesystem.h
  Utilities/rapidjson/allocators.h
  Utilities/rapidjson/document.h
@@ -64,17 +58,10 @@ CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o
  Utilities/set_operations.hpp
  Utilities/sm_common.h
  Utilities/sm_node.h
-<<<<<<< HEAD
  Utilities/zhelpers.hpp
-CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_protocol.hpp
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.cpp
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.hpp
-=======
 CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
->>>>>>> master
  Utilities/filesystem.h
  Utilities/rapidjson/allocators.h
  Utilities/rapidjson/document.h

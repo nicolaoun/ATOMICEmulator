@@ -11,8 +11,8 @@ abd_client.hpp
 /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.hpp
 
 /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.hpp
-../sm_protocol.hpp
-/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
+sm_protocol.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/sm_protocol.hpp
 iostream
 -
 stdio.h
@@ -31,8 +31,8 @@ abd_server.hpp
 /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.hpp
 
 /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.hpp
-../sm_protocol.hpp
-/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
+sm_protocol.hpp
+/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/sm_protocol.hpp
 
 /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.cpp
 sm_protocol.hpp
@@ -201,8 +201,8 @@ string
 -
 
 Protocols/ABD/abd_client.hpp
-../sm_protocol.hpp
-Protocols/sm_protocol.hpp
+sm_protocol.hpp
+Protocols/ABD/sm_protocol.hpp
 iostream
 -
 stdio.h
@@ -217,8 +217,8 @@ mutex
 -
 
 Protocols/ABD/abd_server.hpp
-../sm_protocol.hpp
-Protocols/sm_protocol.hpp
+sm_protocol.hpp
+Protocols/ABD/sm_protocol.hpp
 
 Protocols/sm_protocol.hpp
 sm_node.h
