@@ -2167,6 +2167,9 @@ main.cpp
 README.md
 servers.list
 TODO
+<<<<<<< HEAD
+Utilities/zhelpers.hpp
+=======
 Protocols/ABD/abd_client.cpp
 Protocols/ABD/abd_client.hpp
 Protocols/ABD/abd_protocol.hpp
@@ -2189,3 +2192,4 @@ Protocols/CCHYBRID/cchybrid_server.cpp
 Protocols/CCHYBRID/cchybrid_server.hpp
 Protocols/sm_protocol.cpp
 Protocols/sm_protocol.hpp
+>>>>>>> master

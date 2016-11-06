@@ -4,7 +4,7 @@
 CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_client.hpp
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
+ Protocols/sm_protocol.hpp
  Utilities/filesystem.h
  Utilities/rapidjson/allocators.h
  Utilities/rapidjson/document.h
@@ -29,10 +29,11 @@ CMakeFiles/asm.dir/Protocols/ABD/abd_client.cpp.o
  Utilities/set_operations.hpp
  Utilities/sm_common.h
  Utilities/sm_node.h
+ Utilities/zhelpers.hpp
 CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/ABD/abd_server.hpp
- /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
+ Protocols/sm_protocol.hpp
  Utilities/filesystem.h
  Utilities/rapidjson/allocators.h
  Utilities/rapidjson/document.h
@@ -57,6 +58,7 @@ CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.o
  Utilities/set_operations.hpp
  Utilities/sm_common.h
  Utilities/sm_node.h
+ Utilities/zhelpers.hpp
 CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Protocols/sm_protocol.hpp
@@ -84,6 +86,7 @@ CMakeFiles/asm.dir/Protocols/sm_protocol.cpp.o
  Utilities/set_operations.hpp
  Utilities/sm_common.h
  Utilities/sm_node.h
+ Utilities/zhelpers.hpp
 CMakeFiles/asm.dir/Utilities/arguments.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/arguments.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/arguments.h
@@ -96,12 +99,14 @@ CMakeFiles/asm.dir/Utilities/set_operations.cpp.o
 CMakeFiles/asm.dir/Utilities/sm_common.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_common.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_common.h
+ /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/zhelpers.hpp
 CMakeFiles/asm.dir/Utilities/sm_node.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/filesystem.h
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/set_operations.hpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_common.h
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_node.cpp
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/sm_node.h
+ /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/Utilities/zhelpers.hpp
 CMakeFiles/asm.dir/main.cpp.o
  /Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/main.cpp
  Protocols/ABD/abd_client.hpp
@@ -132,3 +137,4 @@ CMakeFiles/asm.dir/main.cpp.o
  Utilities/set_operations.hpp
  Utilities/sm_common.h
  Utilities/sm_node.h
+ Utilities/zhelpers.hpp

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(ASM)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 add_compile_options(-std=c++11)
 
 set(SOURCE_FILES
@@ -30,6 +30,9 @@ set(SOURCE_FILES
 include_directories(${CMAKE_SOURCE_DIR}/Protocols)
 include_directories(${CMAKE_SOURCE_DIR}/Utilities)
 include_directories(/usr/local/lib)
-TARGET_LINK_LIBRARIES(zmq-static)
+#TARGET_LINK_LIBRARIES(zmq-static)
 
 add_executable(asm ${SOURCE_FILES})
+
+FIND_LIBRARY(ZMQ_LIB zmq-static)
+TARGET_LINK_LIBRARIES(asm ${ZMQ_LIB})
