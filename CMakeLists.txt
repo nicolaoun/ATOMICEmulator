@@ -15,6 +15,8 @@ set(SOURCE_FILES
 
         Protocols/CCHYBRID/cchybrid_client.cpp
         Protocols/CCHYBRID/cchybrid_client.hpp
+        Protocols/CCHYBRID/cchybrid_server.cpp
+        Protocols/CCHYBRID/cchybrid_server.hpp
 
         Utilities/set_operations.hpp
         Utilities/set_operations.cpp

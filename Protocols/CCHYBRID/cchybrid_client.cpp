@@ -37,6 +37,18 @@ CCHybridClient::CCHybridClient(int id, int role, std::string opath, std::string 
     total_ops_ = 1;
     
     //setup local directories
+    // specify the node's paths
+    if ( opath == "")
+    {
+        std::stringstream sstm;
+        sstm << "./client_" << nodeID;
+        client_root_dir_ = sstm.str();
+    }
+    else
+    {
+        client_root_dir_ = opath;
+    }
+
     setup_dirs(opath);
     
     //read the servers
@@ -50,36 +62,24 @@ CCHybridClient::CCHybridClient(int id, int role, std::string opath, std::string 
     
 }
 
-void CCHybridClient::setup_dirs(std::string opath)
+void CCHybridClient::setup_dirs(std::string root_dir)
 {
 
-    // specify the node's paths
-    if ( opath == "")
-    {
-        std::stringstream sstm;
-        sstm << "./client_" << nodeID;
-        client_root_dir_ = sstm.str();
-    }
-    else
-    {
-        client_root_dir_ = opath;
+    if(!directoryExists(root_dir)) {
+        createDirectory(root_dir);
     }
 
-    if(!directoryExists(client_root_dir_)) {
-        createDirectory(client_root_dir_);
-    }
-
-    rcvd_files_dir_ = client_root_dir_ + "/rcvd_files" ;
+    rcvd_files_dir_ = root_dir + "/rcvd_files" ;
     if(!directoryExists(rcvd_files_dir_)) {
         createDirectory(rcvd_files_dir_);
     }
 
-    logs_dir_ = client_root_dir_ + "/logs";
+    logs_dir_ = root_dir + "/logs";
     if(!directoryExists(logs_dir_)) {
         createDirectory(logs_dir_);
     }
 
-    meta_dir_ = client_root_dir_ + "/.meta";
+    meta_dir_ = root_dir + "/.meta";
     if(!directoryExists(meta_dir_)) {
         createDirectory(meta_dir_);
     }
@@ -367,6 +367,9 @@ void CCHybridClient::invoke_op(std::string objID, std::string value){
     //disconnect from the hosts
     DEBUGING(6, "Closing connections...\n");
     close_connections();
+
+    //save the objects metadata
+    obj->save_metadata();
 }
 
 void CCHybridClient::invoke_read()
@@ -402,6 +405,10 @@ void CCHybridClient::invoke_read()
         send_to_all(WRITE); // send the latest tag to all the servers
         rcv_from_quorum(S_- failures_);  // wait for a majority to reply
         // END PHASE2
+    }
+    else
+    {
+        num_one_comm_++;
     }
 }
 
@@ -497,7 +504,7 @@ CCHybridClient::is_predicate_valid()
     // construct the buckets
     for( auto& x : servers_replies_)
     {
-        buckets[x.second.views]++;
+        buckets[x.second.views_]++;
     }
 
     for(a = ((S_/failures_) - 2); a > 0; a--)
@@ -531,7 +538,7 @@ Tag CCHybridClient::find_max_params()
     for(auto& x : servers_replies_)
     {
         pkt_tag = x.second.obj.tg_;
-        pkt_views = x.second.views;
+        pkt_views = x.second.views_;
 
         //if new max ts discovered - update the local <ts, value, pvalue>
         if( pkt_tag > obj->tg_)
@@ -557,13 +564,13 @@ Tag CCHybridClient::find_max_params()
         if ( pkt_tag == obj->tg_ )
         {
             // add the sender and the views
-            max_servers_[x.first] = x.second.views;
+            max_servers_[x.first] = x.second.views_;
 
             //max views
             max_views_ = (max_views_ < pkt_views) ? pkt_views : max_views_;
 
             //check if the ts was propagated by a reader
-            if(x.second.prop_ts)
+            if(x.second.tg_propagated_)
             {
                 prop_servers_.push_back(x.first);
             }

@@ -66,20 +66,11 @@ void Arguments::parseArguments(int argc, char** argv){
             case 'd':
                 unstringify(debuglvl, optarg);
                 break;
+            case 'a':
+                unstringify(protocol, optarg);
 		}
 	}
 
-	// Check Required Arguments
-	/* //!!
-	 * ASK NICK, if the arguments have default values, why are they required arguments?
-	if(nodeid = -1){
-
-	}
-
-	if(type = ""){
-
-	}
-	 */
 }
 
 
@@ -91,5 +82,6 @@ Arguments::Arguments() :
 		type("serve"),
 		nodeid(0),
         menu("no"),
-        debuglvl(4)
+        debuglvl(4),
+        protocol(1)
 {}

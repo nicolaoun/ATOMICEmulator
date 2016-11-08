@@ -24,75 +24,63 @@
 
 #include "cchybrid_server.hpp"
 
-CCHybridServer::CCHybridServer(int serverID, int port, int S, int W, int R, int Q, int nfq, double cInt) {
+CCHybridServer::CCHybridServer(int serverID, int port) {
     
-    nodeID_ = serverID;
-    S_ = S;     //# of servers
-    W_ = W;     //# of writers
-    R_ = R;     //# of readers
-    Q_ = Q;     //# of quorums
-    non_faulty_qid_ = nfq;
+    nodeID = serverID;
     crash_freq_ = 0.0;
     port_ = port;
     role_ = SERVER;
     
     // specify the Server's paths
     std::stringstream sstm;
-    sstm << "./server_" << nodeID_;
+    sstm << "./server_" << nodeID;
     srv_root_dir_ = sstm.str();
     
-    if( !directoryExists(srv_root_dir_) ){
-        createDirectory(srv_root_dir_);
-    }
-    
-    rcvd_files_dir_ = srv_root_dir_ + "/rcvd_files";
-    if (!directoryExists(rcvd_files_dir_)){
-        createDirectory(rcvd_files_dir_);
-    }
-    
-    meta_dir_ = srv_root_dir_ + "/.meta";
-    if(!directoryExists(meta_dir_)) {
-        createDirectory(meta_dir_);
-    }
-    
-    logs_dir_ = srv_root_dir_ + "/logs" ;
-    if(!directoryExists(logs_dir_)){
-        createDirectory(logs_dir_);
-    }
-    
-    char log_fname[10];
-    sprintf(log_fname, "/s%d",nodeID_);
-    logs_dir_ += log_fname;
-    init_logfile(logs_dir_);
+    setup_dirs(srv_root_dir_);
     
     DEBUGING(4,"Initialized on Port:%d\n",
              port_);
     
-    //Initialize the node's local tag
-    tg_.ts=0;
-    tg_.wid=0;
-    tg_.wc=0;
-    
-    serve_clients_.clear();
-    /*
-     serve_counter=(int *)malloc((R_+W_)*sizeof(int));
-     for(int i=0; i<=R_+W_; i++){  //array initialization
-     serve_counter[i]=0;
-     }
-     */
-    
+    serve_clients_.clear();   
+}
+
+void CCHybridServer::setup_dirs(std::string root_dir)
+{
+
+        if(!directoryExists(root_dir)) {
+            createDirectory(root_dir);
+        }
+
+        rcvd_files_dir_ = root_dir + "/rcvd_files" ;
+        if(!directoryExists(rcvd_files_dir_)) {
+            createDirectory(rcvd_files_dir_);
+        }
+
+        logs_dir_ = root_dir + "/logs";
+        if(!directoryExists(logs_dir_)) {
+            createDirectory(logs_dir_);
+        }
+
+        meta_dir_ = root_dir + "/.meta";
+        if(!directoryExists(meta_dir_)) {
+            createDirectory(meta_dir_);
+        }
+
+        char log_fname[10];
+        sprintf(log_fname, "/c%d",nodeID);
+        logs_dir_ += log_fname;
+        init_logfile(logs_dir_);
+        DEBUGING(6, "Loaded Directories...\n");
+
 }
 
 void CCHybridServer::start(){
-    Packet p;
     int fd[2],cid;                                    //pipe variables
-    //vector<int> child_list;                         //list to maintain the connected nodes
-    //int child_num=0;
     struct timeval timeout;
     int ready;
-    Client *tmp_client;
+    smNode *tmp_client;
     
-    DEBUGING(4, "Starting server %d\n", nodeID_);
+    DEBUGING(4, "Starting server %d\n", nodeID);
     
     timeout.tv_sec=1;
     timeout.tv_usec=0;
@@ -160,7 +148,7 @@ void CCHybridServer::listenSocket()
 //Method to accept a new connection request from a client
 void CCHybridServer::acceptClientConnection()
 {
-    Client *tmp_client;
+    smNode *tmp_client;
     
     clientptr = (struct sockaddr *) &client;
     clientlen = sizeof(client);
@@ -177,8 +165,8 @@ void CCHybridServer::acceptClientConnection()
     //setnonblocking(newsock_);
     
     // Initialize new client
-    tmp_client = new Client();
-    tmp_client->req_counter = 0;
+    tmp_client = new smNode();
+    tmp_client->req_counter_ = 0;
     tmp_client->sock = newsock_;
     
     // add client in the list of clients
@@ -204,19 +192,19 @@ void CCHybridServer::acceptClientConnection()
     
     //create a new thread to handle the client
     try {
-        threads.push_back(std::thread(&CCHybridServer::serveClient, this, tmp_client));
+        threads.push_back(std::thread(&CCHybridServer::serve_client, this, tmp_client));
     } catch (int err) {
         REPORTERROR("An exception occured while creating the thread. Err No:%d\n",  err);
     }
 }
 
 
-void CCHybridServer::serveClient(Client *tmp_client)
+void CCHybridServer::serve_client(smNode *tmp_client)
 {
     Packet p;
     std::string type_str;
-    RWObject local_replica;
-    std::vector<Client>::iterator it;
+    CCHybridReplica *local_replica;
+    std::vector<smNode>::iterator it;
     int msg_type = READ;
     
     while (msg_type != TERMINATE) {
@@ -240,7 +228,7 @@ void CCHybridServer::serveClient(Client *tmp_client)
                     type_str = (p.msgType == READ)? "READ" : "WRITE";
                     
                     //find the requested object in the local set of replicas
-                    local_replica = getLocalReplica(p.obj);
+                    local_replica = get_local_replica(p.obj);
                     
                     std::cout << "\n********************************************************\n";
                     DEBUGING(6,"%s msg from %d, Object ID: %s, Tag Rcvd: <%d,%d>, Local Tag: <%d, %d>\n",
@@ -248,12 +236,13 @@ void CCHybridServer::serveClient(Client *tmp_client)
                              p.src_,
                              p.obj.get_id().c_str(),
                              p.obj.get_tag().ts, p.obj.get_tag().wid,
-                             local_replica.tg_.ts, local_replica.tg_.wid
+                             local_replica->tg_.ts, local_replica->tg_.wid
                              );
                     std::cout << "---------------------------------------------------------\n";
                     
                     
                     // if it is a write msg -> receive the file
+                    /*
                     if ( msg_type == WRITE)
                     {
                         char fpath[100];
@@ -266,6 +255,7 @@ void CCHybridServer::serveClient(Client *tmp_client)
                         if( !rcv_file(tmp_client->sock, fpath) )
                             return;    // receive the object's file from the client
                     }
+                    */
                     
                     mtx.lock();
                     serve(&p, tmp_client, local_replica);
@@ -280,13 +270,8 @@ void CCHybridServer::serveClient(Client *tmp_client)
                     it = std::find(serve_clients_.begin(), serve_clients_.end(), *tmp_client);
                     if (it != serve_clients_.end())
                     {
-                        //serve_clients_.erase(serve_clients_.begin()+i); // Erase from the list of clients
                         serve_clients_.erase(it); // Erase from the list of clients
                     }
-                    //FD_CLR(tmp_client->sock, &childFDs);            // Remove from FD
-                    //child_list[i]=0;
-                    //FD_CLR(child_list[i], &childFDs); // Remove from FD
-                    //exit(0);
                     break;
             }
         } catch (int err) {
@@ -298,68 +283,33 @@ void CCHybridServer::serveClient(Client *tmp_client)
 }
 
 //Method to search for an object in the set of replicas and return that object if found
-RWObject CCHybridServer::getLocalReplica(RWObject obj)
-{
-    std::set<RWObject*>::iterator oit;
-    RWObject ret_obj;
-    
-    //find the object of interest
-    oit = objects_set.find(&obj);
-    
+CCHybridReplica* CCHybridServer::get_local_replica(RWObject obj)
+{   
     // if the object is not found -> initialize the object with default values
-    if( oit == objects_set.end() )
+    if( local_objects_.find(obj.objID_) == local_objects_.end() )
     {
         // Create an object of the same type
-        RWObject temp_obj(obj.get_id(), obj.get_type(), meta_dir_);
+        CCHybridReplica temp_obj(obj.get_id(), obj.get_type(), meta_dir_);
         
         //oit = objects_set.insert(oit, temp_obj);
-        ret_obj = insertLocalReplica(temp_obj);
-    }
-    else
-    {
-        ret_obj = *((RWObject*) *oit);
+        local_objects_[obj.objID_] = temp_obj;
+        //ret_obj = insertLocalReplica(temp_obj);
     }
     
-    return ret_obj;
+    return &local_objects_[obj.objID_];
 }
 
-//Method to insert a replica in the replica set, returns a pointer to the element inserted
-RWObject CCHybridServer::insertLocalReplica(RWObject obj)
+void CCHybridServer::serve(Packet *pkt, smNode *c, CCHybridReplica *replica)
 {
-    std::pair<std::set<RWObject*>::iterator,bool> ret;
-    std::set<RWObject*>::iterator oit;
-    RWObject *ret_obj;
-    
-    //remove the outdated object if exists
-    oit = objects_set.find(&obj);
-    if( oit == objects_set.end() )
-    {
-        //objects_set.erase(oit);
-        //}
-    
-        //insert the received one
-        ret = objects_set.insert(&obj);
-        ret_obj = (RWObject*) *ret.first;
-    }
-    else
-    {
-        ret_obj = *oit;
-    }
-    
-    return *ret_obj;
-    
-}
-
-void CCHybridServer::serve(Packet *pkt, Client *c, RWObject replica)
-{
-    //int pid = pkt->src_ - S_;   // position of requesting process in the counter array
     int pid = pkt->src_;
-    std::vector<Client>::iterator cit;
+    CCHybridPacket h_pkt;
+    std::vector<smNode>::iterator cit;
     
     //if(!crashed_){
     c->nodeID = pid;
     
     // file paths
+    /*
     std::stringstream sstm;
     sstm << rcvd_files_dir_.c_str() << "/src" << pkt->src_ << ".[" << pkt->obj.get_tag().ts << "," << pkt->obj.get_tag().wid << "]." << pkt->obj.get_id().c_str() << ".temp";
     
@@ -376,109 +326,107 @@ void CCHybridServer::serve(Packet *pkt, Client *c, RWObject replica)
     {
         copyFile(from, to);
     }
+    */
     
     
-    if(pkt->counter >= c->req_counter)
+    if(pkt->counter >= c->req_counter_)
     {
-        c->req_counter = pkt->counter;
+        c->req_counter_ = pkt->counter;
+
+        if ( replica->tg_ < pkt->obj.tg_ )
+        {
+            // Update the local replica
+            replica->tg_ = pkt->obj.tg_;
+            replica->set_value(pkt->obj.get_value());
+            replica->set_pvalue(pkt->obj.get_pvalue());
+
+            // reset the seen set
+            replica->seen_.clear();
+
+            //resete propagation flag
+            replica->propagated_tg_ = 0;
+        }
+
+        // insert node in the seen set
+        replica->seen_.insert(*c);
+
+        // changed the propagation flag if coming from reader
+        if ( pkt->obj.tg_ == replica->tg_ && pkt->msgType == INFORM)
+        {
+            replica->propagated_tg_ = 1;
+        }
+
         
         // Send the appropriate reply
         switch(pkt->msgType){
             case READ:
                 
-                prepare_pkt(c, READACK, replica);                   // send a READACK to client c
+                h_pkt = prepare_pkt(c, READACK, *replica);                   // send a READACK to client c
                 
                 // if we failed to send the file -> exit the thread
-                if ( !send_file(c->sock, (char*) to.c_str()) ) exit(EXIT_FAILURE);
+                if ( !send_pkt<CCHybridPacket>(c->sock, &h_pkt) ) exit(EXIT_FAILURE);
+
+                // if we failed to send the file -> exit the thread
+                //if ( !send_file(c->sock, (char*) to.c_str()) ) exit(EXIT_FAILURE);
                 
                 DEBUGING(4,"READACK to %d, rcvTag=<%d,%d>, sendTag=<%d,%d>\n",
                          pkt->src_,
                          pkt->obj.get_tag().ts, pkt->obj.get_tag().wid,
-                         replica.tg_.ts, replica.tg_.wid);
+                         replica->tg_.ts, replica->tg_.wid);
                 std::cout << "********************************************************\n";
                 break;
             case WRITE:
-                if(pkt->obj.get_tag() > replica.tg_)
-                {
-                    //replace with the new object
-                    //replica = insertLocalReplica(pkt->obj);
-                    if( !replica.set_latest_tag(pkt->obj.tg_) )
-                    {
-                        REPORTERROR("Failed changing replica's tag to <%d,%d>", pkt->obj.tg_.ts, pkt->obj.tg_.wid);
-                        exit(EXIT_FAILURE);
-                    }
-                    
-                    // copy the file to the permanent storage
-                    if(fileExists(from))
-                    {
-                        copyFile(from, to);
-                    
-                        DEBUGING(4,"New maxTag=<%d,%d> From:%d\n --> Copied journal from %s to %s\n",
-                             replica.tg_.ts, replica.tg_.wid,
-                             pkt->src_,
-                             from.c_str(),
-                             to.c_str()
-                             );
-                    }
-                    else
-                    {
-                        DEBUGING(4,"New maxTag=<%d,%d> From:%d\n --> Failed Copied journal %s to %s\n",
-                                 replica.tg_.ts, replica.tg_.wid,
-                                 pkt->src_,
-                                 from.c_str(),
-                                 to.c_str()
-                                 );
-                    }
-                }
-                
-                prepare_pkt(c, WRITEACK, replica);                  // send a WRITEACK to client c
+
+                h_pkt = prepare_pkt(c, WRITEACK, *replica);                  // send a WRITEACK to client c
+
+                // if we failed to send the file -> exit the thread
+                if ( !send_pkt<CCHybridPacket>(c->sock, &h_pkt) ) exit(EXIT_FAILURE);
                 
                 DEBUGING(4,"WRITEACK from %d, rcvTag=<%d,%d>, sendTag=<%d,%d>\n",
                          pkt->src_,
                          pkt->obj.get_tag().ts, pkt->obj.get_tag().wid,
-                         replica.tg_.ts, replica.tg_.wid);
+                         replica->tg_.ts, replica->tg_.wid);
                 std::cout << "********************************************************\n";
                 break;
         }
+
+        // update replica's local metadata
+        replica->save_metadata();
         
     }
     else{
         DEBUGING(2,"Discarding pkt from %d, pktCounter:%d, srvCounter:%d\n",
                  pkt->src_,
                  pkt->counter,
-                 c->req_counter);
-        prepare_pkt(c, COUNTER_ERROR, pkt->obj);//,0);
+                 c->req_counter_);
+        prepare_pkt(c, COUNTER_ERROR, *replica);//,0);
     }
-    //}
-    /*else
-     DEBUGING(2,"Server %d crashed.\n",nodeID_);
-     */
 }
 
-void CCHybridServer::prepare_pkt(Client *dest, int msgType, RWObject obj){
+CCHybridPacket CCHybridServer::prepare_pkt(smNode *dest, int msgType, CCHybridReplica obj){
     
-    Packet p;
+    CCHybridPacket p;
     std::set<Tag>::iterator it;
     
     //Specify the destination of the packet
-    p.src_=nodeID_;
+    p.src_=nodeID;
     p.dst_=dest->nodeID;
     
     //Specify the fields of the packet accordingly
     p.msgType = msgType;
-    p.counter = dest->req_counter;
+    p.counter = dest->req_counter_;
     p.obj = obj;
-    //p.tg = tg_;
-    //p.value = value_;
-    
-    send_pkt(dest->sock, &p);
-    
-    
-    DEBUGING(2,"Sent packet to PID:%d, Type:%d, Tag:<%d,%d,%d>, Counter:%d Object:%s\n",
+    p.views_ = obj.seen_.size();
+    p.tg_propagated_ = obj.propagated_tg_;
+
+    DEBUGING(2,"Prepared packet to PID:%d, Type:%d, Tag:<%d,%d,%d>, Counter:%d Object:%s\n",
              p.dst_,
              p.msgType,
              p.obj.get_tag().ts,p.obj.get_tag().wid,p.obj.get_tag().wc,
              p.counter,
              p.obj.get_id().c_str());
+
+    return p;
+    
 }
 

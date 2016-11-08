@@ -11,6 +11,8 @@
 //#include "Proto-ABD/ABDReader.hpp"
 #include "ABD/abd_client.hpp"
 #include "ABD/abd_server.hpp"
+#include "CCHYBRID/cchybrid_client.hpp"
+#include "CCHYBRID/cchybrid_server.hpp"
 #include "arguments.h"
 #include <string>
 
@@ -47,7 +49,19 @@ int main(int argc, char** argv)
             int client_type = (args.type == "read")? READER : WRITER;
 
             //ABDClient *r = new ABDClient (args.nodeid, READER, 10, 10);
-            ABDClient client(args.nodeid, client_type, args.path);
+            switch(args.protocol)
+            {
+            case PROTO_ABD:
+                ABDClient client(args.nodeid, client_type, args.path);
+                break;
+            case PROTO_CCHYBRID:
+                CCHybridClient client(args.nodeid, client_type, args.path);
+                break;
+            default:
+                std::cout << "\n *** [ERROR] This protocol is not implemented yet! ***\n\n";
+                exit(EXIT_FAILURE);
+            }
+
             client.set_debug_lvl(args.debuglvl);
 
             //show operation menu - "yes" or "y":show menu

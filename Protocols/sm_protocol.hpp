@@ -56,7 +56,8 @@ class Tag {
     // overloaded >= operator
     bool operator >= (const Tag& tg1) const;
 
-		//bool operator < (const Tag& tg1);
+    // overloaded < operator
+    bool operator < (const Tag& tg1);
 };
 
 // shared object structure

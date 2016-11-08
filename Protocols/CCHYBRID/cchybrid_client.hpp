@@ -68,13 +68,12 @@ protected:
 		std::string rcvd_files_dir_;
 		std::string logs_dir_;
 		std::string meta_dir_;
+        void setup_dirs(std::string root);
     
 		//structures to group and keep the messages rcved
         std::unordered_map<int, CCHybridPacket> servers_replies_;       // servers asociated with packets they sent
         std::set<smNode> servers_sent_;                         // servers we sent a msg to
 
-        //Initialization procedures
-        void setup_dirs(std::string opath);
 
         //Protocol specific procedures
         //int is_quorum_complete();

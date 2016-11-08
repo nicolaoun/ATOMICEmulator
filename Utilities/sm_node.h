@@ -84,12 +84,13 @@ enum QuorumViews{
 };
 
 // MWMR Protocols
-enum MWMRProtocol{
-    PROTO_ABD,
-    PROTO_MWABD,
-    PROTO_CWFR,
-    PROTO_SSO,
-    PROTO_SSO_APPRX,
+enum Protocol{
+    PROTO_ABD = 1,
+    PROTO_MWABD = 2,
+    PROTO_CWFR = 3,
+    PROTO_SSO = 4,
+    PROTO_SSO_APPRX = 5,
+    PROTO_CCHYBRID = 6
 };
 
 // Message Types

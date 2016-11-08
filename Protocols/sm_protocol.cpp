@@ -45,12 +45,11 @@ bool Tag::operator >= (const Tag& tg1) const
 	return (*this == tg1 || *this > tg1);
 }
 
-/*
 bool Tag::operator < (const Tag& tg1)
 {
-	return (!(*this > tg1) && !(*this == tg1));
+    return ( !(*this >= tg1) );
 }
-*/
+
 
 RWObject::RWObject() :
     meta_dir_("./meta"),
