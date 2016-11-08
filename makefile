@@ -177,6 +177,33 @@ Protocols/ABD/abd_server.cpp.s:
 	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/ABD/abd_server.cpp.s
 .PHONY : Protocols/ABD/abd_server.cpp.s
 
+Protocols/CCHYBRID/cchybrid_client.o: Protocols/CCHYBRID/cchybrid_client.cpp.o
+
+.PHONY : Protocols/CCHYBRID/cchybrid_client.o
+
+# target to build an object file
+Protocols/CCHYBRID/cchybrid_client.cpp.o:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/CCHYBRID/cchybrid_client.cpp.o
+.PHONY : Protocols/CCHYBRID/cchybrid_client.cpp.o
+
+Protocols/CCHYBRID/cchybrid_client.i: Protocols/CCHYBRID/cchybrid_client.cpp.i
+
+.PHONY : Protocols/CCHYBRID/cchybrid_client.i
+
+# target to preprocess a source file
+Protocols/CCHYBRID/cchybrid_client.cpp.i:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/CCHYBRID/cchybrid_client.cpp.i
+.PHONY : Protocols/CCHYBRID/cchybrid_client.cpp.i
+
+Protocols/CCHYBRID/cchybrid_client.s: Protocols/CCHYBRID/cchybrid_client.cpp.s
+
+.PHONY : Protocols/CCHYBRID/cchybrid_client.s
+
+# target to generate assembly for a file
+Protocols/CCHYBRID/cchybrid_client.cpp.s:
+	$(MAKE) -f CMakeFiles/asm.dir/build.make CMakeFiles/asm.dir/Protocols/CCHYBRID/cchybrid_client.cpp.s
+.PHONY : Protocols/CCHYBRID/cchybrid_client.cpp.s
+
 Protocols/sm_protocol.o: Protocols/sm_protocol.cpp.o
 
 .PHONY : Protocols/sm_protocol.o
@@ -381,6 +408,9 @@ help:
 	@echo "... Protocols/ABD/abd_server.o"
 	@echo "... Protocols/ABD/abd_server.i"
 	@echo "... Protocols/ABD/abd_server.s"
+	@echo "... Protocols/CCHYBRID/cchybrid_client.o"
+	@echo "... Protocols/CCHYBRID/cchybrid_client.i"
+	@echo "... Protocols/CCHYBRID/cchybrid_client.s"
 	@echo "... Protocols/sm_protocol.o"
 	@echo "... Protocols/sm_protocol.i"
 	@echo "... Protocols/sm_protocol.s"

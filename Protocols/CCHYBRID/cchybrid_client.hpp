@@ -25,25 +25,17 @@ SOFTWARE.
 #ifndef CCHybridClient_hpp
 #define CCHybridClient_hpp
 
-#include "sm_protocol.hpp"
-#include <iostream>
-#include <stdio.h>          /* For I/O */
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <mutex>
+#include "cchybrid_protocol.hpp"
 
-
-#endif /* SFWReader_hpp */
-
-class CCHybridClient : smClient {
+class CCHybridClient : smNode {
 public:
-    //SFWReader(int nodeID, int S, int W, int R, int Q, float rInt, int ops, int proto, char* qf);
     CCHybridClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
-    void invoke_op(std::string objID, object_t objType, std::string path="./", std::string value="");
-    //void auto_read(std::string objID, float rInt, int num_ops, std::string path="./", std::string value="");
+    void invoke_op(std::string objID, std::string value="");
+
     void set_debug_lvl(int lvl){debuglvl = lvl;}
-    bool has_commited(){return commit_flag_;}
+    void set_failures(int f) {failures_ = f;}
+
+    //bool has_commited(){return commit_flag_;}
     void stop();
     void terminate();
 
@@ -58,13 +50,19 @@ protected:
         char objMetaFile[25];               // file that holds latest tag value
         Tag tg_;                            // tag seen by the current node
         std::string value_;                 // latest object value retrieved
-        Tag maxTag;                         // maximum tag discovered during a read round
-		std::string maxValue;
+        std::string maxValue;
 		int max_server_id;
+        int failures_;                      // number of maximum server failures
     
-		std::vector<RWObject> objects;
+        std::unordered_map<std::string, RWObject> objects;
 		RWObject   *obj;
-    
+
+        // Protocol variables
+        Tag max_tag_;                         // maximum tag discovered during a read round
+        int max_views_;
+        std::unordered_map<int, int> max_servers_;
+        std::vector<int> prop_servers_;
+
 		// File Locations
 		std::string client_root_dir_;
 		std::string rcvd_files_dir_;
@@ -72,22 +70,27 @@ protected:
 		std::string meta_dir_;
     
 		//structures to group and keep the messages rcved
-		std::set<int> servers_replied_;          // ids of the servers that replied
-		std::set<Server> servers_sent_;          // servers we sent a msg to
-		std::set<Packet> pkts_rcved_;
-    
+        std::unordered_map<int, CCHybridPacket> servers_replies_;       // servers asociated with packets they sent
+        std::set<smNode> servers_sent_;                         // servers we sent a msg to
+
         //Initialization procedures
         void setup_dirs(std::string opath);
 
         //Protocol specific procedures
         //int is_quorum_complete();
+        void invoke_read();
+        void invoke_write(std::string v);
 		void process_replies();
-        Tag find_max_tag();
+        Tag find_max_params();
+        bool is_predicate_valid();
     
         // Communication procedures
-        Packet prepare_pkt(int, Server s, int);
+        Packet prepare_pkt(int, smNode s, int);
 		void send_to_all(int);
-        void send_to_server(Server s, int m_type);
-		void rcv_from_quorum();
+        bool send_to_server(smNode s, int m_type);
+        void rcv_from_quorum(int min);
 		void close_connections();
 };
+
+
+#endif /* CCHybridClient_hpp */

@@ -38,6 +38,7 @@
 //data structures
 #include <set>
 #include <vector>
+#include <unordered_map>
 #include <string.h>
 #include <unistd.h>
 #include <stdarg.h>
@@ -226,13 +227,10 @@ protected:
     fd_set readfds,crashfds;    // fd set descriptors
     std::vector<smNode> servers_list_;
     std::set<smNode> servers_connected_;
-    //std::vector<Node> servers_list_;
-    //std::set<Node> servers_connected_;
     std::set<int> servers_id_connected_;
     void parse_hosts(const char*);
     void connect_to_hosts();
     bool connect_to_server(smNode *s);
-    //bool connect_to_server(Node *n);
     bool connect_to_node(smNode *n);
     void setnonblocking(int sock);
     

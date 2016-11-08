@@ -78,8 +78,10 @@ public:
 };
 */
 
-std::string get_datetime();
-std::string get_date();
+std::string get_datetime_str();
+std::string get_date_str();
+
+double get_datetime_sec();
 
 
 

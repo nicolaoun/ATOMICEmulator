@@ -65,8 +65,7 @@ RWObject::RWObject(int oID, object_t oType, const std::string &meta)
 	objID_=sstm.str();
     
     meta_dir_ = meta;
-    
-    
+       
     if(!directoryExists(meta_dir_)){
         createDirectory(meta_dir_);
     }
@@ -75,7 +74,7 @@ RWObject::RWObject(int oID, object_t oType, const std::string &meta)
     file_path_ ="./";
     value_ ="";
 
-	//load latest known tag
+    //load latest known data for the object
     load_metadata();
 }
 
@@ -139,6 +138,7 @@ bool RWObject::load_metadata()
             tg_.wid = d["wid"].GetInt();
             tg_.ts = d["ts"].GetInt();
             value_ = d["value"].GetString();
+            p_value_ = d["pvalue"].GetString();
         }
         instrm.close();
     }
@@ -146,17 +146,19 @@ bool RWObject::load_metadata()
     {
         outstrm.open(objmfile, std::ios::out);
 
-        tg_.ts=0;
-        tg_.wid=0;
-        tg_.wc=0;
+        tg_.ts = 0;
+        tg_.wid = 0;
+        tg_.wc = 0;
+        p_value_ = "";
 
-        //JSON: { "oID" : "[object id]", "oType" : [object type], "wid" : [writer id], "ts" : [timestamp], "value" : "[value]"}
+        //JSON: { "oID" : "[object id]", "oType" : [object type], "wid" : [writer id], "ts" : [timestamp], "value" : "[value]", "pvalue" : "[pvalue]"}
         outstrm << "{";
         outstrm << "\"oID\" : \"" << objID_.c_str() << "\", ";
         outstrm << "\"oType\" :" << objType_ << ", ";
         outstrm << "\"wid\" : " << tg_.wid << ", ";
         outstrm << "\"ts\" : " << tg_.ts << ", ";
-        outstrm << "\"value\" : \"" << value_ << "\"}\n";
+        outstrm << "\"value\" : \"" << value_ << ",";
+        outstrm << "\"pvalue\" : \"" << p_value_ << "\"}\n";
         outstrm.close();
     }
 
@@ -174,13 +176,14 @@ bool RWObject::save_metadata()
     // open objects meta data to write the objects tag
     outstrm.open(objmfile, std::ios::out);
 
-    //JSON: { "oID" : "[object id]", "oType" : [object type], "wid" : [writer id], "ts" : [timestamp], "value" : "[value]"}
+    //JSON: { "oID" : "[object id]", "oType" : [object type], "wid" : [writer id], "ts" : [timestamp], "value" : "[value]",  "pvalue" : "[pvalue]"}
     outstrm << "{";
     outstrm << "\"oID\" : \"" << objID_.c_str() << "\", ";
     outstrm << "\"oType\" :" << objType_ << ", ";
     outstrm << "\"wid\" : " << tg_.wid << ", ";
     outstrm << "\"ts\" : " << tg_.ts << ", ";
-    outstrm << "\"value\" : \"" << value_ << "\"}\n";
+    outstrm << "\"value\" : \"" << value_ << ",";
+    outstrm << "\"pvalue\" : \"" << p_value_ << "\"}\n";
     outstrm.close();
 
     outstrm.close();

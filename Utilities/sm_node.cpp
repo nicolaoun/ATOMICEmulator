@@ -125,7 +125,7 @@ void smNode::init_logfile(std::string file){
     //sprintf(infofile,"%s.info.log", logfile.c_str());
     //sprintf(errorfile,"%s.error.log", logfile.c_str());
     
-    DEBUGING(7, "\t%s - DEBUG_LEVEL %d\n************************\n", get_datetime().c_str(), debuglvl);
+    DEBUGING(7, "\t%s - DEBUG_LEVEL %d\n************************\n", get_datetime_str().c_str(), debuglvl);
 }
 
 /**********************************************************/
@@ -446,6 +446,8 @@ bool smNode::connect_to_node(smNode *n)
     std::ostringstream oss;
     oss << "tcp://" << n->ip_addr << ":" << n->port;
     n->z_sock->connect (oss.str());
+
+    return true;
 }
 
 

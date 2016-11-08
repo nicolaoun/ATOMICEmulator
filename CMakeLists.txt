@@ -13,6 +13,9 @@ set(SOURCE_FILES
         Protocols/ABD/abd_server.cpp
         Protocols/ABD/abd_server.hpp
 
+        Protocols/CCHYBRID/cchybrid_client.cpp
+        Protocols/CCHYBRID/cchybrid_client.hpp
+
         Utilities/set_operations.hpp
         Utilities/set_operations.cpp
         Utilities/sm_common.cpp
@@ -30,7 +33,6 @@ set(SOURCE_FILES
 include_directories(${CMAKE_SOURCE_DIR}/Protocols)
 include_directories(${CMAKE_SOURCE_DIR}/Utilities)
 include_directories(/usr/local/lib)
-#TARGET_LINK_LIBRARIES(zmq-static)
 
 add_executable(asm ${SOURCE_FILES})
 

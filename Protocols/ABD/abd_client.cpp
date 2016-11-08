@@ -402,7 +402,7 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath
         DEBUGING(6,"Invoking read %d on object %s at %s \n",
                  num_reads_,
                  obj->get_id().c_str(),
-                 get_datetime().c_str()
+                 get_datetime_str().c_str()
                  );
         std::cout << "***************************************\n";
     }
@@ -413,7 +413,7 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath
         DEBUGING(6,"Invoking write %d on object %s at %s \n",
                  num_writes_,
                  obj->get_id().c_str(),
-                 get_datetime().c_str());
+                 get_datetime_str().c_str());
         std::cout << "***************************************\n";
     }
 
