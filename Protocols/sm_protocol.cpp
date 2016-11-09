@@ -156,7 +156,7 @@ bool RWObject::load_metadata()
         outstrm << "\"oType\" :" << objType_ << ", ";
         outstrm << "\"wid\" : " << tg_.wid << ", ";
         outstrm << "\"ts\" : " << tg_.ts << ", ";
-        outstrm << "\"value\" : \"" << value_ << ",";
+        outstrm << "\"value\" : \"" << value_ << "\",";
         outstrm << "\"pvalue\" : \"" << p_value_ << "\"}\n";
         outstrm.close();
     }
@@ -181,7 +181,7 @@ bool RWObject::save_metadata()
     outstrm << "\"oType\" :" << objType_ << ", ";
     outstrm << "\"wid\" : " << tg_.wid << ", ";
     outstrm << "\"ts\" : " << tg_.ts << ", ";
-    outstrm << "\"value\" : \"" << value_ << ",";
+    outstrm << "\"value\" : \"" << value_ << "\",";
     outstrm << "\"pvalue\" : \"" << p_value_ << "\"}\n";
     outstrm.close();
 

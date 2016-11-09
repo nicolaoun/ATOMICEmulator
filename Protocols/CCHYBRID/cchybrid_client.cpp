@@ -304,7 +304,7 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
  *         PROTOCOL SPECIFIC METHODS
  ************************************************/
 
-void CCHybridClient::invoke_op(std::string objID, std::string value){
+void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string value){
     std::string op_type="READ";
     int num_ops = 0, num_exch;
 

@@ -27,10 +27,10 @@ SOFTWARE.
 
 #include "cchybrid_protocol.hpp"
 
-class CCHybridClient : smNode {
+class CCHybridClient : public smNode {
 public:
     CCHybridClient(int nodeID, int role, std::string opath, std::string sfile="servers.list");
-    void invoke_op(std::string objID, std::string value="");
+    void invoke_op(std::string objID, object_t objType, std::string value="");
 
     void set_debug_lvl(int lvl){debuglvl = lvl;}
     void set_failures(int f) {failures_ = f;}

@@ -38,20 +38,7 @@ ABDClient::ABDClient(int id, int role, std::string opath, std::string sfile) {
     value_ = "";
     total_ops_ = 1;
 
-    //setup local directories
-    setup_dirs(opath);
-    
-    //read the servers
-    parse_hosts(sfile.c_str());
-    
-    DEBUGING(4,"Initialized, Server file: %s\n",
-             sfile.c_str());
-}
-
-void ABDClient::setup_dirs(std::string opath)
-{
-
-    // specify the node's paths
+    // specify the node's root dir
     if ( opath == "")
     {
         std::stringstream sstm;
@@ -63,21 +50,34 @@ void ABDClient::setup_dirs(std::string opath)
         client_root_dir_ = opath;
     }
 
-    if(!directoryExists(client_root_dir_)) {
-        createDirectory(client_root_dir_);
+    //setup local directories
+    setup_dirs(client_root_dir_);
+    
+    //read the servers
+    parse_hosts(sfile.c_str());
+    
+    DEBUGING(4,"Initialized, Server file: %s\n",
+             sfile.c_str());
+}
+
+void ABDClient::setup_dirs(std::string root_dir)
+{
+
+    if(!directoryExists(root_dir)) {
+        createDirectory(root_dir);
     }
 
-    rcvd_files_dir_ = client_root_dir_ + "/rcvd_files" ;
+    rcvd_files_dir_ = root_dir + "/rcvd_files" ;
     if(!directoryExists(rcvd_files_dir_)) {
         createDirectory(rcvd_files_dir_);
     }
 
-    logs_dir_ = client_root_dir_ + "/logs";
+    logs_dir_ = root_dir + "/logs";
     if(!directoryExists(logs_dir_)) {
         createDirectory(logs_dir_);
     }
 
-    meta_dir_ = client_root_dir_ + "/.meta";
+    meta_dir_ = root_dir + "/.meta";
     if(!directoryExists(meta_dir_)) {
         createDirectory(meta_dir_);
     }
@@ -355,7 +355,7 @@ void ABDClient::rcv_from_quorum(){
  *         PROTOCOL SPECIFIC METHODS
  ************************************************/
 
-void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath, std::string value){
+void ABDClient::invoke_op(std::string objID, object_t objType, std::string value){
     struct timeval sysTime;
     std::string rounds="ONE";
 
@@ -373,7 +373,7 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string fpath
 
     // initialize object details
     RWObject temp_obj(objID, objType, meta_dir_);
-    temp_obj.set_path(fpath);
+    temp_obj.set_path(client_root_dir_);
     temp_obj.set_value(value);
 
     std::vector<RWObject>::iterator oit = std::find(objects.begin(), objects.end(), temp_obj);

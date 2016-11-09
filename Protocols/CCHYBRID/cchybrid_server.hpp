@@ -30,7 +30,7 @@ SOFTWARE.
 #define MAX_CONNECTIONS 5
 
 
-class CCHybridServer : smNode{
+class CCHybridServer : public smNode{
 public:
     CCHybridServer(int serverID, int port);
     void start();
