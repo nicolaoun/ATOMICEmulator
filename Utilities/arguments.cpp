@@ -39,7 +39,7 @@ void unstringify( T& x, const std::string& s ){
 void Arguments::parseArguments(int argc, char** argv){
 	optind = 1;
 	int c;
-	const char optionString[] = "f:v:o:p:t:i:m:d:";
+    const char optionString[] = "f:v:o:p:t:i:m:d:a:";
 	while( (c = getopt(argc, argv, optionString)) != -1 ) {
 		switch (c) {
 			case 'f':
@@ -68,6 +68,7 @@ void Arguments::parseArguments(int argc, char** argv){
                 break;
             case 'a':
                 unstringify(protocol, optarg);
+                break;
 		}
 	}
 

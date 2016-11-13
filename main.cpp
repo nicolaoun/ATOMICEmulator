@@ -58,16 +58,17 @@ int main(int argc, char** argv)
             switch((Protocol) args.protocol)
             {
             case PROTO_ABD:
-                std::cout << "\n*********************************************************\n";
+                std::cout << "*********************************************************\n";
                 std::cout << "                 Protocol running: ABD\n";
                 std::cout << "*********************************************************\n\n";
                 abd_client = new ABDClient(args.nodeid, client_type, args.path);
                 handle_client<ABDClient>(abd_client, args);
                 break;
             case PROTO_CCHYBRID:
-                std::cout << "\n*********************************************************\n";
+                std::cout << "*********************************************************\n";
                 std::cout << "                 Protocol running: CCHYBRID\n";
                 std::cout << "*********************************************************\n\n";
+                std::cout << "Root Dir:" << args.path << "\n";
                 cchybrid_client = new CCHybridClient(args.nodeid, client_type, args.path);
                 handle_client<CCHybridClient>(cchybrid_client, args);
                 break;
@@ -91,14 +92,14 @@ int main(int argc, char** argv)
             switch( (Protocol) args.protocol)
             {
             case PROTO_ABD:
-                std::cout << "\n*********************************************************\n";
+                std::cout << "*********************************************************\n";
                 std::cout << "                 Protocol running: ABD\n";
                 std::cout << "*********************************************************\n\n";
                 abd_server = new ABDServer(args.nodeid, args.port);
                 handle_server<ABDServer>(abd_server, args);
                 break;
             case PROTO_CCHYBRID:
-                std::cout << "\n*********************************************************\n";
+                std::cout << "*********************************************************\n";
                 std::cout << "                 Protocol running: CCHYBRID\n";
                 std::cout << "*********************************************************\n\n";
                 cchybrid_server = new CCHybridServer(args.nodeid, args.port);

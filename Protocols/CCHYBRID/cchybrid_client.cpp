@@ -38,7 +38,7 @@ CCHybridClient::CCHybridClient(int id, int role, std::string opath, std::string 
     
     //setup local directories
     // specify the node's paths
-    if ( opath == "")
+    if ( opath == "" )
     {
         std::stringstream sstm;
         sstm << "./client_" << nodeID;
@@ -49,11 +49,11 @@ CCHybridClient::CCHybridClient(int id, int role, std::string opath, std::string 
         client_root_dir_ = opath;
     }
 
-    setup_dirs(opath);
+    setup_dirs(client_root_dir_);
     
     //read the servers
     parse_hosts(sfile.c_str());
-    
+
     failures_ = S_/2;       //set failures by default to minority
     
     DEBUGING(4,"Initialized, Server file: %s, failures: %d\n",
@@ -297,6 +297,10 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
         DEBUGING(4, "Exiting due to many Server errors...\n");
         exit(1);
     }
+    else
+    {
+        DEBUGING(4, "Received replies from %d servers...\n", servers_replies_.size());
+    }
 }
 
 
@@ -306,7 +310,7 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
 
 void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string value){
     std::string op_type="READ";
-    int num_ops = 0, num_exch;
+    int num_ops = 0, num_exch = 0;
 
     // connect to hosts
     connect_to_hosts();
@@ -454,7 +458,7 @@ void CCHybridClient::process_replies()
     // if too many processes viewed this ts => go to a second phase
     if (max_views_ > ((S_ / failures_) - 2) )
     {
-        DEBUGING(2, "Proceeding to PHASE2, maxViews, bound ", max_views_, ((S_ / failures_) - 2));
+        DEBUGING(2, "Checking the PROPAGATION SET, maxViews: %d, bound: %d\n", max_views_, ((S_ / failures_) - 2));
 
         // if propagated to less than f+1 servers - go to second phase
         if( prop_servers_.size() < failures_ +1)
@@ -462,11 +466,11 @@ void CCHybridClient::process_replies()
             //Phase 2
             mode_ = PHASE2;
 
-            DEBUGING(6, "** Too few servers in propagation set (%d) => Going to PHASE2 **", prop_servers_.size());
+            DEBUGING(6, "** Too few servers in propagation set (%d) => Going to PHASE2 **\n", prop_servers_.size());
         }
         else
         {
-            DEBUGING(6, "** Enough servers in propagation set (%d) => RETURNING Value: %s **", prop_servers_.size(), obj->get_value().c_str());
+            DEBUGING(6, "** Enough servers in propagation set (%d) => RETURNING Value: %s **\n", prop_servers_.size(), obj->get_value().c_str());
 
             mode_ = IDLE;
         }
@@ -476,16 +480,16 @@ void CCHybridClient::process_replies()
     }
     else
     {
-        DEBUGING(2, "Checking the PREDICATE, maxViews, bound ", max_views_, ((S_ / failures_) - 2));
+        DEBUGING(2, "Checking the PREDICATE, maxViews: %d, bound: %d\n", max_views_, ((S_ / failures_) - 2));
 
         //check the predicate to return in one round
         if ( is_predicate_valid () )
         {
-            DEBUGING(6, "** Predicate VALID => RETURNING Value: %s **", obj->get_value().c_str());
+            DEBUGING(6, "** Predicate VALID => RETURNING Value: %s **\n", obj->get_value().c_str());
         }
         else
         {
-            DEBUGING(6, "** Predicate INVALID => RETURNING PValue: %s **", obj->get_pvalue().c_str());
+            DEBUGING(6, "** Predicate INVALID => RETURNING PValue: %s **\n", obj->get_pvalue().c_str());
         }
 
         mode_ = IDLE;
@@ -540,6 +544,11 @@ Tag CCHybridClient::find_max_params()
         pkt_tag = x.second.obj.tg_;
         pkt_views = x.second.views_;
 
+        DEBUGING(3, "Checking tag: <%d, %d>\n",
+                    pkt_tag.ts,
+                    pkt_tag.wid
+                 );
+
         //if new max ts discovered - update the local <ts, value, pvalue>
         if( pkt_tag > obj->tg_)
         {
@@ -547,7 +556,7 @@ Tag CCHybridClient::find_max_params()
             obj->set_value( x.second.obj.get_value() );
             obj->set_pvalue(x.second.obj.get_pvalue());
 
-            DEBUGING(3, "Updated local <tag,value, pvalue> pair to: [<%d, %d>, %s, %s]",
+            DEBUGING(3, "Updated local <tag,value, pvalue> pair to: [<%d, %d>, %s, %s]\n",
                         obj->tg_.ts,
                         obj->tg_.wid,
                         obj->get_value().c_str(),

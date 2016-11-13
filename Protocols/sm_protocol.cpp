@@ -72,6 +72,7 @@ RWObject::RWObject(int oID, object_t oType, const std::string &meta)
     objType_ = oType;
     file_path_ ="./";
     value_ ="";
+    p_value_="";
 
     //load latest known data for the object
     load_metadata();
@@ -89,6 +90,7 @@ RWObject::RWObject(const std::string &oID, object_t oType, const std::string &me
     objType_ = oType;
     file_path_ ="./";
     value_ ="";
+    p_value_="";
 
 	//load latest known tag
     load_metadata();
@@ -148,6 +150,7 @@ bool RWObject::load_metadata()
         tg_.ts = 0;
         tg_.wid = 0;
         tg_.wc = 0;
+        value_ = "";
         p_value_ = "";
 
         //JSON: { "oID" : "[object id]", "oType" : [object type], "wid" : [writer id], "ts" : [timestamp], "value" : "[value]", "pvalue" : "[pvalue]"}
