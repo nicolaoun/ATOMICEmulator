@@ -55,6 +55,8 @@
 #include <algorithm>
 #include <thread>
 #include <mutex>
+//JSON
+#include "rapidjson/document.h"
 
 // Process Types
 enum ProcessType{
@@ -107,7 +109,7 @@ enum MessageType{
 };
 
 // Network Settings
-const std::size_t MAX_BUFFER_SIZE = 100;
+const std::size_t MAX_BUFFER_SIZE = 1024;
 
 // Error Types
 enum ErrorType{
@@ -141,13 +143,28 @@ public:
     virtual void serialize(std::ostream& stream)
     {
         // Serialization code
-        stream << msgType << " "  << fsize << " " << counter;
+        // stream << msgType << " "  << fsize << " " << counter;
+        stream << "{\"mType\" : " << msgType << ", \"fSize\" : "  << fsize << "\"Counter \" : " << counter <<"}";
     }
     
     virtual void deserialize(std::istream& stream)
     {
         // Deserialization code
         stream >> msgType >> fsize >> counter;
+    }
+
+    virtual void deserialize(std::string jsonstr)
+    {
+        rapidjson::Document jsonDoc;
+
+        //parse JSON
+        jsonDoc.Parse(jsonstr.c_str());
+
+        // Deserialization code
+        //stream >> msgType >> fsize >> counter;
+        msgType = jsonDoc["mType"].GetInt();
+        fsize = jsonDoc["fSize"].GetInt();
+        counter = jsonDoc["Counter"].GetInt();
     }
 };
 
@@ -291,9 +308,17 @@ protected:
             DEBUGING(1, "Expecting to receive packet at socket %d...\n", sock);
             
             int rcv_bytes = recv(sock, rcvbuf, MAX_BUFFER_SIZE,0);
+
+            DEBUGING(2, "Received Buffer: %s, Bytes:%d, Socket %d...\n", rcvbuf, rcv_bytes, sock);
             
             if ( rcv_bytes < 0) { /* Get message */
                 REPORTERROR("Receiving packet on socket %d", sock);
+                return false;
+            }
+
+            // empty message
+            if ( rcv_bytes == 0)
+            {
                 return false;
             }
             
@@ -302,7 +327,8 @@ protected:
             
             // deserialize the packet received
             std::istream istm(&sb);
-            p->deserialize(istm);
+            //p->deserialize(istm);
+            p->deserialize(sb.str());
             
             DEBUGING(1, "Received Buffer: %s, Size: %d", sb.str().c_str(), rcv_bytes);
         }

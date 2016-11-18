@@ -378,8 +378,7 @@ void smNode::connect_to_hosts(){
         
 	} // end EOF while
 
-	DEBUGING(2, "\nConnected to %d servers... \n\n", servers_connected_.size());
-
+    DEBUGING(2, "Connected to %d servers... \n\n", servers_connected_.size());
 }
 
 /**
@@ -391,7 +390,7 @@ bool smNode::connect_to_server(smNode *s)
     struct sockaddr_in _server;
     struct sockaddr *serverptr;
     struct hostent *rem;
-    
+
     if ((s->sock  = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     { /* Create socket */
         REPORTERROR("Socket");
@@ -428,12 +427,9 @@ bool smNode::connect_to_server(smNode *s)
     return true;
 }
 
+/*
 bool smNode::connect_to_node(smNode *n)
 {
-    //  Prepare our context and socket
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REQ);
-
     n->z_sock = &socket;
 
     // Configure socket to not wait at close time
@@ -449,6 +445,7 @@ bool smNode::connect_to_node(smNode *n)
 
     return true;
 }
+*/
 
 
 void smNode::setnonblocking(int sock)

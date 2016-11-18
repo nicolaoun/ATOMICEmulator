@@ -95,9 +95,9 @@ void CCHybridClient::setup_dirs(std::string root_dir)
  *         COMMUNICATION METHODS
  ************************************************/
 
-Packet CCHybridClient::prepare_pkt(int counter, smNode dest, int msgType)
+CCHybridPacket CCHybridClient::prepare_pkt(int counter, smNode dest, int msgType)
 {
-    Packet p;
+    CCHybridPacket p;
     Tag tg;
         
     //Specify the destination of the packet
@@ -149,7 +149,7 @@ void CCHybridClient::send_to_all(int m_type){
 bool CCHybridClient::send_to_server(smNode s, int m_type)
 {
     char fpath[100];
-    Packet p;
+    CCHybridPacket p;
 
     p = prepare_pkt(req_counter_, s, m_type);
 
@@ -162,30 +162,12 @@ bool CCHybridClient::send_to_server(smNode s, int m_type)
              p.counter);
 
     // try to send meta and file to the server -> if succeed add server in the sent set
-    if( send_pkt<Packet>(s.sock, &p) )
+
+    if( send_pkt<CCHybridPacket>(s.sock, &p) )
     {
-        if( m_type == WRITE && p.obj.get_type() == FILE_T)
-        {
-            //mtx.lock();
-            // send the object value
-            //sprintf(fpath, "%s/%s_%d_%d",client_root_dir_.c_str(), obj->get_id().c_str(), obj->tg_.ts,obj->tg_.wid);
-            sprintf(fpath, "%s/%s",client_root_dir_.c_str(), obj->get_id().c_str());
-            if( send_file(s.sock, fpath))
-            {
-                return true;
-            }
-            else
-            {
-                return false;       //failed to send file
-            }
-            //mtx.unlock();
-        }
-        else
-        {
             //mtx.lock();
             return true;
             //mtx.unlock();
-        }
     }
     else
     {
@@ -239,16 +221,16 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
                     if ( rcv_pkt<CCHybridPacket>((*it).sock, &p) )
                     {
                         
-                        DEBUGING(3,"Received packet from S:%d, Type:%d, Tag:<%d,%d,%d>, Object: <%s, %s, %s>, Counter:%d\n",
+                        DEBUGING(3,"Received packet from S:%d, Type:%d, Tag:<%d,%d,%d>, Object: <%s, %s, %s>, Counter:%d, Views:%d, Propagated:%d\n",
                                  p.src_,
                                  p.msgType,
                                  p.obj.get_tag().ts,p.obj.get_tag().wid,p.obj.get_tag().wc,
                                  p.obj.get_id().c_str(),
                                  p.obj.get_path().c_str(),
                                  p.obj.get_value().c_str(),
-                                 p.counter);
+                                 p.counter, p.obj.views_, p.obj.propagated_tg_);
                         
-                        if ( (p.msgType == READACK || p.msgType == WRITEACK)  && p.counter==req_counter_ )
+                        if ( (p.msgType == READACK || p.msgType == WRITEACK || p.msgType == INFORMACK)  && p.counter==req_counter_ )
                         {
                             servers_replies_[(*it).nodeID]=p;
                         }
@@ -327,8 +309,7 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
     // initialize object details
     if( objects.find(objID) == objects.end() )
     {
-        RWObject temp_obj(objID, VALUE_T, meta_dir_);
-        temp_obj.set_value(value);
+        CCHybridObject temp_obj(objID, VALUE_T, meta_dir_);
         objects[objID] = temp_obj;
     }
 
@@ -340,7 +321,7 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
     switch (role_)
     {
     case READER:
-        invoke_read();
+        num_exch = invoke_read();
         op_type = "READ";
         num_ops = num_reads_;
         break;
@@ -357,15 +338,16 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
     // Calculate operation duration
     totTime+=endTime-startTime;
 
-    std::cout << "\n\n**************************************************\n";
+    std::cout << "\n**************************************************\n";
     DEBUGING(6, "%s#:%d, Object: %s, Duration:%f, Tag:<%d,%d,%d>, Values:[%s, %s] @ %d EXCH\n",
              op_type.c_str(),
              num_ops,
+             obj->get_id().c_str(),
              endTime-startTime,
              obj->tg_.ts,obj->tg_.wid,obj->tg_.wc,
-             obj->get_id().c_str(),
              obj->get_value().c_str(), obj->get_pvalue().c_str(),
              num_exch);
+
     std::cout << "******************************************************\n\n";
 
     //disconnect from the hosts
@@ -376,7 +358,7 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
     obj->save_metadata();
 }
 
-void CCHybridClient::invoke_read()
+int CCHybridClient::invoke_read()
 {
     mode_ = PHASE1;
 
@@ -406,13 +388,17 @@ void CCHybridClient::invoke_read()
 
         num_two_comm_++;
 
-        send_to_all(WRITE); // send the latest tag to all the servers
+        send_to_all(INFORM); // send the latest tag to all the servers
         rcv_from_quorum(S_- failures_);  // wait for a majority to reply
         // END PHASE2
+
+        return 2;
     }
     else
     {
         num_one_comm_++;
+
+        return 1;
     }
 }
 
@@ -434,6 +420,7 @@ void CCHybridClient::invoke_write(std::string v)
     // PHASE1
     // generate new tag
     obj->tg_.ts = obj->tg_.ts + 1;
+    obj->tg_.wid = this->nodeID;
     obj->set_pvalue( obj->get_value() );
     obj->set_value( v );
 
@@ -508,12 +495,12 @@ CCHybridClient::is_predicate_valid()
     // construct the buckets
     for( auto& x : servers_replies_)
     {
-        buckets[x.second.views_]++;
+        buckets[x.second.obj.views_]++;
     }
 
     for(a = ((S_/failures_) - 2); a > 0; a--)
     {
-        DEBUGING(2, "PREDICATE LOOP: a= %d, b[a]= %d, bound= %d", a, buckets[a], (S_ - a*failures_));
+        DEBUGING(2, "PREDICATE LOOP: a= %d, b[a]= %d, bound= %d\n", a, buckets[a], (S_ - a*failures_));
 
         if (buckets[a] >= (S_ - a*failures_))
         {
@@ -534,7 +521,7 @@ CCHybridClient::is_predicate_valid()
 
 Tag CCHybridClient::find_max_params()
 {
-    std::set<Packet>::iterator pit;
+    std::set<CCHybridPacket>::iterator pit;
     
     Tag pkt_tag;
     int pkt_views;
@@ -542,7 +529,7 @@ Tag CCHybridClient::find_max_params()
     for(auto& x : servers_replies_)
     {
         pkt_tag = x.second.obj.tg_;
-        pkt_views = x.second.views_;
+        pkt_views = x.second.obj.views_;
 
         DEBUGING(3, "Checking tag: <%d, %d>\n",
                     pkt_tag.ts,
@@ -573,13 +560,13 @@ Tag CCHybridClient::find_max_params()
         if ( pkt_tag == obj->tg_ )
         {
             // add the sender and the views
-            max_servers_[x.first] = x.second.views_;
+            max_servers_[x.first] = x.second.obj.views_;
 
             //max views
             max_views_ = (max_views_ < pkt_views) ? pkt_views : max_views_;
 
             //check if the ts was propagated by a reader
-            if(x.second.tg_propagated_)
+            if(x.second.obj.propagated_tg_)
             {
                 prop_servers_.push_back(x.first);
             }
