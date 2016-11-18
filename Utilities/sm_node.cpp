@@ -45,7 +45,7 @@ void smNode::DEBUGING(int level, const char *format, ...)
         vsprintf(formattedstr, format, ap);
         va_end(ap);
         
-        sprintf(outstr, "[INFO]%10s %d: %s",
+        sprintf(outstr, "[INFO]%10s %d: %s\n",
                 rolestr[role_],
                 nodeID,
                 formattedstr);
@@ -58,7 +58,7 @@ void smNode::DEBUGING(int level, const char *format, ...)
     }
     else
     {
-        REPORTERROR("Debug msg too long.\n");
+        REPORTERROR("Debug msg too long.");
     }
 }
 
@@ -77,7 +77,7 @@ void smNode::REPORTERROR(const char *format, ...)
         vsprintf(errorstr, format, ap);
         va_end(ap);
         
-        sprintf(errorout, "[ERROR]%10s %d: %s",
+        sprintf(errorout, "[ERROR]%10s %d: %s\n",
                 rolestr[role_],
                 nodeID,
                 errorstr);
@@ -88,7 +88,7 @@ void smNode::REPORTERROR(const char *format, ...)
     }
     else
     {
-        sprintf(errorout, "[ERROR]%10s %d: Error msg too long.",
+        sprintf(errorout, "[ERROR]%10s %d: Error msg too long.\n",
                 rolestr[role_],
                 nodeID);
     }
@@ -151,7 +151,7 @@ bool smNode::send_file(int sock, char* fpath)
     if ( !send_pkt<CTRLPacket>(sock, &fs_pkt) )
     {
         // error while sending the filesize
-        REPORTERROR("Error sending the size of file %s.\n", fpath);
+        REPORTERROR("Error sending the size of file %s.", fpath);
         return false;
     }
     
@@ -193,7 +193,7 @@ bool smNode::send_file(int sock, char* fpath)
             if ( bytes_sent < bytes_read )
             {
                 // error while sending the data
-                REPORTERROR("Error sending file block. READ:%d bytes, SENT:%d bytes\n", bytes_read, bytes_sent);
+                REPORTERROR("Error sending file block. READ:%d bytes, SENT:%d bytes", bytes_read, bytes_sent);
                 infile.close();
                 exit(EXIT_FAILURE);
             }
@@ -226,7 +226,7 @@ bool smNode::send_file(int sock, char* fpath)
         }
         else
         {
-            REPORTERROR("Transmitted bytes do not match file size: TX = %d bytes, FS = %d bytes\n",
+            REPORTERROR("Transmitted bytes do not match file size: TX = %d bytes, FS = %d bytes",
                         transmitted_bytes,
                         fs_pkt.fsize);
             return false;
@@ -247,24 +247,24 @@ bool smNode::rcv_file(int sock, char* fpath)
     struct CTRLPacket fs_pkt;
     
     // rcv the file size
-    DEBUGING(1, "Expecting to receive FILESIZE at socket %d...\n", sock);
+    DEBUGING(1, "Expecting to receive FILESIZE at socket %d...", sock);
     //rcv_bytes = (int) recv(sock, &fs_pkt, sizeof(fs_pkt),0);
     
     if ( !rcv_pkt<CTRLPacket>(sock, &fs_pkt) || fs_pkt.msgType != CTRL_FSIZE) {
         // Error getting size
-        REPORTERROR("Receiving file size at socket %d.\n", sock);
+        REPORTERROR("Receiving file size at socket %d.", sock);
         return false;
     }
     else
     {
         // sender does not have the file
         if ( fs_pkt.fsize == -1 ) {
-            DEBUGING(2, "Sender reported file does not exist (Size: %d).\n", fs_pkt.fsize);
+            DEBUGING(2, "Sender reported file does not exist (Size: %d).", fs_pkt.fsize);
             return true;
         }
         else
         {
-            DEBUGING(2, "Waiting to receive a file of size: %d bytes.\n", fs_pkt.fsize);
+            DEBUGING(2, "Waiting to receive a file of size: %d bytes.", fs_pkt.fsize);
             
             // open the output file : flags - truncate previous content, output, append, binary
             std::ofstream outfile(fpath,  std::ios::out | std::ios::binary);
@@ -280,7 +280,7 @@ bool smNode::rcv_file(int sock, char* fpath)
                 
                 if ( rcv_bytes < 0) {
                     // Error receiving file
-                    REPORTERROR("\n Receiving file %s at socket %d.\n", fpath, sock);
+                    REPORTERROR("\n Receiving file %s at socket %d.", fpath, sock);
                     outfile.close();
                     return false;
                 }
@@ -310,7 +310,7 @@ bool smNode::rcv_file(int sock, char* fpath)
                 DEBUGING(2, "File %s received successfully.\n", fpath);
             }
             else{
-                REPORTERROR("\nTransmitted bytes do not match file size: TX = %d bytes, FS = %d bytes.\n",
+                REPORTERROR("\nTransmitted bytes do not match file size: TX = %d bytes, FS = %d bytes.",
                             transmitted_bytes,
                             fs_pkt.fsize
                             );
@@ -328,7 +328,7 @@ void smNode::parse_hosts(const char *file){
     smNode srv;
 
     
-    DEBUGING(2, "Reading file: %s\n",
+    DEBUGING(2, "Reading file: %s",
              file);
     
     if(!(fp=fopen(file,"r"))){
@@ -340,7 +340,7 @@ void smNode::parse_hosts(const char *file){
             
             servers_list_.push_back(srv);
             
-            DEBUGING(2, "SID:%d, Host:s%s, Port:%d\n",
+            DEBUGING(2, "SID:%d, Host:s%s, Port:%d",
                      srv.nodeID,
                      srv.hostname,
                      srv.port);
@@ -378,7 +378,7 @@ void smNode::connect_to_hosts(){
         
 	} // end EOF while
 
-    DEBUGING(2, "Connected to %d servers... \n\n", servers_connected_.size());
+    DEBUGING(2, "Connected to %d servers... \n", servers_connected_.size());
 }
 
 /**
@@ -417,7 +417,7 @@ bool smNode::connect_to_server(smNode *s)
         return false;
     }
     else{
-        DEBUGING(6, "Connected to Server %d on host %s, port %d, sock %d\n",
+        DEBUGING(6, "Connected to Server %d on host %s, port %d, sock %d",
                  s->nodeID,
                  s->hostname,
                  s->port,

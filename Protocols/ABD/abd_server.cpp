@@ -65,7 +65,7 @@ ABDServer::ABDServer(int serverID, int port, int S, int W, int R, int Q, int nfq
     logs_dir_ += log_fname;
     init_logfile(logs_dir_);
     
-    DEBUGING(4,"Initialized on Port:%d\n",
+    DEBUGING(4,"Initialized on Port:%d",
              port_);
     
     //Initialize the node's local tag
@@ -92,7 +92,7 @@ void ABDServer::start(){
     int ready;
     smNode *tmp_client;
     
-    DEBUGING(4, "Starting server %d\n", nodeID);
+    DEBUGING(4, "Starting server %d", nodeID);
     
     timeout.tv_sec=1;
     timeout.tv_usec=0;
@@ -109,7 +109,7 @@ void ABDServer::start(){
     /* Listen for connections */
     listenSocket();
     
-    DEBUGING(4, "Listening for connections to port %d...\n", port_);
+    DEBUGING(4, "Listening for connections to port %d...", port_);
     
     while(1) {
         
@@ -165,7 +165,7 @@ void ABDServer::acceptClientConnection()
     clientptr = (struct sockaddr *) &client;
     clientlen = sizeof(client);
     
-    DEBUGING(4, "Accepting connections on port %d\n", port_);
+    DEBUGING(4, "Accepting connections on port %d", port_);
     
     /* Accept connection */
     if ((newsock_ = accept(sock_, clientptr, (socklen_t *) &clientlen)) < 0) {
@@ -197,7 +197,7 @@ void ABDServer::acceptClientConnection()
         strcpy(tmp_client->hostname, rem->h_name);
         strcpy(tmp_client->ip_addr, rem->h_addr);
         
-        DEBUGING(4, "Accepted connection from %s (IP:%s)\n",
+        DEBUGING(4, "Accepted connection from %s (IP:%s)",
                  tmp_client->hostname,
                  tmp_client->ip_addr);
     }
@@ -206,7 +206,7 @@ void ABDServer::acceptClientConnection()
     try {
         threads.push_back(std::thread(&ABDServer::serveClient, this, tmp_client));
     } catch (int err) {
-        REPORTERROR("An exception occured while creating the thread. Err No:%d\n",  err);
+        REPORTERROR("An exception occured while creating the thread. Err No:%d",  err);
     }
 }
 
@@ -224,13 +224,13 @@ void ABDServer::serveClient(smNode *tmp_client)
         try {
             if( !rcv_pkt<Packet>(tmp_client->sock, &p) )         // receive a packet from the client
             {
-                REPORTERROR("Failed receiving packet!\n");
+                REPORTERROR("Failed receiving packet!");
                 return;
             }
             
             tmp_client->nodeID = p.src_;
             
-            DEBUGING(2, "Received msg: ClientID = %d, Socket = %d...\n", tmp_client->nodeID, tmp_client->sock);
+            DEBUGING(2, "Received msg: ClientID = %d, Socket = %d...", tmp_client->nodeID, tmp_client->sock);
             
             msg_type = p.msgType;
             
@@ -243,7 +243,7 @@ void ABDServer::serveClient(smNode *tmp_client)
                     local_replica = getLocalReplica(p.obj);
                     
                     std::cout << "\n********************************************************\n";
-                    DEBUGING(6,"%s msg from %d, Object ID: %s, Tag Rcvd: <%d,%d>, Local Tag: <%d, %d>\n",
+                    DEBUGING(6,"%s msg from %d, Object ID: %s, Tag Rcvd: <%d,%d>, Local Tag: <%d, %d>",
                              type_str.c_str(),
                              p.src_,
                              p.obj.get_id().c_str(),
@@ -273,7 +273,7 @@ void ABDServer::serveClient(smNode *tmp_client)
                     break;
                 case TERMINATE:
                 default:
-                    DEBUGING(2,"Closing connection with %d...\n",
+                    DEBUGING(2,"Closing connection with %d...",
                              p.src_);
                     
                     close(tmp_client->sock);                        // Close socket
@@ -391,7 +391,7 @@ void ABDServer::serve(Packet *pkt, smNode *c, RWObject replica)
                 // if we failed to send the file -> exit the thread
                 if ( !send_file(c->sock, (char*) to.c_str()) ) exit(EXIT_FAILURE);
                 
-                DEBUGING(4,"READACK to %d, rcvTag=<%d,%d>, sendTag=<%d,%d>\n",
+                DEBUGING(4,"READACK to %d, rcvTag=<%d,%d>, sendTag=<%d,%d>",
                          pkt->src_,
                          pkt->obj.get_tag().ts, pkt->obj.get_tag().wid,
                          replica.tg_.ts, replica.tg_.wid);
@@ -413,7 +413,7 @@ void ABDServer::serve(Packet *pkt, smNode *c, RWObject replica)
                     {
                         copyFile(from, to);
                     
-                        DEBUGING(4,"New maxTag=<%d,%d> From:%d\n --> Copied journal from %s to %s\n",
+                        DEBUGING(4,"New maxTag=<%d,%d> From:%d\n --> Copied journal from %s to %s",
                              replica.tg_.ts, replica.tg_.wid,
                              pkt->src_,
                              from.c_str(),
@@ -422,7 +422,7 @@ void ABDServer::serve(Packet *pkt, smNode *c, RWObject replica)
                     }
                     else
                     {
-                        DEBUGING(4,"New maxTag=<%d,%d> From:%d\n --> Failed Copied journal %s to %s\n",
+                        DEBUGING(4,"New maxTag=<%d,%d> From:%d\n --> Failed Copied journal %s to %s",
                                  replica.tg_.ts, replica.tg_.wid,
                                  pkt->src_,
                                  from.c_str(),
@@ -433,7 +433,7 @@ void ABDServer::serve(Packet *pkt, smNode *c, RWObject replica)
                 
                 prepare_pkt(c, WRITEACK, replica);                  // send a WRITEACK to client c
                 
-                DEBUGING(4,"WRITEACK from %d, rcvTag=<%d,%d>, sendTag=<%d,%d>\n",
+                DEBUGING(4,"WRITEACK from %d, rcvTag=<%d,%d>, sendTag=<%d,%d>",
                          pkt->src_,
                          pkt->obj.get_tag().ts, pkt->obj.get_tag().wid,
                          replica.tg_.ts, replica.tg_.wid);
@@ -443,7 +443,7 @@ void ABDServer::serve(Packet *pkt, smNode *c, RWObject replica)
         
     }
     else{
-        DEBUGING(2,"Discarding pkt from %d, pktCounter:%d, srvCounter:%d\n",
+        DEBUGING(2,"Discarding pkt from %d, pktCounter:%d, srvCounter:%d",
                  pkt->src_,
                  pkt->counter,
                  c->req_counter_);
@@ -474,7 +474,7 @@ void ABDServer::prepare_pkt(smNode *dest, int msgType, RWObject obj){
     send_pkt(dest->sock, &p);
     
     
-    DEBUGING(2,"Sent packet to PID:%d, Type:%d, Tag:<%d,%d,%d>, Counter:%d Object:%s\n",
+    DEBUGING(2,"Sent packet to PID:%d, Type:%d, Tag:<%d,%d,%d>, Counter:%d Object:%s",
              p.dst_,
              p.msgType,
              p.obj.get_tag().ts,p.obj.get_tag().wid,p.obj.get_tag().wc,

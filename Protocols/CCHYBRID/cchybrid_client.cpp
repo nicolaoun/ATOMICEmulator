@@ -56,7 +56,7 @@ CCHybridClient::CCHybridClient(int id, int role, std::string opath, std::string 
 
     failures_ = S_/2;       //set failures by default to minority
     
-    DEBUGING(4,"Initialized, Server file: %s, failures: %d\n",
+    DEBUGING(4,"Initialized, Server file: %s, failures: %d",
              sfile.c_str(),
              failures_);
     
@@ -88,7 +88,7 @@ void CCHybridClient::setup_dirs(std::string root_dir)
     sprintf(log_fname, "/c%d",nodeID);
     logs_dir_ += log_fname;
     init_logfile(logs_dir_);
-    DEBUGING(6, "Loaded Directories...\n");
+    DEBUGING(6, "Loaded Directories...");
 }
 
 /************************************************
@@ -140,7 +140,7 @@ void CCHybridClient::send_to_all(int m_type){
     // check if we have not reached the majority => exit
     if((int) servers_sent_.size() <= S_/2)
     {
-        REPORTERROR("Too few servers received msg while sending to all.\n");
+        REPORTERROR("Too few servers received msg while sending to all.");
         close_connections();
         exit(1);
     }
@@ -154,7 +154,7 @@ bool CCHybridClient::send_to_server(smNode s, int m_type)
     p = prepare_pkt(req_counter_, s, m_type);
 
     Tag tg = p.obj.get_tag();
-    DEBUGING(2,"Sending packet to PID:%d, Type:%d, Object:%s, Tag:<%d,%d,%d>, Counter:%d\n",
+    DEBUGING(2,"Sending packet to PID:%d, Type:%d, Object:%s, Tag:<%d,%d,%d>, Counter:%d",
              p.dst_,
              p.msgType,
              p.obj.get_id().c_str(),
@@ -199,10 +199,10 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
         // wait until something happens
         ready=select(FD_SETSIZE, &readfds, NULL, NULL, &sel_timeout);
         
-        DEBUGING(2, "There are %d fds ready to be read....\n",ready);
+        DEBUGING(2, "There are %d fds ready to be read....",ready);
         
         if (ready < 0) {
-            REPORTERROR("Select");
+            REPORTERROR("Error selecting a server.");
             exit(EXIT_FAILURE);
         }
         
@@ -211,17 +211,17 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
             servers_pending_=servers_sent_;
             
             for (it=servers_sent_.begin(); it!=servers_sent_.end(); it++) {
-                DEBUGING(2, "Trying sock:%d....\n",
+                DEBUGING(2, "Trying sock:%d....",
                          (*it).sock);
                 
                 if (FD_ISSET((*it).sock, &readfds)) {
-                    DEBUGING(1,"Receiving packet at address:0x%x\n",&p);
+                    DEBUGING(1,"Receiving packet at address:0x%x",&p);
                     
                     // receive the packet
                     if ( rcv_pkt<CCHybridPacket>((*it).sock, &p) )
                     {
                         
-                        DEBUGING(3,"Received packet from S:%d, Type:%d, Tag:<%d,%d,%d>, Object: <%s, %s, %s>, Counter:%d, Views:%d, Propagated:%d\n",
+                        DEBUGING(3,"Received packet from S:%d, Type:%d, Tag:<%d,%d,%d>, Object: <%s, %s, %s>, Counter:%d, Views:%d, Propagated:%d",
                                  p.src_,
                                  p.msgType,
                                  p.obj.get_tag().ts,p.obj.get_tag().wid,p.obj.get_tag().wc,
@@ -239,7 +239,7 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
                                 case READACK:
                                 case WRITEACK:
                                 case COUNTER_ERROR:
-                                    REPORTERROR("Counter-Error with Server %d (%s) on socket %d: LC=%d, SC=%d ...\n",
+                                    REPORTERROR("Counter-Error with Server %d (%s) on socket %d: LC=%d, SC=%d ...",
                                              (*it).nodeID,
                                              (*it).hostname,
                                              (*it).sock,
@@ -248,7 +248,7 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
                                     break;
                                     
                                 default:
-                                    REPORTERROR("Unknown-Error with Server %d (%s) on socket %d: Packet details: type %d, counter %d, tag <%d,%d,%d>...\n",
+                                    REPORTERROR("Unknown-Error with Server %d (%s) on socket %d: Packet details: type %d, counter %d, tag <%d,%d,%d>...",
                                              (*it).nodeID,
                                              (*it).hostname,
                                              (*it).sock,
@@ -276,12 +276,12 @@ void CCHybridClient::rcv_from_quorum(int min_replies){
     
     // if only a minority replied -> exit
     if (servers_replies_.size() <= min_replies) {
-        DEBUGING(4, "Exiting due to many Server errors...\n");
+        DEBUGING(4, "Exiting due to many Server errors...");
         exit(1);
     }
     else
     {
-        DEBUGING(4, "Received replies from %d servers...\n", servers_replies_.size());
+        DEBUGING(4, "Received replies from %d servers...", servers_replies_.size());
     }
 }
 
@@ -339,7 +339,7 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
     totTime+=endTime-startTime;
 
     std::cout << "\n**************************************************\n";
-    DEBUGING(6, "%s#:%d, Object: %s, Duration:%f, Tag:<%d,%d,%d>, Values:[%s, %s] @ %d EXCH\n",
+    DEBUGING(6, "%s#:%d, Object: %s, Duration:%f, Tag:<%d,%d,%d>, Values:[%s, %s] @ %d EXCH",
              op_type.c_str(),
              num_ops,
              obj->get_id().c_str(),
@@ -351,7 +351,7 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
     std::cout << "******************************************************\n\n";
 
     //disconnect from the hosts
-    DEBUGING(6, "Closing connections...\n");
+    DEBUGING(6, "Closing connections...");
     close_connections();
 
     //save the objects metadata
@@ -365,7 +365,7 @@ int CCHybridClient::invoke_read()
     num_reads_++;
 
     std::cout << "***************************************\n";
-    DEBUGING(6,"Invoking read %d on object %s at %s \n",
+    DEBUGING(6,"Invoking read %d on object %s at %s ",
              num_reads_,
              obj->get_id().c_str(),
              get_datetime_str().c_str()
@@ -384,7 +384,7 @@ int CCHybridClient::invoke_read()
     if (mode_ == PHASE2)
     {
         //PHASE2
-        DEBUGING(2, "Performing phase2...\n");
+        DEBUGING(2, "Performing phase2...");
 
         num_two_comm_++;
 
@@ -409,7 +409,7 @@ void CCHybridClient::invoke_write(std::string v)
     num_writes_++;
 
     std::cout << "***************************************\n";
-    DEBUGING(6,"Invoking write %d on object %s at %s \n",
+    DEBUGING(6,"Invoking write %d on object %s at %s ",
              num_writes_,
              obj->get_id().c_str(),
              get_datetime_str().c_str());
@@ -445,7 +445,7 @@ void CCHybridClient::process_replies()
     // if too many processes viewed this ts => go to a second phase
     if (max_views_ > ((S_ / failures_) - 2) )
     {
-        DEBUGING(2, "Checking the PROPAGATION SET, maxViews: %d, bound: %d\n", max_views_, ((S_ / failures_) - 2));
+        DEBUGING(2, "Checking the PROPAGATION SET, maxViews: %d, bound: %d", max_views_, ((S_ / failures_) - 2));
 
         // if propagated to less than f+1 servers - go to second phase
         if( prop_servers_.size() < failures_ +1)
@@ -453,11 +453,11 @@ void CCHybridClient::process_replies()
             //Phase 2
             mode_ = PHASE2;
 
-            DEBUGING(6, "** Too few servers in propagation set (%d) => Going to PHASE2 **\n", prop_servers_.size());
+            DEBUGING(6, "** Too few servers in propagation set (%d) => Going to PHASE2 **", prop_servers_.size());
         }
         else
         {
-            DEBUGING(6, "** Enough servers in propagation set (%d) => RETURNING Value: %s **\n", prop_servers_.size(), obj->get_value().c_str());
+            DEBUGING(6, "** Enough servers in propagation set (%d) => RETURNING Value: %s **", prop_servers_.size(), obj->get_value().c_str());
 
             mode_ = IDLE;
         }
@@ -467,16 +467,16 @@ void CCHybridClient::process_replies()
     }
     else
     {
-        DEBUGING(2, "Checking the PREDICATE, maxViews: %d, bound: %d\n", max_views_, ((S_ / failures_) - 2));
+        DEBUGING(2, "Checking the PREDICATE, maxViews: %d, bound: %d", max_views_, ((S_ / failures_) - 2));
 
         //check the predicate to return in one round
         if ( is_predicate_valid () )
         {
-            DEBUGING(6, "** Predicate VALID => RETURNING Value: %s **\n", obj->get_value().c_str());
+            DEBUGING(6, "** Predicate VALID => RETURNING Value: %s **", obj->get_value().c_str());
         }
         else
         {
-            DEBUGING(6, "** Predicate INVALID => RETURNING PValue: %s **\n", obj->get_pvalue().c_str());
+            DEBUGING(6, "** Predicate INVALID => RETURNING PValue: %s **", obj->get_pvalue().c_str());
         }
 
         mode_ = IDLE;
@@ -500,7 +500,7 @@ CCHybridClient::is_predicate_valid()
 
     for(a = ((S_/failures_) - 2); a > 0; a--)
     {
-        DEBUGING(2, "PREDICATE LOOP: a= %d, b[a]= %d, bound= %d\n", a, buckets[a], (S_ - a*failures_));
+        DEBUGING(2, "PREDICATE LOOP: a= %d, b[a]= %d, bound= %d", a, buckets[a], (S_ - a*failures_));
 
         if (buckets[a] >= (S_ - a*failures_))
         {
@@ -531,7 +531,7 @@ Tag CCHybridClient::find_max_params()
         pkt_tag = x.second.obj.tg_;
         pkt_views = x.second.obj.views_;
 
-        DEBUGING(3, "Checking tag: <%d, %d>\n",
+        DEBUGING(3, "Checking tag: <%d, %d>",
                     pkt_tag.ts,
                     pkt_tag.wid
                  );
@@ -543,7 +543,7 @@ Tag CCHybridClient::find_max_params()
             obj->set_value( x.second.obj.get_value() );
             obj->set_pvalue(x.second.obj.get_pvalue());
 
-            DEBUGING(3, "Updated local <tag,value, pvalue> pair to: [<%d, %d>, %s, %s]\n",
+            DEBUGING(3, "Updated local <tag,value, pvalue> pair to: [<%d, %d>, %s, %s]",
                         obj->tg_.ts,
                         obj->tg_.wid,
                         obj->get_value().c_str(),
@@ -584,7 +584,7 @@ void CCHybridClient::stop(){
     switch(role_){
         case WRITER:
             //send_timer_.force_cancel();
-            DEBUGING(7,"(writes: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
+            DEBUGING(7,"(writes: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED",
                      num_writes_,
                      num_one_comm_,
                      num_two_comm_,
@@ -592,7 +592,7 @@ void CCHybridClient::stop(){
             break;
         case READER:
             //send_timer_.force_cancel();
-            DEBUGING(7,"(reads: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
+            DEBUGING(7,"(reads: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED",
                      num_reads_,
                      num_one_comm_,
                      num_two_comm_,
@@ -622,7 +622,7 @@ void CCHybridClient::terminate(){
     switch(role_){
         case WRITER:
             //send_timer_.force_cancel();
-            DEBUGING(7,"(writes: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
+            DEBUGING(7,"(writes: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED",
                      num_writes_,
                      num_one_comm_,
                      num_two_comm_,
@@ -630,7 +630,7 @@ void CCHybridClient::terminate(){
             break;
         case READER:
             //send_timer_.force_cancel();
-            DEBUGING(7,"(reads: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED\n",
+            DEBUGING(7,"(reads: %d, ONECOMM: %d, TWOCOMM: %d, AVETIME: %.4lf) -- TERMINATED",
                      num_reads_,
                      num_one_comm_,
                      num_two_comm_,
@@ -639,9 +639,9 @@ void CCHybridClient::terminate(){
         /*
         case SERVER:
             if(crashed_)
-                DEBUGING(7,"crashed at %f -- TERMINATED\n", crashTime);
+                DEBUGING(7,"crashed at %f -- TERMINATED", crashTime);
             else
-                DEBUGING(7,"terminates -- TERMINATED\n");
+                DEBUGING(7,"terminates -- TERMINATED");
             break;
             */
     }

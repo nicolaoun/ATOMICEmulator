@@ -38,7 +38,7 @@ CCHybridServer::CCHybridServer(int serverID, int port) {
     
     setup_dirs(srv_root_dir_);
     
-    DEBUGING(4,"Initialized on Port:%d\n",
+    DEBUGING(4,"Initialized on Port:%d",
              port_);
     
     serve_clients_.clear();   
@@ -70,7 +70,7 @@ void CCHybridServer::setup_dirs(std::string root_dir)
         sprintf(log_fname, "/c%d",nodeID);
         logs_dir_ += log_fname;
         init_logfile(logs_dir_);
-        DEBUGING(6, "Loaded Directories...\n");
+        DEBUGING(6, "Loaded Directories...");
 
 }
 
@@ -80,7 +80,7 @@ void CCHybridServer::start(){
     int ready;
     smNode *tmp_client;
     
-    DEBUGING(4, "Starting server %d\n", nodeID);
+    DEBUGING(4, "Starting server %d", nodeID);
     
     timeout.tv_sec=1;
     timeout.tv_usec=0;
@@ -97,7 +97,7 @@ void CCHybridServer::start(){
     /* Listen for connections */
     listenSocket();
     
-    DEBUGING(4, "Listening for connections to port %d...\n", port_);
+    DEBUGING(4, "Listening for connections to port %d...", port_);
     
     while(1) {
         
@@ -153,7 +153,7 @@ void CCHybridServer::acceptClientConnection()
     clientptr = (struct sockaddr *) &client;
     clientlen = sizeof(client);
     
-    DEBUGING(4, "Accepting connections on port %d\n", port_);
+    DEBUGING(4, "Accepting connections on port %d", port_);
     
     /* Accept connection */
     if ((newsock_ = accept(sock_, clientptr, (socklen_t *) &clientlen)) < 0) {
@@ -185,7 +185,7 @@ void CCHybridServer::acceptClientConnection()
         strcpy(tmp_client->hostname, rem->h_name);
         strcpy(tmp_client->ip_addr, rem->h_addr);
         
-        DEBUGING(4, "Accepted connection from %s (IP:%s)\n",
+        DEBUGING(4, "Accepted connection from %s (IP:%s)",
                  tmp_client->hostname,
                  tmp_client->ip_addr);
     }
@@ -194,7 +194,7 @@ void CCHybridServer::acceptClientConnection()
     try {
         threads.push_back(std::thread(&CCHybridServer::serve_client, this, tmp_client));
     } catch (int err) {
-        REPORTERROR("An exception occured while creating the thread. Err No:%d\n",  err);
+        REPORTERROR("An exception occured while creating the thread. Err No:%d",  err);
     }
 }
 
@@ -212,13 +212,13 @@ void CCHybridServer::serve_client(smNode *tmp_client)
         try {
             if( !rcv_pkt<CCHybridPacket>(tmp_client->sock, &p) )         // receive a packet from the client
             {
-                REPORTERROR("Failed receiving packet!\n");
+                REPORTERROR("Failed receiving packet!");
                 return;
             }
             
             tmp_client->nodeID = p.src_;
             
-            DEBUGING(2, "Received msg: ClientID = %d, Socket = %d...\n", tmp_client->nodeID, tmp_client->sock);
+            DEBUGING(2, "Received msg: ClientID = %d, Socket = %d...", tmp_client->nodeID, tmp_client->sock);
             
             msg_type = p.msgType;
             
@@ -230,7 +230,7 @@ void CCHybridServer::serve_client(smNode *tmp_client)
                 local_replica = get_local_replica(p.obj);
 
                 std::cout << "\n********************************************************\n";
-                DEBUGING(6,"%s msg from %d, Object ID: %s, Tag Rcvd: <%d,%d>, Local Tag: <%d, %d>\n",
+                DEBUGING(6,"%s msg from %d, Object ID: %s, Tag Rcvd: <%d,%d>, Local Tag: <%d, %d>",
                          type_str.c_str(),
                          p.src_,
                          p.obj.get_id().c_str(),
@@ -262,7 +262,7 @@ void CCHybridServer::serve_client(smNode *tmp_client)
             }
             else
             {
-                DEBUGING(2,"Closing connection with %d...\n",
+                DEBUGING(2,"Closing connection with %d...",
                          p.src_);
 
                 close(tmp_client->sock);                        // Close socket
@@ -350,7 +350,7 @@ void CCHybridServer::serve(CCHybridPacket *pkt, smNode *c, CCHybridObject *repli
         replica->seen_.insert(*c);
         replica->views_ = replica->seen_.size();
 
-        DEBUGING(2, "Seen set size: %d\n", replica->seen_.size());
+        DEBUGING(2, "Seen set size: %d", replica->seen_.size());
 
         // changed the propagation flag if coming from reader
         if ( pkt->obj.tg_ == replica->tg_ && pkt->msgType == INFORM)
@@ -394,7 +394,7 @@ void CCHybridServer::serve(CCHybridPacket *pkt, smNode *c, CCHybridObject *repli
             break;
         }
 
-        DEBUGING(4,"%s to %d, rcvTag=<%d,%d>, sendTag=<%d,%d>\n",
+        DEBUGING(4,"%s to %d, rcvTag=<%d,%d>, sendTag=<%d,%d>",
                  ackstr.c_str(),
                  pkt->src_,
                  pkt->obj.get_tag().ts, pkt->obj.get_tag().wid,
@@ -406,7 +406,7 @@ void CCHybridServer::serve(CCHybridPacket *pkt, smNode *c, CCHybridObject *repli
         
     }
     else{
-        DEBUGING(2,"Discarding pkt from %d, pktCounter:%d, srvCounter:%d\n",
+        DEBUGING(2,"Discarding pkt from %d, pktCounter:%d, srvCounter:%d",
                  pkt->src_,
                  pkt->counter,
                  c->req_counter_);
@@ -428,7 +428,7 @@ CCHybridPacket CCHybridServer::prepare_pkt(smNode *dest, int msgType, CCHybridOb
     p.counter = dest->req_counter_;
     p.obj = obj;
 
-    DEBUGING(2,"Prepared packet to PID:%d, Type:%d, Tag:<%d,%d,%d>, Counter:%d Object:%s Views:%d Propagated:%d\n",
+    DEBUGING(2,"Prepared packet to PID:%d, Type:%d, Tag:<%d,%d,%d>, Counter:%d Object:%s Views:%d Propagated:%d",
              p.dst_,
              p.msgType,
              p.obj.get_tag().ts,p.obj.get_tag().wid,p.obj.get_tag().wc,
