@@ -398,23 +398,23 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string value
 
     if ( role_ == READER ) {
         num_reads_++;
-        std::cout << "***************************************\n";
+        DEBUGING(6, "***************************************");
         DEBUGING(6,"Invoking read %d on object %s at %s ",
                  num_reads_,
                  obj->get_id().c_str(),
                  get_datetime_str().c_str()
                  );
-        std::cout << "***************************************\n";
+        DEBUGING(6, "***************************************");
     }
     else
     {
         num_writes_++;
-        std::cout << "***************************************\n";
+        DEBUGING(6, "***************************************");
         DEBUGING(6,"Invoking write %d on object %s at %s ",
                  num_writes_,
                  obj->get_id().c_str(),
                  get_datetime_str().c_str());
-        std::cout << "***************************************\n";
+        DEBUGING(6, "***************************************");
     }
 
     num_msgs_ = 0;
@@ -441,14 +441,14 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string value
 
     totTime+=endTime-startTime;
 
-    std::cout << "\n\n**************************************************\n";
+    DEBUGING(6,"\n\n**************************************************");
     DEBUGING(6, "Read#:%d, Duration:%f, Rounds:%s, Tag:<%d,%d,%d>, Object: %s!!",
              num_reads_,
              endTime-startTime,
              rounds.c_str(),
              obj->tg_.ts,obj->tg_.wid,obj->tg_.wc,
              obj->get_id().c_str());
-    std::cout << "******************************************************\n\n";
+    DEBUGING(6,"******************************************************");
 
     //disconnect from the hosts
     DEBUGING(6, "Closing connections...");
@@ -487,13 +487,13 @@ void ABDClient::process_replies()
         obj->set_latest_tag(maxTag);
         commit_flag_ = true;
         
-        std::cout << "\n\n***************************************************\n";
+        DEBUGING(6, "\n\n***************************************************");
         DEBUGING(6,"ABD: WRITE SUCCEEDED -> Writing New Tag:<%d,%d,%d> ",
                  maxTag.ts,
                  maxTag.wid,
                  maxTag.wc
                  );
-        std::cout << "***************************************************\n";
+        DEBUGING(6, "***************************************************");
         
     }
     else
@@ -523,7 +523,7 @@ void ABDClient::process_replies()
             }
         }
         
-        std::cout << "\n\n***************************************\n";
+       DEBUGING(6, "\n\n***************************************");
         DEBUGING(6,"ABD: Propagating Tag:<%d,%d,%d> ",
                  maxTag.ts,
                  maxTag.wid,
@@ -531,7 +531,7 @@ void ABDClient::process_replies()
                  //src.rdbuf()
                  //maxValue.c_str()
                  );
-        std::cout << "***************************************\n";
+       DEBUGING(6, "***************************************");
     }
     
     mode_ = PHASE2;

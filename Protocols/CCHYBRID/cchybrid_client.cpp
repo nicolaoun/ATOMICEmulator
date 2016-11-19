@@ -338,7 +338,7 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
     // Calculate operation duration
     totTime+=endTime-startTime;
 
-    std::cout << "\n**************************************************\n";
+    DEBUGING(6, "\n**************************************************");
     DEBUGING(6, "%s#:%d, Object: %s, Duration:%f, Tag:<%d,%d,%d>, Values:[%s, %s] @ %d EXCH",
              op_type.c_str(),
              num_ops,
@@ -348,7 +348,7 @@ void CCHybridClient::invoke_op(std::string objID, object_t objType, std::string 
              obj->get_value().c_str(), obj->get_pvalue().c_str(),
              num_exch);
 
-    std::cout << "******************************************************\n\n";
+    DEBUGING(6, "******************************************************\n");
 
     //disconnect from the hosts
     DEBUGING(6, "Closing connections...");
@@ -364,13 +364,13 @@ int CCHybridClient::invoke_read()
 
     num_reads_++;
 
-    std::cout << "***************************************\n";
+    DEBUGING(6, "***************************************");
     DEBUGING(6,"Invoking read %d on object %s at %s ",
              num_reads_,
              obj->get_id().c_str(),
              get_datetime_str().c_str()
              );
-    std::cout << "***************************************\n";
+    DEBUGING(6,"***************************************");
 
     num_msgs_ = 0;
 
@@ -408,12 +408,12 @@ void CCHybridClient::invoke_write(std::string v)
 
     num_writes_++;
 
-    std::cout << "***************************************\n";
+    DEBUGING(6,"***************************************");
     DEBUGING(6,"Invoking write %d on object %s at %s ",
              num_writes_,
              obj->get_id().c_str(),
              get_datetime_str().c_str());
-    std::cout << "***************************************\n";
+   DEBUGING(6,"***************************************");
 
     num_msgs_ = 0;
 

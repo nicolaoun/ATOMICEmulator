@@ -242,7 +242,7 @@ void ABDServer::serveClient(smNode *tmp_client)
                     //find the requested object in the local set of replicas
                     local_replica = getLocalReplica(p.obj);
                     
-                    std::cout << "\n********************************************************\n";
+                    DEBUGING(6, "\n********************************************************");
                     DEBUGING(6,"%s msg from %d, Object ID: %s, Tag Rcvd: <%d,%d>, Local Tag: <%d, %d>",
                              type_str.c_str(),
                              p.src_,
@@ -250,7 +250,7 @@ void ABDServer::serveClient(smNode *tmp_client)
                              p.obj.get_tag().ts, p.obj.get_tag().wid,
                              local_replica.tg_.ts, local_replica.tg_.wid
                              );
-                    std::cout << "---------------------------------------------------------\n";
+                    DEBUGING(6, "---------------------------------------------------------");
                     
                     
                     // if it is a write msg -> receive the file
@@ -395,7 +395,7 @@ void ABDServer::serve(Packet *pkt, smNode *c, RWObject replica)
                          pkt->src_,
                          pkt->obj.get_tag().ts, pkt->obj.get_tag().wid,
                          replica.tg_.ts, replica.tg_.wid);
-                std::cout << "********************************************************\n";
+                DEBUGING(6, "********************************************************");
                 break;
             case WRITE:
                 if(pkt->obj.get_tag() > replica.tg_)
@@ -437,7 +437,7 @@ void ABDServer::serve(Packet *pkt, smNode *c, RWObject replica)
                          pkt->src_,
                          pkt->obj.get_tag().ts, pkt->obj.get_tag().wid,
                          replica.tg_.ts, replica.tg_.wid);
-                std::cout << "********************************************************\n";
+                DEBUGING(6, "********************************************************");
                 break;
         }
         
