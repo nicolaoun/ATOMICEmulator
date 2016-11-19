@@ -340,7 +340,7 @@ void smNode::parse_hosts(const char *file){
             
             servers_list_.push_back(srv);
             
-            DEBUGING(2, "SID:%d, Host:s%s, Port:%d",
+            DEBUGING(2, "SID:%d, Host:%s, Port:%d",
                      srv.nodeID,
                      srv.hostname,
                      srv.port);
