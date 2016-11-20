@@ -52,6 +52,12 @@ def create_output_file_for_scenario(drct):
 
     return directory
 
+# copy to remode device
+def copy_to_machine(filename, ip):
+    print "Copying "+filename+" to "+ip
+    command = "scp -i ~/.ssh/aws_key.pem "+filename+" ubuntu@"+ip+":~/"
+    os.system(command)
+
 #collect the available aws instances
 def parse_vms(filename):
     with open(filename) as f:
@@ -110,19 +116,23 @@ def run_servers(numS):
 
     # send the file to all the machines
     for ip in aws_machines:
-        print "Copying "+serverfile+" to "+ip
-        command = "scp -i ~/.ssh/aws_key.pem "+serverfile+" ubuntu@"+ip+":~/"
-        os.system(command)
+        copy_to_machine(serverfile, ip)
 
     # close file
     f.close()
 
 def run_writer(out_file):
     # run the writer on the first machine
-    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
+    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file
+
+    # copy the command into the running script
+    f = open("run_command.sh","w")
+    f.write(command)
+    f.close()
+
     #execute the command
     #os.system(command)
-    processes.append(subprocess.Popen(["ssh","-i", "~/.ssh/aws_key.pem ubuntu@"+aws_machines[0], "'~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto'", ">>", outfile]))
+    processes.append(subprocess.Popen(["ssh","-i", "/home/ubuntu/.ssh/aws_key.pem", "ubuntu@"+aws_machines[0], "'/home/ubuntu/run_command.sh'"]))
 
 def run_readers(numR, out_file):
     for id in range(1, numR+1):
@@ -130,9 +140,19 @@ def run_readers(numR, out_file):
         vm = id % len(aws_machines)
         # run the reader
         command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
+
+        # copy the command into the running script
+        f = open("run_command.sh","w")
+        f.write(command)
+        f.close()
+
+        # copy the script over
+        copy_to_machine("run_command.sh", aws_machines[vm])
+
         #execute the command
         #os.system(command)
         #processes.append(subprocess.Popen(command))
+        processes.append(subprocess.Popen(["ssh","-i", "/home/ubuntu/.ssh/aws_key.pem", "ubuntu@"+aws_machines[0], "'/home/ubuntu/run_command.sh'"]))
 
 
 #############################################################################
