@@ -164,10 +164,13 @@ def main():
         # get the server file
         vmfile = sys.argv[1]
 
+        # get the available machines
+        parse_vms(vmfile)
+
         if len(sys.argv) > 2:
             if sys.argv[2] == "kill":
                 kill_servers()
-            else if sys.argv[2] == "clean":
+            elif sys.argv[2] == "clean":
                 clean_data()
             else:
                 print "Unknown command."
@@ -176,9 +179,6 @@ def main():
             main_results_dir = "output/ALL_RESULTS.txt"
             print "*** The Main Averaged Results will be at: " + str(main_results_dir)+" ***"
             main_directory = create_output_file_for_scenario(main_results_dir,0)
-
-            # get the available machines
-            parse_vms(vmfile)
 
             for numServers in range(srvrs_start, srvrs_stop+1, srvrs_step):
                 for numReaders in range(srvrs_start, srvrs_stop+1, srvrs_step):
