@@ -122,7 +122,7 @@ def run_writer(out_file):
     command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
     #execute the command
     #os.system(command)
-    processes.append(subprocess.Popen(command))
+    processes.append(subprocess.Popen(["ssh","-i", "~/.ssh/aws_key.pem ubuntu@"+aws_machines[0], "'~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto'", ">>", outfile]))
 
 def run_readers(numR, out_file):
     for id in range(1, numR+1):
@@ -132,7 +132,7 @@ def run_readers(numR, out_file):
         command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
         #execute the command
         #os.system(command)
-        processes.append(subprocess.Popen(command))
+        #processes.append(subprocess.Popen(command))
 
 
 #############################################################################
