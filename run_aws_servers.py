@@ -63,7 +63,7 @@ def parse_vms(filename):
 
 def run_tests(S, R):
     num_tests = 5
-    for t in range(0, num_test+1):
+    for t in range(0, num_tests+1):
         print "        executing #test=" + str(t)
 
 
