@@ -73,12 +73,6 @@ def run_tests(S, R):
                 #create a file for each test
                 out_file = create_output_file_for_scenario(out_file)
 
-        # run the servers
-        run_servers(S)
-
-        # sleep for 10 sec until the servers are initialized
-        time.sleep(10)
-
         # run the writer
         run_writer(out_file)
 
@@ -109,6 +103,12 @@ def run_servers(numS):
         os.system(command)
 
         port = port+1
+
+    # send the file to all the machines
+    for ip in aws_machines:
+        print "Copying "+serverfile+" to "+ip
+        command = "scp -i ~/.ssh/aws_key.pem "+serverfile+ "ubuntu@"+ip+":~/"
+        os.system(command)
 
     # close file
     f.close()
@@ -184,6 +184,15 @@ def main():
             main_directory = create_output_file_for_scenario(main_results_dir)
 
             for numServers in range(srvrs_start, srvrs_stop+1, srvrs_step):
+                # kill running server instances
+                kill_servers()
+                # wait a bit
+                sleep(10)
+                # run the new server instances
+                run_servers(numServers)
+                # wait 10s for the servers to initialize
+                sleep(10)
+
                 for numReaders in range(srvrs_start, srvrs_stop+1, srvrs_step):
                     # run the scenario
                     run_tests(numServers, numReaders)
