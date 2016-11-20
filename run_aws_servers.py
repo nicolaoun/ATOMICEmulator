@@ -115,7 +115,7 @@ def run_servers(numS):
 
 def run_writer(out_file):
     # run the writer on the first machine
-    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -d 7' >> "+out_file+" &"
+    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
     #execute the command
     os.system(command)
 
@@ -124,7 +124,7 @@ def run_readers(numR, out_file):
         # pick the machine to run
         vm = id % len(aws_machines)
         # run the reader
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -d 7' >> "+out_file+" &"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
         #execute the command
         os.system(command)
 
@@ -195,6 +195,9 @@ def main():
                 for numReaders in range(srvrs_start, srvrs_stop+1, srvrs_step):
                     # run the scenario
                     run_tests(numServers, numReaders)
+
+            # kill running server instances
+            kill_servers()
 
         print "\nAll done, script exiting..."
     else:
