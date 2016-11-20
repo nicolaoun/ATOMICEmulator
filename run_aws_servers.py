@@ -1,6 +1,7 @@
 import os
 from time import sleep
 import sys
+import subprocess
 
 # kill the server instances from the machines
 def kill_servers():
@@ -79,6 +80,9 @@ def run_tests(S, R):
         # run the readers in the available machines
         run_readers(R, out_file)
 
+        # wait for processes to terminate
+        exit_codes = [p.wait() for p in processes]
+
         # collect the results for the test
 
     # calculate the avg for the scenario
@@ -117,7 +121,8 @@ def run_writer(out_file):
     # run the writer on the first machine
     command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
     #execute the command
-    os.system(command)
+    #os.system(command)
+    processes.append(subprocess.Popen(command))
 
 def run_readers(numR, out_file):
     for id in range(1, numR+1):
@@ -126,7 +131,8 @@ def run_readers(numR, out_file):
         # run the reader
         command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
         #execute the command
-        os.system(command)
+        #os.system(command)
+        processes.append(subprocess.Popen(command))
 
 
 #############################################################################
@@ -145,6 +151,7 @@ protocol = 6
 tests = 5
 Version="fixInt"# "randInt"
 aws_machines=[]
+processes=[]
 
 # _start is the initial
 # _stop is the last one - included!
