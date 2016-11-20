@@ -58,23 +58,26 @@ def parse_vms(filename):
             ip=line.split()[0]
             print "Adding IP:"+ip+"..."
             aws_machines.append(ip);
-        print "Detected "+len(aws_machines)+" VMs running."
+        print "Detected "+str(len(aws_machines))+" VMs running."
 
 
-def run_scenario(S, R):
+def run_tests(S, R):
     num_tests = 5
     for t in range(0, num_test+1):
         print "        executing #test=" + str(t)
 
 
-        out_file = "output/S_"+str(numServers)+"_R_"+str(numReaders)+"/version_"+str(Version)+"/read_interval_"+str(rInterval)+"_write_interval_"+str(wInterval)+"_/test_"+str(t)+".txt"
+        out_file = "output/S_"+str(numServers)+"_R_"+str(numReaders)+"_test_"+str(t)+".txt"
         #if execute flag raised - invoke the command otherwise just parse the output
-        if(not os.path.isfile(scc_directory)):
+        if(not os.path.isfile(out_file)):
                 #create a file for each test
-                scc_directory = create_output_file_for_scenario(scc_directory)
+                out_file = create_output_file_for_scenario(out_file)
 
         # run the servers
         run_servers(S)
+
+        # sleep for 10 sec until the servers are initialized
+        time.sleep(10)
 
         # run the writer
         run_writer(out_file)
@@ -101,7 +104,7 @@ def run_servers(numS):
 
         f.write(str(id)+" "+ip+" "+str(port)+"\n")
 
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/ATOMICEmulator/asm -t serve -p "+port+" -i "+id+" -a 6 -d 6' &"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/ATOMICEmulator/asm -t serve -p "+str(port)+" -i "+str(id)+" -a 6 -d 6' &"
         #execute the command
         os.system(command)
 
@@ -112,16 +115,16 @@ def run_servers(numS):
 
 def run_writer(out_file):
     # run the writer on the first machine
-    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+protocol+" -d 7' >> "+out_file+" &"
+    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -d 7' >> "+out_file+" &"
     #execute the command
     os.system(command)
 
-def run_readers(numR):
+def run_readers(numR, out_file):
     for id in range(1, numR+1):
         # pick the machine to run
         vm = id % len(aws_machines)
         # run the reader
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+id+" -o reg0 -a "+protocol+" -d 7' >> "+out_file+" &"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -d 7' >> "+out_file+" &"
         #execute the command
         os.system(command)
 
@@ -178,12 +181,12 @@ def main():
             # prepare the output directory
             main_results_dir = "output/ALL_RESULTS.txt"
             print "*** The Main Averaged Results will be at: " + str(main_results_dir)+" ***"
-            main_directory = create_output_file_for_scenario(main_results_dir,0)
+            main_directory = create_output_file_for_scenario(main_results_dir)
 
             for numServers in range(srvrs_start, srvrs_stop+1, srvrs_step):
                 for numReaders in range(srvrs_start, srvrs_stop+1, srvrs_step):
                     # run the scenario
-                    run_test(numServers, numReaders)
+                    run_tests(numServers, numReaders)
 
         print "\nAll done, script exiting..."
     else:
