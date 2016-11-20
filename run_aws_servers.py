@@ -107,7 +107,7 @@ def run_servers(numS):
     # send the file to all the machines
     for ip in aws_machines:
         print "Copying "+serverfile+" to "+ip
-        command = "scp -i ~/.ssh/aws_key.pem "+serverfile+ "ubuntu@"+ip+":~/"
+        command = "scp -i ~/.ssh/aws_key.pem "+serverfile+" ubuntu@"+ip+":~/"
         os.system(command)
 
     # close file
@@ -186,9 +186,8 @@ def main():
             for numServers in range(srvrs_start, srvrs_stop+1, srvrs_step):
                 # kill running server instances
                 kill_servers()
-                # wait a bit
-                sleep(10)
-                # run the new server instances
+
+               # run the new server instances
                 run_servers(numServers)
                 # wait 10s for the servers to initialize
                 sleep(10)
