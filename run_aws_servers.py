@@ -67,7 +67,7 @@ def run_tests(S, R):
         print "        executing #test=" + str(t)
 
 
-        out_file = "output/S_"+str(numServers)+"_R_"+str(numReaders)+"_test_"+str(t)+".txt"
+        out_file = "output/S_"+str(S)+"_R_"+str(R)+"_test_"+str(t)+".txt"
         #if execute flag raised - invoke the command otherwise just parse the output
         if(not os.path.isfile(out_file)):
                 #create a file for each test
