@@ -53,9 +53,9 @@ def create_output_file_for_scenario(drct):
     return directory
 
 # copy to remode device
-def copy_to_machine(filename, ip):
-    print "Copying "+filename+" to "+ip
-    command = "scp -i ~/.ssh/aws_key.pem "+filename+" ubuntu@"+ip+":~/"
+def copy_to_machine(filepath, destdir, ip):
+    print "Copying "+filepath+" to "+ip
+    command = "scp -i ~/.ssh/aws_key.pem "+filepath+" ubuntu@"+ip+":"+destdir
     os.system(command)
 
 #collect the available aws instances
@@ -65,6 +65,7 @@ def parse_vms(filename):
             ip=line.split()[0]
             print "Adding IP:"+ip+"..."
             aws_machines.append(ip);
+            copy("~/ATOMICEmulator/asm", "~/ATOMICEmulator/", ip)
         print "Detected "+str(len(aws_machines))+" VMs running."
 
 
@@ -116,7 +117,7 @@ def run_servers(numS):
 
     # send the file to all the machines
     for ip in aws_machines:
-        copy_to_machine(serverfile, ip)
+        copy_to_machine(serverfile, "~/", ip)
 
     # close file
     f.close()
@@ -147,7 +148,7 @@ def run_readers(numR, out_file):
         f.close()
 
         # copy the script over
-        copy_to_machine("run_command.sh", aws_machines[vm])
+        copy_to_machine("run_command.sh", "~/", aws_machines[vm])
 
         #execute the command
         #os.system(command)
