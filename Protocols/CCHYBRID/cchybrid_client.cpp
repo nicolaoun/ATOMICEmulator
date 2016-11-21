@@ -604,13 +604,18 @@ void CCHybridClient::stop(){
 
 void CCHybridClient::close_connections(){
     
-    //Packet p;
+    CCHybridPacket p;
     std::set<smNode>::iterator  it;
     
     req_counter_++;
     
     for (it=servers_connected_.begin(); it!=servers_connected_.end(); it++) {
-        prepare_pkt(req_counter_, *it, TERMINATE);
+        p = prepare_pkt(req_counter_, *it, TERMINATE);
+
+        if( !send_pkt<CCHybridPacket>((*it).sock, &p) )
+        {
+            REPORTERROR("Failed to terminate the connection properly.");
+        }
         
         close((*it).sock); /* Close socket */
     }

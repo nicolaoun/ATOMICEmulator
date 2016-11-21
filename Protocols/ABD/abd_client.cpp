@@ -601,14 +601,19 @@ void ABDClient::stop(){
 
 void ABDClient::close_connections(){
     
-    //Packet p;
+    Packet p;
     std::set<smNode>::iterator  it;
     
     req_counter_++;
     
     for (it=servers_connected_.begin(); it!=servers_connected_.end(); it++) {
-        prepare_pkt(req_counter_, *it, TERMINATE);
+        p = prepare_pkt(req_counter_, *it, TERMINATE);
         
+        if( !send_pkt<Packet>((*it).sock, &p) )
+        {
+            REPORTERROR("Failed to terminate the connection properly.");
+        }
+
         close((*it).sock); /* Close socket */
     }
     
