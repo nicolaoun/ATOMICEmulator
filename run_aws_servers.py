@@ -139,7 +139,7 @@ def run_readers(numR, out_file):
         # pick the machine to run
         vm = id % len(aws_machines)
         # run the reader
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file+" &"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file
 
         # copy the command into the running script
         f = open("run_command.sh","w")

@@ -246,7 +246,7 @@ void ABDClient::rcv_from_quorum(){
                                  p.obj.get_path().c_str(),
                                  p.obj.get_value().c_str(),
                                  p.counter);
-                        
+
                         if ( (p.msgType == READACK || p.msgType == WRITEACK)  && p.counter==req_counter_ )
                         {
                             // receive the file during the query phase (PHASE 1)
@@ -375,6 +375,13 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string value
     RWObject temp_obj(objID, objType, meta_dir_);
     temp_obj.set_path(client_root_dir_);
     temp_obj.set_value(value);
+    temp_obj.set_type(objType);
+
+    if(temp_obj.get_type() == FILE_T)
+        DEBUGING(1, "Temp Object type: FILE");
+
+    if(temp_obj.get_type() == VALUE_T)
+        DEBUGING(1, "Temp Object type: VALUE");
 
     std::vector<RWObject>::iterator oit = std::find(objects.begin(), objects.end(), temp_obj);
 

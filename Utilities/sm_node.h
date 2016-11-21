@@ -134,7 +134,7 @@ const std::size_t MIN_TIMEOUT = 1;
 //int pkt_vid_compare(const void *id1, const void *id2);  //packet comparison used by qsort
 class CTRLPacket : public Serializable{
 public:
-    int msgType;        // Type of the message
+    int msgType;                // Type of the message
     int fsize;                  // Size of the file
     int counter;                // Used to determine if this is a new packet
     
@@ -144,7 +144,7 @@ public:
     {
         // Serialization code
         // stream << msgType << " "  << fsize << " " << counter;
-        stream << "{\"mType\" : " << msgType << ", \"fSize\" : "  << fsize << "\"Counter \" : " << counter <<"}";
+        stream << "{\"mType\" : " << msgType << ", \"fSize\" : "  << fsize << ", \"Counter\" : " << counter <<"}";
     }
     
     virtual void deserialize(std::istream& stream)
@@ -155,6 +155,8 @@ public:
 
     virtual void deserialize(std::string jsonstr)
     {
+        std::cout << "Called CTRLPacket deserialise()....\n";
+
         rapidjson::Document jsonDoc;
 
         //parse JSON
@@ -179,7 +181,7 @@ public:
     char ip_addr[30];       // node ip address
     int port;               // node incoming port
     int sock;               // node communication socket
-    zmq::socket_t *z_sock;  // node zmq socket
+    //zmq::socket_t *z_sock;  // node zmq socket
 
     int req_counter_;           // request counter
     int receive_counter_;       // count # of messages received
@@ -346,7 +348,7 @@ protected:
     /***************************************
      *          ZMQ Socket
      ***************************************/
-
+/*
     // Overloaded send method
     template <typename PacketClass>
     bool send_pkt(zmq::socket_t z_sock, PacketClass *p)
@@ -389,7 +391,8 @@ protected:
             zmq::message_t reply;
             z_sock.recv(&reply);
 
-            if ( !reply.data()) { /* Get message */
+            // Get messgage
+            if ( !reply.data()) {
                 REPORTERROR("Receiving packet on ZMQ socket");
                 return false;
             }
@@ -407,6 +410,7 @@ protected:
 
         return true;
     }
+    */
     
     // Logging
     void init_logfile(std::string dir="");

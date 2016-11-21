@@ -88,7 +88,7 @@ void smNode::REPORTERROR(const char *format, ...)
     }
     else
     {
-        sprintf(errorout, "[ERROR]%10s %d: Error msg too long.\n",
+        sprintf(errorout, "[ERROR]%10s %d: Error msg too long.",
                 rolestr[role_],
                 nodeID);
     }
@@ -125,7 +125,7 @@ void smNode::init_logfile(std::string file){
     //sprintf(infofile,"%s.info.log", logfile.c_str());
     //sprintf(errorfile,"%s.error.log", logfile.c_str());
     
-    DEBUGING(7, "\t%s - DEBUG_LEVEL %d\n************************\n", get_datetime_str().c_str(), debuglvl);
+    DEBUGING(7, "\t%s - DEBUG_LEVEL %d\n************************", get_datetime_str().c_str(), debuglvl);
 }
 
 /**********************************************************/
@@ -145,7 +145,7 @@ bool smNode::send_file(int sock, char* fpath)
     fs_pkt.fsize = getFileSize(fpath);
     fs_pkt.counter = req_counter_;
     
-    DEBUGING(2, "Size of file %s is %d bytes\n", fpath, fs_pkt.fsize);
+    DEBUGING(2, "Size of file %s is %d bytes", fpath, fs_pkt.fsize);
     
     // Send file size
     if ( !send_pkt<CTRLPacket>(sock, &fs_pkt) )
@@ -157,7 +157,7 @@ bool smNode::send_file(int sock, char* fpath)
     
     // if the file does not exists - return
     if (fs_pkt.fsize == -1) {
-        DEBUGING(2, "No file to be transmitted.\n");
+        DEBUGING(2, "No file to be transmitted.");
         return true;
     }
     else //otherwise send the file
@@ -177,7 +177,7 @@ bool smNode::send_file(int sock, char* fpath)
             
             infile.read(buffer, bytes_read);                    // read MAX_BUFFER_SIZE bytes from the file
             
-            DEBUGING(1, " ** Read bytes: %d\n", bytes_read);
+            DEBUGING(1, " ** Read bytes: %d", bytes_read);
             
             try
             {
@@ -188,7 +188,7 @@ bool smNode::send_file(int sock, char* fpath)
                 REPORTERROR("Sending Interupted!!Err No: %d", err);
             }
             
-            DEBUGING(1, " ** Transmitted file bytes: %d\n", bytes_sent);
+            DEBUGING(1, " ** Transmitted file bytes: %d", bytes_sent);
             
             if ( bytes_sent < bytes_read )
             {
@@ -222,7 +222,7 @@ bool smNode::send_file(int sock, char* fpath)
         
         if(transmitted_bytes == fs_pkt.fsize)
         {
-            DEBUGING(2, "File transmitted correclty.\n");
+            DEBUGING(2, "File transmitted correclty.");
         }
         else
         {
@@ -307,7 +307,7 @@ bool smNode::rcv_file(int sock, char* fpath)
             outfile.close();
             
             if (transmitted_bytes == fs_pkt.fsize) {
-                DEBUGING(2, "File %s received successfully.\n", fpath);
+                DEBUGING(2, "File %s received successfully.", fpath);
             }
             else{
                 REPORTERROR("\nTransmitted bytes do not match file size: TX = %d bytes, FS = %d bytes.",
@@ -378,7 +378,7 @@ void smNode::connect_to_hosts(){
         
 	} // end EOF while
 
-    DEBUGING(2, "Connected to %d servers... \n", servers_connected_.size());
+    DEBUGING(2, "Connected to %d servers... ", servers_connected_.size());
 }
 
 /**

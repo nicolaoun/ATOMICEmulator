@@ -136,9 +136,15 @@ void handle_client(ProtoType* client, Arguments args)
 
     //check the type of the object
     if( args.value == "" )
+    {
         o_type = FILE_T;
+        std::cout << "oType: FILE";
+    }
     else
+    {
         o_type = VALUE_T;
+        std::cout << "oType: VALUE";
+    }
 
 
     client->set_debug_lvl(args.debuglvl);

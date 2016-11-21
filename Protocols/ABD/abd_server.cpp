@@ -254,7 +254,7 @@ void ABDServer::serveClient(smNode *tmp_client)
                     
                     
                     // if it is a write msg -> receive the file
-                    if ( msg_type == WRITE)
+                    if ( msg_type == WRITE && p.obj.get_type() == FILE_T)
                     {
                         char fpath[100];
                         sprintf(fpath, "%s/rcvd_files/src%d.[%d,%d].%s.temp",
@@ -311,6 +311,7 @@ RWObject ABDServer::getLocalReplica(RWObject obj)
     {
         // Create an object of the same type
         RWObject temp_obj(obj.get_id(), obj.get_type(), meta_dir_);
+        temp_obj.set_type(obj.get_type());
         
         //oit = objects_set.insert(oit, temp_obj);
         ret_obj = insertLocalReplica(temp_obj);
