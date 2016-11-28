@@ -65,7 +65,7 @@ def parse_vms(filename):
             ip=line.split()[0]
             print "Adding IP:"+ip+"..."
             aws_machines.append(ip);
-            copy_to_machine("~/ATOMICEmulator/asm", "~/ATOMICEmulator/", ip)
+            copy_to_machine("~/ATOMICEmulator/asm", "~/", ip)
         print "Detected "+str(len(aws_machines))+" VMs running."
 
 
@@ -75,7 +75,7 @@ def run_tests(S, R):
         print "        executing #test=" + str(t)
 
 
-        out_file = "output/"+protocols[protocol]+"_S_"+str(S)+"_R_"+str(R)+"_test_"+str(t)+".txt"
+        out_file = "output/"+proto+"_S_"+str(S)+"_R_"+str(R)+"_test_"+str(t)+".txt"
         #if execute flag raised - invoke the command otherwise just parse the output
         if(not os.path.isfile(out_file)):
                 #create a file for each test
@@ -109,7 +109,7 @@ def run_servers(numS):
 
         f.write(str(id)+" "+ip+" "+str(port)+"\n")
 
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/ATOMICEmulator/asm -t serve -p "+str(port)+" -i "+str(id)+" -a 6 -d 6' &"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/asm -t serve -p "+str(port)+" -i "+str(id)+" -a 6 -d 6' &"
         #execute the command
         os.system(command)
 
@@ -124,7 +124,7 @@ def run_servers(numS):
 
 def run_writer(out_file):
     # run the writer on the first machine
-    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/ATOMICEmulator/asm -t write -i 0 -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file
+    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/asm -t write -i 0 -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file
 
     # copy the command into the running script
     f = open("run_command.sh","w")
@@ -140,7 +140,7 @@ def run_readers(numR, out_file):
         # pick the machine to run
         vm = id % len(aws_machines)
         # run the reader
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/ATOMICEmulator/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocol)+" -c 1 -d 6 -m auto' >> "+out_file
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file
 
         # copy the command into the running script
         f = open("run_command.sh","w")
@@ -168,7 +168,7 @@ hybridfast = "HybridFast"
 oh_fast = "oh-Fast"
 alg =""
 executable=""
-protocol = 6
+proto = "CCHybrid"
 tests = 5
 Version="fixInt"# "randInt"
 aws_machines=[]
@@ -180,7 +180,7 @@ rdrs_start = 10
 rdrs_stop=100
 rds_step=10  #No worries we will end up doing 10,20,40,80,100
 #protocols = [ ["abd", "am-abd"], ["oh-Sam", "am-ohSam"], ["Semifast", "am-semifast"], ["HybridFast", "am-cchybrid"], ["oh-Fast", "am-ohfast"] ]
-protocols = [ [1, "abd"], [6, "HybridFast"]]
+protocols = [ "ABD" : 1, "CCHybrid" : 6 ]
 srvrs_start=10 #10
 srvrs_stop=10
 srvrs_step=5
