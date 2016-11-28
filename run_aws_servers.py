@@ -65,7 +65,7 @@ def parse_vms(filename):
             ip=line.split()[0]
             print "Adding IP:"+ip+"..."
             aws_machines.append(ip);
-            copy("~/ATOMICEmulator/asm", "~/ATOMICEmulator/", ip)
+            copy_to_machine("~/ATOMICEmulator/asm", "~/ATOMICEmulator/", ip)
         print "Detected "+str(len(aws_machines))+" VMs running."
 
 
@@ -75,7 +75,7 @@ def run_tests(S, R):
         print "        executing #test=" + str(t)
 
 
-        out_file = "output/S_"+str(S)+"_R_"+str(R)+"_test_"+str(t)+".txt"
+        out_file = "output/"+protocols[protocol]+"_S_"+str(S)+"_R_"+str(R)+"_test_"+str(t)+".txt"
         #if execute flag raised - invoke the command otherwise just parse the output
         if(not os.path.isfile(out_file)):
                 #create a file for each test
