@@ -115,12 +115,13 @@ def run_servers(numS):
 
         port = port+1
 
+    # close file
+    f.close()
+
     # send the file to all the machines
     for ip in aws_machines:
         copy_to_machine(serverfile, "~/", ip)
 
-    # close file
-    f.close()
 
 def run_writer(out_file):
     # run the writer on the first machine
@@ -130,6 +131,9 @@ def run_writer(out_file):
     f = open("run_command.sh","w")
     f.write(command)
     f.close()
+
+    # copy the script over
+    copy_to_machine("run_command.sh", "~/", aws_machines[0])
 
     #execute the command
     #os.system(command)
@@ -212,9 +216,6 @@ def main():
             main_directory = create_output_file_for_scenario(main_results_dir)
 
             for numServers in range(srvrs_start, srvrs_stop+1, srvrs_step):
-                # kill running server instances
-                kill_servers()
-
                # run the new server instances
                 run_servers(numServers)
                 # wait 10s for the servers to initialize
@@ -224,8 +225,8 @@ def main():
                     # run the scenario
                     run_tests(numServers, numReaders)
 
-            # kill running server instances
-            kill_servers()
+                # kill running server instances
+                kill_servers()
 
         print "\nAll done, script exiting..."
     else:
