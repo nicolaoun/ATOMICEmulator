@@ -31,7 +31,7 @@ def clean_data():
 
         with open(out_file) as f:
             for line in f:
-                meta_dir = line+"/.meta"
+                meta_dir = line.split("\n")[0]+"/.meta"
                 print "Cleaning "+meta_dir+" at "+ip
                 command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" 'rm "+meta_dir+"/*'"
                 #execute the command

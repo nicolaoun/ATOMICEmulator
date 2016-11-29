@@ -129,7 +129,7 @@ void handle_client(ProtoType* client, Arguments args)
 {
     object_t o_type;
     double frequency;
-     int val = 0;
+     int val = rand()%100;
     int ops = 10;
 
     int client_type = (args.type == "read")? READER : WRITER;
