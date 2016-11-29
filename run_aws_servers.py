@@ -109,7 +109,7 @@ def run_servers(numS):
 
         f.write(str(id)+" "+ip+" "+str(port)+"\n")
 
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/asm -t serve -p "+str(port)+" -i "+str(id)+" -a 6 -d 6'"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/asm -t serve -p "+str(port)+" -i "+str(id)+" -a 6 -d 6' &"
         #execute the command
         os.system(command)
 
@@ -125,7 +125,7 @@ def run_servers(numS):
 
 def run_writer(out_file):
     # run the writer on the first machine
-    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/asm -t write -i 0 -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file+" &"
+    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[0]+" '~/asm -t write -i 0 -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file
 
     # copy the command into the running script
     f = open("run_command.sh","w")
@@ -144,7 +144,7 @@ def run_readers(numR, out_file):
         # pick the machine to run
         vm = id % len(aws_machines)
         # run the reader
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file+" &"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file
 
         # copy the command into the running script
         f = open("run_command.sh","w")
