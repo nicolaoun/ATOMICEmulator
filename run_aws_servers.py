@@ -109,7 +109,7 @@ def run_servers(numS):
 
         f.write(str(id)+" "+ip+" "+str(port)+"\n")
 
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/asm -t serve -p "+str(port)+" -i "+str(id)+" -a 6 -d 6' >> "+out_file+" &"
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+ip+" '~/asm -t serve -p "+str(port)+" -i "+str(id)+" -a 6 -d 6'"
         #execute the command
         os.system(command)
 
@@ -144,7 +144,7 @@ def run_readers(numR, out_file):
         # pick the machine to run
         vm = id % len(aws_machines)
         # run the reader
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file
+        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file+" &"
 
         # copy the command into the running script
         f = open("run_command.sh","w")
@@ -195,21 +195,21 @@ def main():
 
     print "Starting Script...\n"
 
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
         # get the server file
         vmfile = sys.argv[1]
 
         # get the available machines
         parse_vms(vmfile)
 
-        if len(sys.argv) > 2:
-            if sys.argv[2] == "kill":
-                kill_servers()
-            elif sys.argv[2] == "clean":
-                clean_data()
-            else:
-                print "Unknown command."
-        else:
+        if sys.argv[2] == "kill":
+            kill_servers()
+        elif sys.argv[2] == "clean":
+            clean_data()
+        elif sys.argv[2] == "servers":
+            # for testing run 10 servers
+            run_servers(10)
+        elif sys.argv[2] == "start":
             # prepare the output directory
             main_results_dir = "output/ALL_RESULTS.txt"
             print "*** The Main Averaged Results will be at: " + str(main_results_dir)+" ***"
@@ -227,10 +227,12 @@ def main():
 
                 # kill running server instances
                 kill_servers()
+        else:
+            print "Unknown command."
 
         print "\nAll done, script exiting..."
     else:
-        print "Usage: server file expected."
+        print "Usage: server file and command [kill, clean, servers, start] expected."
 
 if __name__ == "__main__":
     main()
