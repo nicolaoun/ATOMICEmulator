@@ -91,19 +91,19 @@ void Arguments::printHelp()
 {
     std::cout << "Usage: "<<std::setw(5)<<"./asm [-option1] [value1] [-option2] [value2]....\n";
     std::cout << "Options:\n";
-    std::cout << std::setw(10) << "-t [read,write,server]" <<std::string(5,' ')<<"Operation type. Legal values: {read,write,server}.\n";
-    std::cout << std::setw(10) << "-o <string>" <<std::string(5,' ')<<"Object identifier. In case the object is a file this is the object's filename.\n";
-    std::cout << std::setw(10) << "-i <uint_32>" <<std::string(5,' ')<<"Node identifier.\n";
-    std::cout << std::setw(10) << "-c <uint_32>" <<std::string(5,' ')<<"Maximum number of crash failures.\n";
-    std::cout << std::setw(10) << "-p [4000-5000]" <<std::string(5,' ')<<"Port number to listen. Used only with the {serve} type.\n";
-    std::cout << std::setw(10) << "-a <uint_32>" <<std::string(5,' ')<<"Algorithm to run [1: ABD, 6:CCHybrid]\n";
-    std::cout << std::setw(10) << "-f <path>" <<std::string(5,' ')<<"Object path if object is a file.\n";
-    std::cout << std::setw(10) << "-v <number>" <<std::string(5,' ')<<"Object value (if not a file).\n";
+    std::cout << std::setw(25) << "-t [read,write,server]" <<std::string(5,' ')<<"Operation type. Legal values: {read,write,server}.\n";
+    std::cout << std::setw(25) << "-o <string>" <<std::string(5,' ')<<"Object identifier. In case the object is a file this is the object's filename.\n";
+    std::cout << std::setw(25) << "-i <uint_32>" <<std::string(5,' ')<<"Node identifier.\n";
+    std::cout << std::setw(25) << "-c <uint_32>" <<std::string(5,' ')<<"Maximum number of crash failures.\n";
+    std::cout << std::setw(25) << "-p [4000-5000]" <<std::string(5,' ')<<"Port number to listen. Used only with the {serve} type.\n";
+    std::cout << std::setw(25) << "-a <uint_32>" <<std::string(5,' ')<<"Algorithm to run [1: ABD, 6:CCHybrid]\n";
+    std::cout << std::setw(25) << "-f <path>" <<std::string(5,' ')<<"Object path if object is a file.\n";
+    std::cout << std::setw(25) << "-v <number>" <<std::string(5,' ')<<"Object value (if not a file).\n";
     std::cout <<"\n";
-    std::cout << std::setw(10) << "-s <uint_32>" <<std::string(5,' ')<<"Randmness seed.\n";
-    std::cout << std::setw(10) << "-d <uint_32>" <<std::string(5,' ')<<"Debug level [1-7]. 1 prints everything while 7 most important info.\n";
-    std::cout << std::setw(10) << "-m <option>" <<std::string(5,' ')<<"Presents a menu or not. You have to type [y, yes, Y, Yes, auto].\n";
-    std::cout << std::setw(10) << "-h" <<std::string(5,' ')<<"This help message\n";
+    std::cout << std::setw(25) << "-s <uint_32>" <<std::string(5,' ')<<"Randmness seed.\n";
+    std::cout << std::setw(25) << "-d <uint_32>" <<std::string(5,' ')<<"Debug level [1-7]. 1 prints everything while 7 most important info.\n";
+    std::cout << std::setw(25) << "-m <option>" <<std::string(5,' ')<<"Presents a menu or not. You have to type [y, yes, Y, Yes, auto].\n";
+    std::cout << std::setw(25) << "-h" <<std::string(5,' ')<<"This help message\n";
     exit(0);
 }
 
