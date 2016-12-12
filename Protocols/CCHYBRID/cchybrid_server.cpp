@@ -229,7 +229,7 @@ void CCHybridServer::serve_client(smNode *tmp_client)
                 //find the requested object in the local set of replicas
                 local_replica = get_local_replica(p.obj);
 
-                DEBUGING(6,"\n********************************************************");
+                DEBUGING(6,"********************************************************");
                 DEBUGING(6,"%s msg from %d, Object ID: %s, Tag Rcvd: <%d,%d>, Local Tag: <%d, %d>",
                          type_str.c_str(),
                          p.src_,

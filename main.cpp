@@ -44,6 +44,9 @@ int main(int argc, char** argv)
         std::cout << "Initializing "<< args.type <<" process ID: "<< args.nodeid << "\n";
         std::cout << "*********************************************************\n\n";
 
+        // seed randomnes
+        srand(args.seed);
+
         if ( args.type == "read" || args.type == "write")
         {
             if (args.objid == "" ) {

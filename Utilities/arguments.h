@@ -41,6 +41,7 @@ public:
     std::string menu;
     int protocol;
     int crashes;
+    int seed;
     
     void parseArguments(int argc, char** argv);
     void printHelp();
