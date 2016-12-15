@@ -448,7 +448,7 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string value
 
     totTime+=endTime-startTime;
 
-    DEBUGING(6,"\n\n**************************************************");
+    DEBUGING(6,"*****************************************************");
     DEBUGING(6, "Read#:%d, Duration:%f, Rounds:%s, Tag:<%d,%d,%d>, Object: %s!!",
              num_reads_,
              endTime-startTime,
@@ -494,7 +494,7 @@ void ABDClient::process_replies()
         obj->set_latest_tag(maxTag);
         commit_flag_ = true;
         
-        DEBUGING(6, "\n\n***************************************************");
+        DEBUGING(6, "***************************************************");
         DEBUGING(6,"ABD: WRITE SUCCEEDED -> Writing New Tag:<%d,%d,%d> ",
                  maxTag.ts,
                  maxTag.wid,
@@ -506,31 +506,35 @@ void ABDClient::process_replies()
     else
     {   // either a newer write discovered or a read is invoked
         commit_flag_ = false;
-        
+
         // if the tag is higher than the local tag or file does not exist -> keep the file
-        if ( maxTag > obj->tg_ || !fileExists(dest_file) )
+        if ( maxTag > obj->tg_ || (obj->get_type() == FILE_T && !fileExists(dest_file)) )
         {
             obj->set_latest_tag(maxTag);
             
-            // copy the appropriate file to the path
-            sstm.str("");
-            sstm.clear();
-            sstm << rcvd_files_dir_.c_str() << "/sid" << max_server_id << ".[" << obj->get_tag().ts << "," << obj->get_tag().wid << "]." << obj->get_id().c_str() << ".temp";
-            
-            std::string src_file = sstm.str();  // received file
-            
-            // copy the file to the local directory
-            if (directoryExists(src_file)){
-                copyFile(src_file, dest_file);
-                DEBUGING(2, "Copied file '%s' successfully", dest_file.c_str());
-            }
-            else
+            // if the object is a file
+            if (obj->get_type() == FILE_T)
             {
-                REPORTERROR("Directory does not exist: %s",src_file.c_str());
+                // copy the appropriate file to the path
+                sstm.str("");
+                sstm.clear();
+                sstm << rcvd_files_dir_.c_str() << "/sid" << max_server_id << ".[" << obj->get_tag().ts << "," << obj->get_tag().wid << "]." << obj->get_id().c_str() << ".temp";
+
+                std::string src_file = sstm.str();  // received file
+
+                // copy the file to the local directory
+                if (directoryExists(src_file)){
+                    copyFile(src_file, dest_file);
+                    DEBUGING(2, "Copied file '%s' successfully", dest_file.c_str());
+                }
+                else
+                {
+                    REPORTERROR("Directory does not exist: %s",src_file.c_str());
+                }
             }
         }
         
-       DEBUGING(6, "\n\n***************************************");
+       DEBUGING(6, "***************************************");
         DEBUGING(6,"ABD: Propagating Tag:<%d,%d,%d> ",
                  maxTag.ts,
                  maxTag.wid,
