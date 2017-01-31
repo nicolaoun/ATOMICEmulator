@@ -1,0 +1,286 @@
+
+*********************************************************
+Initializing read process ID: 4
+*********************************************************
+
+*********************************************************
+                 Protocol running: CCHYBRID
+*********************************************************
+
+Root Dir:
+[INFO]    READER 4: 	2016-12-15 06:54:25 - DEBUG_LEVEL 0
+************************
+[INFO]    READER 4: Loaded Directories...
+[INFO]    READER 4: Reading file: servers.list
+[INFO]    READER 4: SID:1, Host:172.31.25.155, Port:4000
+[INFO]    READER 4: SID:2, Host:172.31.25.156, Port:4001
+[INFO]    READER 4: SID:3, Host:172.31.25.153, Port:4002
+[INFO]    READER 4: SID:4, Host:172.31.25.154, Port:4003
+[INFO]    READER 4: SID:5, Host:172.31.25.157, Port:4004
+[INFO]    READER 4: SID:6, Host:172.31.23.57, Port:4005
+[INFO]    READER 4: SID:7, Host:172.31.23.58, Port:4006
+[INFO]    READER 4: SID:8, Host:172.31.23.59, Port:4007
+[INFO]    READER 4: SID:9, Host:172.31.23.60, Port:4008
+[INFO]    READER 4: SID:10, Host:172.31.24.44, Port:4009
+[INFO]    READER 4: Initialized, Server file: servers.list, failures: 5
+oType: VALUE[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 1 on object reg0 at 2016-12-15 06:54:25 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Predicate VALID => RETURNING Value: 15 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:1, Object: reg0, Duration:0.001399, Tag:<1274,0,0>, Values:[15, 92] @ 1 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 2 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 2 on object reg0 at 2016-12-15 06:54:27 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Too few servers in propagation set (0) => Going to PHASE2 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:2, Object: reg0, Duration:0.002441, Tag:<1275,0,0>, Values:[16, 15] @ 2 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 3 on object reg0 at 2016-12-15 06:54:31 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Predicate VALID => RETURNING Value: 17 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:3, Object: reg0, Duration:0.001381, Tag:<1276,0,0>, Values:[17, 16] @ 1 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 2 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 4 on object reg0 at 2016-12-15 06:54:33 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Too few servers in propagation set (0) => Going to PHASE2 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:4, Object: reg0, Duration:0.003122, Tag:<1277,0,0>, Values:[18, 17] @ 2 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 5 on object reg0 at 2016-12-15 06:54:38 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Predicate VALID => RETURNING Value: 19 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:5, Object: reg0, Duration:0.003386, Tag:<1278,0,0>, Values:[19, 18] @ 1 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 2 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 6 on object reg0 at 2016-12-15 06:54:40 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Too few servers in propagation set (0) => Going to PHASE2 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:6, Object: reg0, Duration:0.002518, Tag:<1279,0,0>, Values:[20, 19] @ 2 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 7 on object reg0 at 2016-12-15 06:54:45 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Predicate VALID => RETURNING Value: 21 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:7, Object: reg0, Duration:0.001385, Tag:<1280,0,0>, Values:[21, 20] @ 1 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 8 on object reg0 at 2016-12-15 06:54:49 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Predicate VALID => RETURNING Value: 22 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:8, Object: reg0, Duration:0.001406, Tag:<1281,0,0>, Values:[22, 21] @ 1 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 9 on object reg0 at 2016-12-15 06:54:53 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Predicate VALID => RETURNING Value: 23 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:9, Object: reg0, Duration:0.001301, Tag:<1282,0,0>, Values:[23, 22] @ 1 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 3 sec...
+****************
+
+[INFO]    READER 4: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 4: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 4: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 4: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 4: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 4: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 4: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 4: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 4: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 4: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: Invoking read 10 on object reg0 at 2016-12-15 06:54:56 
+[INFO]    READER 4: ***************************************
+[INFO]    READER 4: ** Predicate VALID => RETURNING Value: 24 **
+[INFO]    READER 4: 
+**************************************************
+[INFO]    READER 4: READ#:10, Object: reg0, Duration:0.001970, Tag:<1283,0,0>, Values:[24, 23] @ 1 EXCH
+[INFO]    READER 4: ******************************************************
+
+[INFO]    READER 4: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 4: (reads: 10, ONECOMM: 7, TWOCOMM: 3, AVETIME: 0.0020) -- TERMINATED

@@ -1,0 +1,286 @@
+
+*********************************************************
+Initializing read process ID: 14
+*********************************************************
+
+*********************************************************
+                 Protocol running: CCHYBRID
+*********************************************************
+
+Root Dir:
+[INFO]    READER 14: 	2016-12-12 08:36:04 - DEBUG_LEVEL 0
+************************
+[INFO]    READER 14: Loaded Directories...
+[INFO]    READER 14: Reading file: servers.list
+[INFO]    READER 14: SID:1, Host:172.31.25.155, Port:4010
+[INFO]    READER 14: SID:2, Host:172.31.25.156, Port:4011
+[INFO]    READER 14: SID:3, Host:172.31.25.153, Port:4012
+[INFO]    READER 14: SID:4, Host:172.31.25.154, Port:4013
+[INFO]    READER 14: SID:5, Host:172.31.25.157, Port:4014
+[INFO]    READER 14: SID:6, Host:172.31.23.57, Port:4015
+[INFO]    READER 14: SID:7, Host:172.31.23.58, Port:4016
+[INFO]    READER 14: SID:8, Host:172.31.23.59, Port:4017
+[INFO]    READER 14: SID:9, Host:172.31.23.60, Port:4018
+[INFO]    READER 14: SID:10, Host:172.31.24.44, Port:4019
+[INFO]    READER 14: Initialized, Server file: servers.list, failures: 5
+oType: FILE[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 1 on object reg0 at 2016-12-12 08:36:04 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Predicate VALID => RETURNING Value: 84 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:1, Object: reg0, Duration:0.003466, Tag:<695,0,0>, Values:[84, 83] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 2 on object reg0 at 2016-12-12 08:36:08 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Enough servers in propagation set (10) => RETURNING Value: 84 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:2, Object: reg0, Duration:0.001860, Tag:<695,0,0>, Values:[84, 83] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 7 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 3 on object reg0 at 2016-12-12 08:36:15 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Enough servers in propagation set (10) => RETURNING Value: 86 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:3, Object: reg0, Duration:0.001787, Tag:<697,0,0>, Values:[86, 85] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 3 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 4 on object reg0 at 2016-12-12 08:36:18 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Enough servers in propagation set (20) => RETURNING Value: 86 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:4, Object: reg0, Duration:0.001829, Tag:<697,0,0>, Values:[86, 85] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 5 on object reg0 at 2016-12-12 08:36:23 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Enough servers in propagation set (10) => RETURNING Value: 87 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:5, Object: reg0, Duration:0.001752, Tag:<698,0,0>, Values:[87, 86] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 6 on object reg0 at 2016-12-12 08:36:28 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Predicate VALID => RETURNING Value: 89 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:6, Object: reg0, Duration:0.007098, Tag:<700,0,0>, Values:[89, 88] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 7 on object reg0 at 2016-12-12 08:36:32 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Enough servers in propagation set (10) => RETURNING Value: 90 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:7, Object: reg0, Duration:0.001454, Tag:<701,0,0>, Values:[90, 89] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 3 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 8 on object reg0 at 2016-12-12 08:36:35 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Enough servers in propagation set (20) => RETURNING Value: 90 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:8, Object: reg0, Duration:0.001378, Tag:<701,0,0>, Values:[90, 89] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 9 on object reg0 at 2016-12-12 08:36:40 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Predicate VALID => RETURNING Value: 92 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:9, Object: reg0, Duration:0.001539, Tag:<703,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 14: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 14: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 14: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 14: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 14: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 14: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 14: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 14: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 14: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 14: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: Invoking read 10 on object reg0 at 2016-12-12 08:36:44 
+[INFO]    READER 14: ***************************************
+[INFO]    READER 14: ** Enough servers in propagation set (10) => RETURNING Value: 92 **
+[INFO]    READER 14: 
+**************************************************
+[INFO]    READER 14: READ#:10, Object: reg0, Duration:0.002656, Tag:<703,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 14: ******************************************************
+
+[INFO]    READER 14: Closing connections...
+
+
+****************
+Next operation in 7 sec...
+****************
+
+[INFO]    READER 14: (reads: 10, ONECOMM: 10, TWOCOMM: 0, AVETIME: 0.0025) -- TERMINATED

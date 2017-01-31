@@ -1,0 +1,40 @@
+
+*********************************************************
+Initializing read process ID: 7
+*********************************************************
+
+*********************************************************
+                 Protocol running: ABD
+*********************************************************
+
+[INFO]    READER 7: 	2016-12-15 07:25:41 - DEBUG_LEVEL 0
+************************
+[INFO]    READER 7: Loaded Directories...
+[INFO]    READER 7: Reading file: servers.list
+[INFO]    READER 7: SID:1, Host:172.31.25.155, Port:4000
+[INFO]    READER 7: SID:2, Host:172.31.25.156, Port:4001
+[INFO]    READER 7: SID:3, Host:172.31.25.153, Port:4002
+[INFO]    READER 7: SID:4, Host:172.31.25.154, Port:4003
+[INFO]    READER 7: SID:5, Host:172.31.25.157, Port:4004
+[INFO]    READER 7: SID:6, Host:172.31.23.57, Port:4005
+[INFO]    READER 7: SID:7, Host:172.31.23.58, Port:4006
+[INFO]    READER 7: SID:8, Host:172.31.23.59, Port:4007
+[INFO]    READER 7: SID:9, Host:172.31.23.60, Port:4008
+[INFO]    READER 7: SID:10, Host:172.31.24.44, Port:4009
+[INFO]    READER 7: Initialized, Server file: servers.list
+oType: VALUE[INFO]    READER 7: Connected to Server 1 on host 172.31.25.155, port 4000, sock 3
+[INFO]    READER 7: Connected to Server 2 on host 172.31.25.156, port 4001, sock 4
+[INFO]    READER 7: Connected to Server 3 on host 172.31.25.153, port 4002, sock 5
+[INFO]    READER 7: Connected to Server 4 on host 172.31.25.154, port 4003, sock 6
+[INFO]    READER 7: Connected to Server 5 on host 172.31.25.157, port 4004, sock 7
+[INFO]    READER 7: Connected to Server 6 on host 172.31.23.57, port 4005, sock 8
+[INFO]    READER 7: Connected to Server 7 on host 172.31.23.58, port 4006, sock 9
+[INFO]    READER 7: Connected to Server 8 on host 172.31.23.59, port 4007, sock 10
+[INFO]    READER 7: Connected to Server 9 on host 172.31.23.60, port 4008, sock 11
+[INFO]    READER 7: Connected to Server 10 on host 172.31.24.44, port 4009, sock 12
+[INFO]    READER 7: ***************************************
+[INFO]    READER 7: Invoking read 1 on object reg0 at 2016-12-15 07:25:41 
+[INFO]    READER 7: ***************************************
+[INFO]    READER 7: ***************************************
+[INFO]    READER 7: ABD: Propagating Tag:<1289,0,0> 
+[INFO]    READER 7: ***************************************

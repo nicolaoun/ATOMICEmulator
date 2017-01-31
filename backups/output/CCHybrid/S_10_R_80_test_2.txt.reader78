@@ -1,0 +1,286 @@
+
+*********************************************************
+Initializing read process ID: 78
+*********************************************************
+
+*********************************************************
+                 Protocol running: CCHYBRID
+*********************************************************
+
+Root Dir:
+[INFO]    READER 78: 	2016-12-12 08:48:29 - DEBUG_LEVEL 0
+************************
+[INFO]    READER 78: Loaded Directories...
+[INFO]    READER 78: Reading file: servers.list
+[INFO]    READER 78: SID:1, Host:172.31.25.155, Port:4010
+[INFO]    READER 78: SID:2, Host:172.31.25.156, Port:4011
+[INFO]    READER 78: SID:3, Host:172.31.25.153, Port:4012
+[INFO]    READER 78: SID:4, Host:172.31.25.154, Port:4013
+[INFO]    READER 78: SID:5, Host:172.31.25.157, Port:4014
+[INFO]    READER 78: SID:6, Host:172.31.23.57, Port:4015
+[INFO]    READER 78: SID:7, Host:172.31.23.58, Port:4016
+[INFO]    READER 78: SID:8, Host:172.31.23.59, Port:4017
+[INFO]    READER 78: SID:9, Host:172.31.23.60, Port:4018
+[INFO]    READER 78: SID:10, Host:172.31.24.44, Port:4019
+[INFO]    READER 78: Initialized, Server file: servers.list, failures: 5
+oType: FILE[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 1 on object reg0 at 2016-12-12 08:48:29 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (10) => RETURNING Value: 88 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:1, Object: reg0, Duration:0.002214, Tag:<819,0,0>, Values:[88, 87] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 2 on object reg0 at 2016-12-12 08:48:33 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (10) => RETURNING Value: 89 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:2, Object: reg0, Duration:0.003757, Tag:<820,0,0>, Values:[89, 88] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 7 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 3 on object reg0 at 2016-12-12 08:48:40 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (10) => RETURNING Value: 90 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:3, Object: reg0, Duration:0.001943, Tag:<821,0,0>, Values:[90, 89] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 3 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 4 on object reg0 at 2016-12-12 08:48:43 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (10) => RETURNING Value: 91 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:4, Object: reg0, Duration:0.002335, Tag:<822,0,0>, Values:[91, 90] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 5 on object reg0 at 2016-12-12 08:48:48 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (10) => RETURNING Value: 92 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:5, Object: reg0, Duration:0.002291, Tag:<823,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 6 on object reg0 at 2016-12-12 08:48:53 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (20) => RETURNING Value: 92 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:6, Object: reg0, Duration:0.002047, Tag:<823,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 7 on object reg0 at 2016-12-12 08:48:57 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (30) => RETURNING Value: 92 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:7, Object: reg0, Duration:0.002820, Tag:<823,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 3 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 8 on object reg0 at 2016-12-12 08:49:00 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (40) => RETURNING Value: 92 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:8, Object: reg0, Duration:0.001936, Tag:<823,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 5 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 9 on object reg0 at 2016-12-12 08:49:05 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (50) => RETURNING Value: 92 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:9, Object: reg0, Duration:0.001927, Tag:<823,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 4 sec...
+****************
+
+[INFO]    READER 78: Connected to Server 1 on host 172.31.25.155, port 4010, sock 3
+[INFO]    READER 78: Connected to Server 2 on host 172.31.25.156, port 4011, sock 4
+[INFO]    READER 78: Connected to Server 3 on host 172.31.25.153, port 4012, sock 5
+[INFO]    READER 78: Connected to Server 4 on host 172.31.25.154, port 4013, sock 6
+[INFO]    READER 78: Connected to Server 5 on host 172.31.25.157, port 4014, sock 7
+[INFO]    READER 78: Connected to Server 6 on host 172.31.23.57, port 4015, sock 8
+[INFO]    READER 78: Connected to Server 7 on host 172.31.23.58, port 4016, sock 9
+[INFO]    READER 78: Connected to Server 8 on host 172.31.23.59, port 4017, sock 10
+[INFO]    READER 78: Connected to Server 9 on host 172.31.23.60, port 4018, sock 11
+[INFO]    READER 78: Connected to Server 10 on host 172.31.24.44, port 4019, sock 12
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: Invoking read 10 on object reg0 at 2016-12-12 08:49:09 
+[INFO]    READER 78: ***************************************
+[INFO]    READER 78: ** Enough servers in propagation set (60) => RETURNING Value: 92 **
+[INFO]    READER 78: 
+**************************************************
+[INFO]    READER 78: READ#:10, Object: reg0, Duration:0.002342, Tag:<823,0,0>, Values:[92, 91] @ 1 EXCH
+[INFO]    READER 78: ******************************************************
+
+[INFO]    READER 78: Closing connections...
+
+
+****************
+Next operation in 7 sec...
+****************
+
+[INFO]    READER 78: (reads: 10, ONECOMM: 10, TWOCOMM: 0, AVETIME: 0.0024) -- TERMINATED
