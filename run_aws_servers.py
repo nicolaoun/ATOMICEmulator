@@ -2,6 +2,7 @@ import os
 from time import sleep
 import sys
 import subprocess
+import threading
 
 # kill the server instances from the machines
 def kill_servers():
@@ -85,7 +86,8 @@ def run_tests(S, R):
         run_writer(out_file)
 
         # run the readers in the available machines
-        run_readers(R, out_file)
+        for id in range(1, R+1):
+            run_reader(id, out_file)
 
         # wait for processes to terminate
         exit_codes = [p.wait() for p in processes]
@@ -139,25 +141,24 @@ def run_writer(out_file):
     #os.system(command)
     processes.append(subprocess.Popen(["ssh","-i", "/home/ubuntu/.ssh/aws_key.pem", "ubuntu@"+aws_machines[0], "'/home/ubuntu/run_command.sh'"]))
 
-def run_readers(numR, out_file):
-    for id in range(1, numR+1):
-        # pick the machine to run
-        vm = id % len(aws_machines)
-        # run the reader
-        command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file
+def run_reader(id, out_file):
+    # pick the machine to run
+    vm = id % len(aws_machines)
+    # run the reader
+    command = "ssh -i ~/.ssh/aws_key.pem ubuntu@"+aws_machines[vm]+" '~/asm -t read -i "+str(id)+" -o reg0 -a "+str(protocols[proto])+" -c 1 -d 6 -m auto' >> "+out_file
 
-        # copy the command into the running script
-        f = open("run_command.sh","w")
-        f.write(command)
-        f.close()
+    # copy the command into the running script
+    f = open("run_command.sh","w")
+    f.write(command)
+    f.close()
 
-        # copy the script over
-        copy_to_machine("run_command.sh", "~/", aws_machines[vm])
+    # copy the script over
+    copy_to_machine("run_command.sh", "~/", aws_machines[vm])
 
-        #execute the command
-        #os.system(command)
-        #processes.append(subprocess.Popen(command))
-        processes.append(subprocess.Popen(["ssh","-i", "/home/ubuntu/.ssh/aws_key.pem", "ubuntu@"+aws_machines[0], "'/home/ubuntu/run_command.sh'"]))
+    #execute the command
+    #os.system(command)
+    #processes.append(subprocess.Popen(command))
+    processes.append(subprocess.Popen(["ssh","-i", "/home/ubuntu/.ssh/aws_key.pem", "ubuntu@"+aws_machines[0], "'/home/ubuntu/run_command.sh'"]))
 
 
 #############################################################################
@@ -177,6 +178,7 @@ tests = 5
 Version="fixInt"# "randInt"
 aws_machines=[]
 processes=[]
+threads=[]
 
 # _start is the initial
 # _stop is the last one - included!

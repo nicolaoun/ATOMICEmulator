@@ -331,8 +331,7 @@ protected:
             std::istream istm(&sb);
             //p->deserialize(istm);
             p->deserialize(sb.str());
-            
-            DEBUGING(1, "Received Buffer: %s, Size: %d", sb.str().c_str(), rcv_bytes);
+
         }
         catch(int e)
         {

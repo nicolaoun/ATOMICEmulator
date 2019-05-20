@@ -377,12 +377,6 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string value
     temp_obj.set_value(value);
     temp_obj.set_type(objType);
 
-    if(temp_obj.get_type() == FILE_T)
-        DEBUGING(1, "Temp Object type: FILE");
-
-    if(temp_obj.get_type() == VALUE_T)
-        DEBUGING(1, "Temp Object type: VALUE");
-
     std::vector<RWObject>::iterator oit = std::find(objects.begin(), objects.end(), temp_obj);
 
     if ( oit != objects.end() ) {
@@ -396,6 +390,12 @@ void ABDClient::invoke_op(std::string objID, object_t objType, std::string value
 
     //std::set the object to work with
     obj = &(*oit);
+
+    if(obj->get_type() == FILE_T)
+        DEBUGING(1, "Temp Object type: FILE");
+
+    if(obj->get_type() == VALUE_T)
+        DEBUGING(1, "Temp Object type: VALUE");
 
     //mark the time of the read invocation
     gettimeofday(&sysTime, NULL);

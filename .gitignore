@@ -45,3 +45,10 @@ Untitled.xcworkspace/xcuserdata/nicolasnicolaou.xcuserdatad/UserInterfaceState.x
 *.files
 
 asm
+asm
+.DS_Store
+ATOMICEmulator.creator.user
+ATOMICEmulator.files
+ATOMICEmulator.includes
+CMakeFiles/asm.dir/link.txt
+CMakeFiles/asm.dir/link.txt

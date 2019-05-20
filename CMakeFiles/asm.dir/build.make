@@ -350,7 +350,7 @@ asm: CMakeFiles/asm.dir/Utilities/arguments.cpp.o
 asm: CMakeFiles/asm.dir/Utilities/filesystem.cpp.o
 asm: CMakeFiles/asm.dir/main.cpp.o
 asm: CMakeFiles/asm.dir/build.make
-asm: /usr/local/lib/libzmq-static.a
+asm: /usr/lib/libpthread.dylib
 asm: CMakeFiles/asm.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/nicolasnicolaou/Documents/workspace/ATOMICEmulator/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable asm"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/asm.dir/link.txt --verbose=$(VERBOSE)

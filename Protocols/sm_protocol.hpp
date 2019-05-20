@@ -134,6 +134,7 @@ class Packet : public Serializable{
         // Serialization code
         //JSON: { "Src" : [src_id], "Dest" : [dest_id], "mType" : [msg_type], "ts" : [timestamp], "value" : "[value]"}
         serializeHead(stream);
+
         stream  << ", \"oID\" : \"" << obj.objID_ << "\"";
         stream << ", \"oType\" : " << obj.get_type();
         stream << ", \"Ts\" : " << tag.ts << ", \"Wid\" : " << tag.wid;
@@ -173,13 +174,11 @@ class Packet : public Serializable{
         Tag tag;
         rapidjson::Document jsonDoc;
 
+        deserializeHead(jsonstr);
+
         //parse JSON
         jsonDoc.Parse(jsonstr.c_str());
 
-        src_ = jsonDoc["Src"].GetInt();
-        dst_ = jsonDoc["Dest"].GetInt();
-        msgType = jsonDoc["mType"].GetInt();
-        counter = jsonDoc["Counter"].GetInt();
         obj.objID_ = jsonDoc["oID"].GetString();
         obj.set_type( (object_t) jsonDoc["oType"].GetInt());
         tag.ts = jsonDoc["Ts"].GetInt();
